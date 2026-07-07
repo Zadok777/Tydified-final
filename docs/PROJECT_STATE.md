@@ -9,7 +9,7 @@ _Last updated: 2026-06-23_
 ## Status at a glance
 
 - **Phase:** v1.0 feature-complete; in App Store / Play readiness.
-- **App folder:** `~/Desktop/Chorely 2/` (package name `chorely`).
+- **App folder:** `~/Desktop/Chorely 2/` (package name `tydified`).
 - **Repo:** `https://github.com/Zadok777/Chorely-final.git` (`origin`, branch `main`).
 - **Supabase:** project **Chorely App** (`zinbukzmkorkawbgckkh`), personal account.
   17 migrations applied; 12 tables (RLS on) + 12 RPCs.
@@ -38,7 +38,7 @@ _Last updated: 2026-06-23_
    product setup is ready.
 3. **Email confirmation** — turn confirmation ON before real testers.
 4. **Host legal pages** and verify the Terms/Privacy URLs used by the paywall.
-5. **Delete old artifacts** — old GitHub repo `doulosnexus-lang/Chorely` and the
+5. **Delete old artifacts** — old GitHub repo `doulosnexus-lang/Tydified` and the
    old Supabase project `kwwhuwegzdaqstqhmths` (different account; delete in its
    own dashboard).
 6. **Store readiness** — production Supabase decision + re-enable email

@@ -1,4 +1,4 @@
-# DESIGN.md — Chorely Visual System
+# DESIGN.md — Tydified Visual System
 
 > **Append-only:** Whenever you discover a new design token, rule, or anti-pattern during the project, add it to the correct section below. CLAUDE.md never duplicates design content — this file is the single source of truth for the visual system.
 
@@ -6,14 +6,16 @@
 
 ## 1. Brand
 
-The visual design follows the **Lumina Bloom** design system: pink, orange, and green on a light lavender background with intentional glassmorphism.
+The visual design follows the **Tydified** brand (2026-07 rebrand from Chorely): the five logo-lockup hues — Tydi cyan-blue, fied pink, fied purple, trophy gold, tagline green — grounded by brand navy, on a warm near-white canvas with solid surfaces.
+
+**Name:** Tydified. **Tagline:** "Do chores. Earn points. Unlock rewards. Level up!"
 
 ### Brand Logo
 
-The Chorely logo is a rounded-square smiley face with a pink→orange gradient border, and a "Chorely" wordmark in pink below. Logo components live in `src/components/brand/`:
+The Tydified lockup is a bubble wordmark — "Tydi" in a cyan→blue gradient, a gold trophy, "fied" in pink→purple — over a navy tagline pill. The full lockup lives as an image asset (`assets/tydified-logo.png`, used by the splash and hero moments). In-app brand components live in `src/components/brand/`:
 
-- `ChorelyLogo` — three variants: `full` (stacked icon + wordmark), `horizontal` (inline), `icon` (smiley only)
-- `ChorelyIcon` — standalone smiley-square icon
+- `TydifiedLogo` — three variants: `full` (stacked icon + wordmark), `horizontal` (inline), `icon` (mascot only)
+- `TydifiedIcon` — standalone rounded-square smiley mascot (recolors via tokens)
 
 The wordmark uses **Nunito ExtraBold** (`@expo-google-fonts/nunito`).
 
@@ -23,18 +25,19 @@ The wordmark uses **Nunito ExtraBold** (`@expo-google-fonts/nunito`).
 
 Authored in hex for React Native compatibility. Values are perceptually balanced — do not introduce a new hue without recording it here first.
 
-> Updated 2026-07-02 to match the §12 Calm & Refined refresh (teal accent, solid surfaces, warm near-white canvas). `tokens.ts` is the executable source; dark-mode values live in `darkC` there.
+> Updated 2026-07-07 for the Tydified rebrand. Every brand hue is an exact sample from the Tydified logo lockup. `tokens.ts` is the executable source; dark-mode values live in `darkC` there.
 
 ```ts
-// Brand palette (light)
-pink:       '#0EA5A4'   // PRIMARY ACCENT (teal) — CTAs, active nav, progress fills. Token key kept as `pink` (§12).
-pinkText:   '#0B807F'   // Darker teal for accent-colored TEXT on light surfaces (#0EA5A4 is ~2.9:1 on white — fills/icons only)
-orange:     '#FF8C42'   // Points / reward energy ONLY
-green:      '#00A92A'   // Success ONLY — completed/approved states
+// Brand palette (light) — exact lockup samples
+pink:       '#14B0FE'   // PRIMARY ACCENT (Tydi blue) — CTAs, active nav, progress fills. Token key kept as `pink` (§12).
+pinkText:   '#0059AE'   // Deep Tydi blue (gradient base) for accent-colored TEXT on light surfaces — ~5.9:1 on white
+orange:     '#FEAA01'   // Trophy amber — points / reward energy ONLY
+green:      '#60DB01'   // Tagline green — success fills/chips ONLY (fails contrast as text on light)
+greenText:  '#3D9800'   // Darkened tagline-green hue for success TEXT/icons on light surfaces
 bg:         '#FAF9FB'   // Warm near-white canvas, every screen
 
 // Text
-textDark:   '#22222B'   // Headings, primary body
+textDark:   '#00001B'   // Brand navy (logo outline/pill) — headings, primary body
 textMid:    '#6B6B80'   // Secondary text, captions
 textLight:  '#A8A8B8'   // Placeholder, muted labels
 textWhite:  '#FFFFFF'   // Text on colored/gradient backgrounds
@@ -43,33 +46,35 @@ textWhite:  '#FFFFFF'   // Text on colored/gradient backgrounds
 glass:      '#FFFFFF'                  // Primary card surface (name is historical)
 glassLight: '#F3F1F7'                  // Recessed / subtle container
 border:     'rgba(24, 20, 40, 0.06)'   // Hairline for definition on near-white
-borderPink: 'rgba(14, 165, 164, 0.32)' // Active/selected card borders (teal)
+borderPink: 'rgba(20, 176, 254, 0.32)' // Active/selected card borders (Tydi blue)
 
-// Tinted alphas (teal-based)
-pinkAlpha15:  'rgba(14, 165, 164, 0.15)'
-pinkAlpha10:  'rgba(14, 165, 164, 0.10)'
-orangeAlpha15:'rgba(255, 140, 66, 0.15)'
-orangeAlpha10:'rgba(255, 140, 66, 0.10)'
-greenAlpha15: 'rgba(0, 169, 42, 0.15)'
-greenAlpha20: 'rgba(0, 169, 42, 0.20)'
+// Tinted alphas (Tydi-blue-based)
+pinkAlpha15:  'rgba(20, 176, 254, 0.15)'
+pinkAlpha10:  'rgba(20, 176, 254, 0.10)'
+orangeAlpha15:'rgba(254, 170, 1, 0.15)'
+orangeAlpha10:'rgba(254, 170, 1, 0.10)'
+greenAlpha15: 'rgba(96, 219, 1, 0.15)'
+greenAlpha20: 'rgba(96, 219, 1, 0.20)'
 mutedAlpha20: 'rgba(168, 168, 184, 0.20)'
 redAlpha15:   'rgba(220, 38, 38, 0.15)'
 ```
 
-**Accent-text rule:** any teal-colored *text* (ghost buttons, active tab labels, selected chips, the invite code, greeting name) uses `pinkText`, never `pink`. `pink` stays for fills, icons, and borders where 3:1 suffices.
+Reserve hues (in the lockup, available for celebration accents — record usage here before introducing): fied pink `#FC5499` (light `#FD7A9E`), fied purple `#B353FC` (light `#C771FC`), Tydi cyan `#5FFCFE`, tagline cyan `#02F4FA`, bright trophy gold `#FDCB01`.
+
+**Accent-text rule:** any accent-colored *text* (ghost buttons, active tab labels, selected chips, the invite code, greeting name) uses `pinkText`, never `pink`; success text/icons use `greenText`, never `green`. `pink`/`green` stay for fills, chips, and borders where 3:1 suffices.
 
 ---
 
 ## 3. Avatar Gradients
 
-Five gradient pairs cycled for family members, in fixed order so the same child always gets the same gradient. One cohesive **warm family** (§12) — not a multi-hue rainbow.
+Five gradient pairs cycled for family members, in fixed order so the same child always gets the same gradient. The five **Tydified lockup hue families** — kids stay distinguishable while every avatar reads as the brand.
 
 ```ts
-['#FF8C42', '#FF4D8D']   // Peach → Pink    (child 1)
-['#FF6F91', '#FF4D8D']   // Rose  → Pink    (child 2)
-['#FFB36B', '#FF7A59']   // Amber → Coral   (child 3)
-['#FF9472', '#FF5C8A']   // Coral → Rose    (child 4)
-['#FFC04D', '#FF8C42']   // Gold  → Orange  (child 5)
+['#5FFCFE', '#14B0FE']   // Cyan  → Blue    (child 1)
+['#FD7A9E', '#FC5499']   // Rose  → Pink    (child 2)
+['#C771FC', '#B353FC']   // Lilac → Purple  (child 3)
+['#FDCB01', '#FEAA01']   // Gold  → Amber   (child 4)
+['#8DF13C', '#60DB01']   // Lime  → Green   (child 5)
 ```
 
 ---
@@ -99,7 +104,7 @@ shadowSm:   { offset: { width: 0, height: 1 },  radius: 4,  opacity: 0.06 }     
 shadowMd:   { offset: { width: 0, height: 4 },  radius: 12, opacity: 0.05 }                 // Standard cards
 shadowLg:   { offset: { width: 0, height: 8 },  radius: 24, opacity: 0.07 }                 // Prominent cards
 shadow2xl:  { offset: { width: 0, height: 16 }, radius: 48, opacity: 0.16 }                 // Modals, bottom nav
-shadowPink: { offset: { width: 0, height: 4 },  radius: 12, opacity: 0.16, color: C.pink }  // Primary buttons (teal glow)
+shadowPink: { offset: { width: 0, height: 4 },  radius: 12, opacity: 0.16, color: C.pink }  // Primary buttons (Tydi-blue glow)
 ```
 
 ---
@@ -188,8 +193,8 @@ high_school: {  // ages 15–18
 
 ## 9. Component Rules
 
-- All cards use **solid surfaces** (`glass` token = opaque white / `#221D31` dark) with a hairline `border` — no BlurView (§12; the token name is historical).
-- Primary buttons: teal (`C.pink`) fill, white text, teal-tinted shadow (`shadowPink`); a light haptic fires on press.
+- All cards use **solid surfaces** (`glass` token = opaque white / `#15152F` dark) with a hairline `border` — no BlurView (§12; the token name is historical).
+- Primary buttons: Tydi blue (`C.pink`) fill, white text, blue-tinted shadow (`shadowPink`); a light haptic fires on press.
 - Inputs: surface background with `border` token; focus state lifts to `borderPink`.
 - Background is **warm near-white** (`#FAF9FB`) by default. Dark mode is an opt-in toggle, never the default.
 - Minimum touch target: **48px** standard, **56px** for elementary bracket.
@@ -208,11 +213,11 @@ These are the AI-default tells that make output look machine-made. Each item sho
 
 - **Banned fonts:** Inter, Geist, any system-default sans. Agents reach for these by default — that's the giveaway.
 - **Banned icon set:** Lucide. Use Ionicons via `@expo/vector-icons`.
-- **Uniform contrast:** every element rendered at equal weight flattens the page. Pink for primary action only; green for success only; everything else recedes.
+- **Uniform contrast:** every element rendered at equal weight flattens the page. Tydi blue for primary action only; green for success only; everything else recedes.
 - **Centered single-CTA hero as default layout:** acceptable on Welcome screen; never on Dashboard, Chores, Rewards, Family, or Settings.
 - **Lazy glassmorphism:** `background: 'rgba(255,255,255,0.5)'` slapped on everything is the AI-default tell. Our glassmorphism is intentional — it requires real `BlurView` on iOS, designed alpha values, and `border`/`borderPink` tokens that match the surface beneath.
 
-**Note on glassmorphism in Chorely:** The Lumina Bloom system is glass-forward by deliberate brand choice. This conflicts with the general "no glassmorphic gradient panels" anti-pattern in generic web design docs. The resolution: our glass is *designed* (alpha values, blur intensity, and gradients are all specified above), not slapped on arbitrarily. If you reach for `rgba(255,255,255,0.5)` without referencing the `glass` / `glassLight` tokens above, you're in anti-pattern territory.
+**Note on glassmorphism in Tydified:** The Lumina Bloom system is glass-forward by deliberate brand choice. This conflicts with the general "no glassmorphic gradient panels" anti-pattern in generic web design docs. The resolution: our glass is *designed* (alpha values, blur intensity, and gradients are all specified above), not slapped on arbitrarily. If you reach for `rgba(255,255,255,0.5)` without referencing the `glass` / `glassLight` tokens above, you're in anti-pattern territory.
 
 ---
 
@@ -259,7 +264,7 @@ All screens must match these layouts. Pixel-level parity with the prototype is t
 
 ## Dark Mode (added 2026-05-28)
 
-Chorely supports a full dark theme. The **Settings → Appearance** toggle flips `settingsStore.darkMode` (persisted locally and synced to `user_settings.dark_mode`), which `ThemeProvider` maps to the `darkC` palette in `tokens.ts`. The whole app recolors instantly because components read colors via `useTheme().C` and build styles with `useThemedStyles(makeStyles)` instead of importing the static `C`.
+Tydified supports a full dark theme. The **Settings → Appearance** toggle flips `settingsStore.darkMode` (persisted locally and synced to `user_settings.dark_mode`), which `ThemeProvider` maps to the `darkC` palette in `tokens.ts`. The whole app recolors instantly because components read colors via `useTheme().C` and build styles with `useThemedStyles(makeStyles)` instead of importing the static `C`.
 
 - **Light is the default**; dark is opt-in per user and applies even before sign-in (the store rehydrates from AsyncStorage at launch).
 - Dark ground is deep violet `#171423` with light-translucent glass (`rgba(255,255,255,0.08)`) and inverted text. Brand pink/orange are unchanged; green is brightened (`#1FBF44`) for contrast. `BlurView` tint follows the mode.
@@ -269,6 +274,8 @@ Chorely supports a full dark theme. The **Settings → Appearance** toggle flips
 
 ## 12. Calm & Refined Refresh (2026-06-01)
 
+> **2026-07-07:** the accent hues in this section were superseded by the Tydified rebrand (§2 has current values: teal → Tydi blue `#14B0FE`, orange → trophy amber, avatars → lockup hue families, `GRADIENTS.brand` → cyan→blue). The surface/shadow/one-accent *rules* below still stand.
+
 The Lumina Bloom glassmorphism was tuned toward a calmer, more premium feel after the glass-heavy look read as "AI-generated." The brand (pink/orange/green, Nunito + DM Sans, mascot) is unchanged; **surfaces and color usage** changed.
 
 - **Surfaces are now SOLID, not glass.** `glass`/`glassLight` are opaque (`#FFFFFF` / `#F3F1F7` light; `#221D31` / `#1B1726` dark). `GlassCard`, `Button` (secondary), `TabBar`, and `ModalSheet` no longer render `BlurView` — they paint a solid surface + a hairline `border`. Treat the name `GlassCard` as historical; it is a solid surface card.
@@ -277,7 +284,7 @@ The Lumina Bloom glassmorphism was tuned toward a calmer, more premium feel afte
 - **Shadows** softened (md radius 12 / opacity 0.05; lg 24 / 0.07; pink glow 0.16) — premium = small, soft, low-opacity.
 - **Primary accent is TEAL (`#0EA5A4`; dark `#1FC2B5`), not pink.** Pink read feminine for a family app used by boys too. The token key is still `pink` (the primary-accent slot — ~24 files read `C.pink`), but its value + `pinkAlpha*`/`borderPink` are teal. `GRADIENTS.brand` is `teal → orange` (hero, logo border).
 - **One-accent rule.** Teal is the single accent. Orange is reserved for **points/rewards only**; green for **success only**. Do not color decorative UI (icons, tiles, backgrounds) with secondary hues.
-- **Motion (subtle, "not-AI" craft).** The `ChorelyIcon` smiley winks + bobs via its `animated` prop (forwarded through `Avatar` for `AVATAR_FACE`); enabled on the dashboard header. Stat numbers count up via `useCountUp` (src/hooks). Keep motion small and cheap — see ChorelyIcon's own notes (bob < 4px). Available next: celebration wink on approval, spring press, active-tab pop.
+- **Motion (subtle, "not-AI" craft).** The `TydifiedIcon` smiley winks + bobs via its `animated` prop (forwarded through `Avatar` for `AVATAR_FACE`); enabled on the dashboard header. Stat numbers count up via `useCountUp` (src/hooks). Keep motion small and cheap — see TydifiedIcon's own notes (bob < 4px). Available next: celebration wink on approval, spring press, active-tab pop.
 - **Avatar gradients** are one warm family (peach→pink→coral→amber), not a multi-hue rainbow.
 - **Hero gradient** uses `GRADIENTS.brand` (pink→orange); `GRADIENTS.violet`/`sky` are deprecated for hero use.
 - **Editorial typography:** big near-black display numbers + the new `typography.label` (11px, uppercase, tracked) for stat captions. Let data read through size, not color.
@@ -301,6 +308,7 @@ The Lumina Bloom glassmorphism was tuned toward a calmer, more premium feel afte
 
 <!--
 CHANGELOG (newest first)
+- 2026-07-07 Tydified rebrand: name Chorely → Tydified + tagline; palette re-sampled from the logo lockup (Tydi blue primary, trophy amber, tagline green + greenText, brand-navy textDark/dark ground); avatar gradients + GRADIENTS + reward COLORS re-keyed to lockup hues; brand components renamed Tydified*.
 - 2026-07-02 Visual polish pass: added `pinkText` token + accent-text contrast rule (§2); synced §2/§3/§5/§9 values with tokens.ts (they still showed the pre-§12 pink/lavender/glass system); tabular-nums on heroNum (§7); animated progress fills (useAnimatedRatio); staggered list entrances; active-tab pill + 11px labels; haptics on primary buttons + tab switches.
 - 2026-06-01 Calm & Refined refresh (§12): solid surfaces over glass, warm near-white canvas, softened shadows, one-accent rule (orange=points, green=success), warm avatar family, brand hero gradient, editorial number typography + typography.label, unified quick-action tiles.
 - 2026-05-27 Initial Lumina Bloom system split out of CLAUDE.md §6/§13. Fonts set to Nunito + DM Sans (matching App.tsx). Anti-patterns section added.

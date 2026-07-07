@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-// Holds the live "is this parent a Chorely Plus subscriber?" flag, kept in sync
+// Holds the live "is this parent a Tydified Plus subscriber?" flag, kept in sync
 // by src/lib/revenuecat.ts (initial fetch on launch + a customer-info listener +
 // after each purchase/restore). `isReady` flips true once we've heard from
 // RevenueCat at least once (or determined it's unavailable, e.g. Expo Go/web),

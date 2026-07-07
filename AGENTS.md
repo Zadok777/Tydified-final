@@ -10,7 +10,7 @@ For Codex, this file is the primary project instruction file. Claude-specific no
 
 This repository is for the Chorely App.
 
-Chorely is an Expo-managed React Native app using TypeScript, Supabase, theming, parent/child records, points, streaks, chores, and household workflows.
+Tydified is an Expo-managed React Native app using TypeScript, Supabase, theming, parent/child records, points, streaks, chores, and household workflows.
 
 The app must remain simple, stable, privacy-conscious, and safe for family use.
 

@@ -1,9 +1,9 @@
-# Product Spec — Chorely
+# Product Spec — Tydified
 
 > Canonical scope lives in CLAUDE.md §1, §8, §9. This document expands on the
 > product intent. When they disagree, CLAUDE.md wins.
 
-## What Chorely is
+## What Tydified is
 
 A family chore and reward management app. Parents run everything; children earn
 points and redeem rewards. Content is entirely secular.
@@ -43,7 +43,7 @@ pushed from More (not a tab).
 
 ## Monetization
 
-One paid tier, **"Chorely Plus"** (RevenueCat entitlement id `Chorely Pro`):
+One paid tier, **"Tydified Plus"** (RevenueCat entitlement id `Chorely Pro`):
 
 - Free: up to **1 child** and **4 active chores per child**.
 - Plus: unlimited children + chores + premium features.

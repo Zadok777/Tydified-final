@@ -1,18 +1,18 @@
-# PLANNING.md — Chorely v1.0 Build
+# PLANNING.md — Tydified v1.0 Build
 
-This document describes the architecture, phasing, and key decisions for building Chorely v1.0 in `/Users/santiagos4god/Desktop/Chorely 2/`. The full visual system lives in `DESIGN.md`. Project rules and the Supabase schema live in `CLAUDE.md`. Per-task progress is tracked in `TASKS.md`.
+This document describes the architecture, phasing, and key decisions for building Tydified v1.0 in `/Users/santiagos4god/Desktop/Chorely 2/`. The full visual system lives in `DESIGN.md`. Project rules and the Supabase schema live in `CLAUDE.md`. Per-task progress is tracked in `TASKS.md`.
 
 ---
 
 ## Build Approach
 
-This is a **fresh build**, not a rebuild. The folder starts with the Expo skeleton (`App.tsx`, `package.json`, `app.json`, `eas.json`, `babel.config.js`, `metro.config.js`, `tsconfig.json`, `index.ts`) and the brand asset (`assets/chorely-logo.png`). Everything else is built phase by phase per `TASKS.md`.
+This is a **fresh build**, not a rebuild. The folder starts with the Expo skeleton (`App.tsx`, `package.json`, `app.json`, `eas.json`, `babel.config.js`, `metro.config.js`, `tsconfig.json`, `index.ts`) and the brand asset (`assets/tydified-logo.png`). Everything else is built phase by phase per `TASKS.md`.
 
 ### What exists ahead of time
 
 - **Supabase backend**: the live project at the Supabase URL (provided when wiring Phase 2) already has migrations 001–010 applied, all RPC functions deployed, and RLS policies enforced. The schema is documented in CLAUDE.md §5. We connect to it from the new app; we do not re-create it.
 - **GitHub repo**: hosted on the personal GitHub account as of the 2026-06-23 migration. Phase 1 wires the local folder to the remote and pushes the first commit.
-- **Brand asset**: `assets/chorely-logo.png` is the pink→orange smiley used by the `ChorelyLogo` and `ChorelyIcon` components.
+- **Brand asset**: `assets/tydified-logo.png` is the pink→orange smiley used by the `TydifiedLogo` and `TydifiedIcon` components.
 - **App.tsx**: stubs in font loading (Nunito + DM Sans), `SafeAreaProvider`, `GestureHandlerRootView`, `NavigationContainer`, and `ThemeProvider` + `RootNavigator`. The imports it references (`./src/theme`, `./src/navigation/RootNavigator`) are created in Phase 1 / Phase 4.
 
 ### What does NOT exist yet
@@ -23,7 +23,7 @@ This is a **fresh build**, not a rebuild. The folder starts with the Expo skelet
 
 ### What we will NOT salvage
 
-Anything from prior `~/Desktop/Chorely-new` or earlier Chorely attempts. Those folders and their IDE caches were deleted on 2026-05-27. This build references the prototype design (captured in DESIGN.md) and the live Supabase schema (captured in CLAUDE.md §5) as its only inputs.
+Anything from prior `~/Desktop/Chorely-new` or earlier Tydified attempts. Those folders and their IDE caches were deleted on 2026-05-27. This build references the prototype design (captured in DESIGN.md) and the live Supabase schema (captured in CLAUDE.md §5) as its only inputs.
 
 ---
 
@@ -73,8 +73,8 @@ Exports:
 ```
 src/components/
 ├── brand/                  # Logo and brand assets
-│   ├── ChorelyLogo.tsx     # Full/horizontal/icon variants
-│   ├── ChorelyIcon.tsx     # Standalone smiley-square icon
+│   ├── TydifiedLogo.tsx     # Full/horizontal/icon variants
+│   ├── TydifiedIcon.tsx     # Standalone smiley-square icon
 │   └── index.ts
 ├── ui/                     # Atomic design elements
 │   ├── GlassCard.tsx       # Glass card with blur + border

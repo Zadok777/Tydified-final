@@ -61,7 +61,7 @@ export const useSettingsStore = create<SettingsState>()(
       reset: () => set(defaults),
     }),
     {
-      name: 'chorely.settings',
+      name: 'tydified.settings',
       storage: createJSONStorage(() => AsyncStorage),
     }
   )

@@ -159,9 +159,9 @@ function toneVisual(
     case 'success':
       return {
         background: C.greenAlpha15,
-        borderColor: 'rgba(0, 169, 42, 0.30)',
+        borderColor: 'rgba(96, 219, 1, 0.30)',
         iconName: 'checkmark-circle',
-        iconColor: C.green,
+        iconColor: C.greenText,
       };
     case 'error':
       return {

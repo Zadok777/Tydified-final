@@ -50,7 +50,7 @@ export function ProgressRing({
   // collide on `<defs>` lookup.
   const gradientId = React.useMemo(() => {
     gradientCounter += 1;
-    return `chorelyRing${gradientCounter}`;
+    return `tydifiedRing${gradientCounter}`;
   }, []);
 
   const stroke = ringColor === 'gradient' ? `url(#${gradientId})` : ringColor;

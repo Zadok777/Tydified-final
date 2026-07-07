@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
-import { ChorelyIcon } from '../brand/ChorelyIcon';
+import { TydifiedIcon } from '../brand/TydifiedIcon';
 import { Avatar, AVATAR_FACE } from '../ui/Avatar';
 import { Button } from '../ui/Button';
 import { useToast } from '../ui/Toast';
@@ -33,7 +33,7 @@ import {
 type IoniconName = React.ComponentProps<typeof Ionicons>['name'];
 
 // Curated, kid-friendly icon options. `null` = initials; AVATAR_FACE = the
-// Chorely smiley; anything else is an Ionicon name.
+// Tydified smiley; anything else is an Ionicon name.
 const ICON_OPTIONS: readonly (string | null)[] = [
   null,
   AVATAR_FACE,
@@ -200,7 +200,7 @@ export function ProfileEditModal({
                     Aa
                   </Text>
                 ) : opt === AVATAR_FACE ? (
-                  <ChorelyIcon size={26} />
+                  <TydifiedIcon size={26} />
                 ) : (
                   <Ionicons
                     name={opt as IoniconName}

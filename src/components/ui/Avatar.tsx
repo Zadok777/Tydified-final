@@ -11,11 +11,11 @@ import {
   shadows,
   typography,
 } from '../../theme/tokens';
-import { ChorelyIcon } from '../brand/ChorelyIcon';
+import { TydifiedIcon } from '../brand/TydifiedIcon';
 
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
 
-// Sentinel `avatar_icon` value that renders the Chorely smiley instead of a
+// Sentinel `avatar_icon` value that renders the Tydified smiley instead of a
 // gradient circle. Anything else non-empty is treated as an Ionicon name.
 export const AVATAR_FACE = 'face';
 
@@ -27,14 +27,14 @@ interface AvatarProps {
   // a stable hash of `name` picks one — same name always lands on the same
   // gradient across the app.
   gradientIndex?: number;
-  // Optional override of the center content. `AVATAR_FACE` renders the Chorely
+  // Optional override of the center content. `AVATAR_FACE` renders the Tydified
   // smiley as the whole avatar; any other non-empty value is an Ionicon name
   // rendered white-on-gradient; null/undefined falls back to the initial.
   icon?: string | null;
   size?: AvatarSize;
   style?: StyleProp<ViewStyle>;
   withBorder?: boolean;
-  // When the avatar is the Chorely face (AVATAR_FACE), make it wink + bob.
+  // When the avatar is the Tydified face (AVATAR_FACE), make it wink + bob.
   // No-op for gradient/initial avatars.
   animated?: boolean;
 }
@@ -64,10 +64,10 @@ export function Avatar({
 }: AvatarProps) {
   const px = sizePx[size];
 
-  // The Chorely face replaces the gradient circle entirely (it's the brand
+  // The Tydified face replaces the gradient circle entirely (it's the brand
   // rounded-square smiley, not a circular badge).
   if (icon === AVATAR_FACE) {
-    return <ChorelyIcon size={px} animated={animated} style={style} />;
+    return <TydifiedIcon size={px} animated={animated} style={style} />;
   }
 
   const idx =

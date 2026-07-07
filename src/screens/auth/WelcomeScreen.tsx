@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
-import { ChorelyLogo } from '../../components/brand/ChorelyLogo';
+import { TydifiedLogo } from '../../components/brand/TydifiedLogo';
 import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { Button } from '../../components/ui/Button';
 import {
@@ -24,12 +24,12 @@ export function WelcomeScreen() {
     <ScreenContainer>
       <View style={styles.root}>
         <View style={styles.hero}>
-          <ChorelyLogo variant="full" iconSize={104} animated />
+          <TydifiedLogo variant="full" iconSize={104} animated />
         </View>
 
         <View style={styles.copy}>
           <Text style={styles.tagline} maxFontSizeMultiplier={1.5}>
-            Chores and rewards your kids actually look forward to.
+            Do chores. Earn points. Unlock rewards. Level up!
           </Text>
           <Text style={styles.subtitle} maxFontSizeMultiplier={1.5}>
             Set chores, approve completions, and let your kids earn rewards

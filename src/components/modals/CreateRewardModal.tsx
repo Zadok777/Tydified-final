@@ -61,14 +61,14 @@ const ICONS: readonly IoniconName[] = [
 ];
 
 // Fixed accent choices stored on the reward row — mode-independent literals.
-// Refreshed for the teal brand: dropped the off-palette purple/cyan, kept
-// enough variety for users to tell rewards apart.
+// The five Tydified logo hues, sampled from the lockup, so every reward chip
+// reads as the brand while staying distinguishable.
 const COLORS: readonly string[] = [
-  '#0EA5A4', // teal (brand)
-  '#FF8C42', // orange
-  '#00A92A', // green
-  '#FF5C8A', // rose
-  '#F4B400', // gold
+  '#14B0FE', // Tydi blue (brand)
+  '#FEAA01', // trophy amber
+  '#60DB01', // tagline green
+  '#FC5499', // fied pink
+  '#B353FC', // fied purple
 ];
 
 const schema = yup.object({

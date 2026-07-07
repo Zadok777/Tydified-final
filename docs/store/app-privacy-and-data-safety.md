@@ -1,4 +1,4 @@
-# Chorely — App Store App Privacy + Google Play Data Safety answers
+# Tydified — App Store App Privacy + Google Play Data Safety answers
 
 Fill these into App Store Connect (**App Privacy**) and Google Play Console (**Data safety**) at submission. Derived from `docs/legal/privacy-policy.md`. **Keep all three in sync** — reviewers compare them.
 
@@ -8,7 +8,7 @@ Fill these into App Store Connect (**App Privacy**) and Google Play Console (**D
 
 ## Key framing (read first)
 
-- **Target audience: adults (parents/guardians), 18+.** Children do **not** use the app directly. Do **not** enroll in Apple's Kids Category or Google's "Designed for Families" program — Chorely is a parent productivity tool. (You still answer COPPA-style questions honestly; you just aren't a child-directed app.)
+- **Target audience: adults (parents/guardians), 18+.** Children do **not** use the app directly. Do **not** enroll in Apple's Kids Category or Google's "Designed for Families" program — Tydified is a parent productivity tool. (You still answer COPPA-style questions honestly; you just aren't a child-directed app.)
 - **No tracking / no ads.** No data is used to track users across apps or for advertising. Apple "Data used to Track You" = **None**.
 - **Service providers ≠ "sharing."** Supabase and RevenueCat process data **on our behalf** as service providers. Under both Apple's and Google's definitions this is **collection**, not third-party **sharing/selling**. So "shared with third parties" = **No**.
 - **Payments:** card/payment details are handled entirely by Apple/Google — we never see them, so we don't declare payment info. We do hold **subscription status**.
@@ -29,7 +29,7 @@ For each type Apple asks: *Linked to the user?* and *Used for tracking?* For us:
 | **Contact Info → Email Address** (parent login) | Yes | App Functionality | Yes | No |
 | **User Content → Other User Content** (family name, child name + optional DOB, chores, rewards, points, goals, activity) | Yes | App Functionality | Yes | No |
 | **Identifiers → User ID** (account ID used by Supabase/RevenueCat) | Yes | App Functionality | Yes | No |
-| **Purchases → Purchase History** (Chorely Plus subscription status) | Yes | App Functionality | Yes | No |
+| **Purchases → Purchase History** (Tydified Plus subscription status) | Yes | App Functionality | Yes | No |
 
 ### Data Not Linked to You
 **None.** (We don't collect anonymous analytics/diagnostics in the current build.)
@@ -58,7 +58,7 @@ For each type Apple asks: *Linked to the user?* and *Used for tracking?* For us:
 | **Personal info → User IDs** | Yes | No | Required | App functionality |
 | **Personal info → Other info** (child name + optional date of birth) | Yes | No | Required | App functionality |
 | **App activity → Other user-generated content** (chores, rewards, points, goals, activity) | Yes | No | Required | App functionality |
-| **Financial info → Purchase history** (Chorely Plus subscription status) | Yes | No | Optional | App functionality |
+| **Financial info → Purchase history** (Tydified Plus subscription status) | Yes | No | Optional | App functionality |
 
 ### Data types — NOT collected (declare as not collected)
 - Location (precise or approximate), Contacts, Photos/Videos, Audio, Calendar, Health/Fitness, Web browsing, Installed apps.
@@ -75,9 +75,9 @@ For each type Apple asks: *Linked to the user?* and *Used for tracking?* For us:
 
 ## C. Content rating / target audience (related forms)
 
-- **Google "Target audience and content":** select an **adult** age band (18+) — Chorely is parent-facing. Do **not** declare children as a target audience (avoids Families policy obligations the app isn't designed for).
+- **Google "Target audience and content":** select an **adult** age band (18+) — Tydified is parent-facing. Do **not** declare children as a target audience (avoids Families policy obligations the app isn't designed for).
 - **Google content rating questionnaire (IARC):** answer honestly — no violence, no user-to-user open communication, no ads, no gambling. Should land at **Everyone**.
-- **Apple age rating:** answer the questionnaire honestly (no objectionable content) → typically **4+**. Position Chorely as a **parent/family productivity** app, **not** Kids Category.
+- **Apple age rating:** answer the questionnaire honestly (no objectionable content) → typically **4+**. Position Tydified as a **parent/family productivity** app, **not** Kids Category.
 
 ---
 

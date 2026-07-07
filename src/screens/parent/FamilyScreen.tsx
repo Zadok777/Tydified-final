@@ -87,7 +87,7 @@ export function FamilyScreen() {
     if (family?.invite_code == null) return;
     try {
       await Share.share({
-        message: `Join our family on Chorely! Use invite code ${family.invite_code}.`,
+        message: `Join our family on Tydified! Use invite code ${family.invite_code}.`,
       });
     } catch {
       // user dismissed share sheet — no-op
@@ -359,7 +359,7 @@ function ActivityRow({
         </View>
         {pts !== 0 ? (
           <Text
-            style={[styles.activityPts, { color: pts > 0 ? C.green : C.textMid }]}
+            style={[styles.activityPts, { color: pts > 0 ? C.greenText : C.textMid }]}
             maxFontSizeMultiplier={1.2}
           >
             {pts > 0 ? '+' : ''}

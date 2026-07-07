@@ -50,8 +50,8 @@ const PREVIEW_TRIAL = __DEV__ && true;
 // These must be live, publicly-hosted pages before App Store / Play submission
 // (see docs/RELEASE_CHECKLIST.md). Apple requires functional Terms + Privacy
 // links on any paywall.
-const TERMS_URL = 'https://chorely.app/terms';
-const PRIVACY_URL = 'https://chorely.app/privacy';
+const TERMS_URL = 'https://tydified.app/terms';
+const PRIVACY_URL = 'https://tydified.app/privacy';
 
 const BENEFITS = [
   `Unlimited children (free tier stops at ${FREE_LIMITS.maxChildren})`,
@@ -116,7 +116,7 @@ export function PaywallScreen() {
       ? `Free families can add ${FREE_LIMITS.maxChildren} children`
       : reason === 'chores'
         ? `Free families get ${FREE_LIMITS.maxActiveChoresPerChild} chores per child`
-        : 'Unlock everything in Chorely';
+        : 'Unlock everything in Tydified';
 
   const onSubscribe = useCallback(async () => {
     const pkg = packages.find((p) => p.identifier === selectedId);
@@ -126,7 +126,7 @@ export function PaywallScreen() {
     setWorking(false);
     if (res.ok) {
       hapticLight();
-      toast.show({ message: 'Welcome to Chorely Plus!', tone: 'success' });
+      toast.show({ message: 'Welcome to Tydified Plus!', tone: 'success' });
       nav.goBack();
     } else if (!res.cancelled) {
       toast.show({
@@ -167,7 +167,7 @@ export function PaywallScreen() {
 
   return (
     <ScreenContainer scroll edges={['top', 'bottom']}>
-      <Header title="Chorely Plus" onBack={() => nav.goBack()} />
+      <Header title="Tydified Plus" onBack={() => nav.goBack()} />
 
       <GradientCard colors={GRADIENTS.brand} style={styles.hero}>
         <View style={styles.heroIcon}>
@@ -177,7 +177,7 @@ export function PaywallScreen() {
           {headline}
         </Text>
         <Text style={styles.heroSub} maxFontSizeMultiplier={1.4}>
-          Chorely Plus removes the limits and unlocks premium features.
+          Tydified Plus removes the limits and unlocks premium features.
         </Text>
       </GradientCard>
 
@@ -196,7 +196,7 @@ export function PaywallScreen() {
         <View style={styles.activeCard}>
           <Ionicons name="checkmark-circle" size={22} color={C.green} />
           <Text style={styles.activeText} maxFontSizeMultiplier={1.3}>
-            {`You're on Chorely Plus. You can switch plans below, or manage/cancel anytime in your ${platformStore()} subscription settings.`}
+            {`You're on Tydified Plus. You can switch plans below, or manage/cancel anytime in your ${platformStore()} subscription settings.`}
           </Text>
         </View>
       ) : null}
@@ -449,12 +449,12 @@ const makeStyles = (C: Palette) =>
     },
     planCurrent: {
       ...typography.caption,
-      color: C.green,
+      color: C.greenText,
       marginTop: 2,
     },
     planTrial: {
       ...typography.caption,
-      color: C.green,
+      color: C.greenText,
       marginTop: 2,
     },
     planPrice: {

@@ -1,5 +1,5 @@
 // Small date helpers so screens never import a date library for the few labels
-// Chorely needs. All inputs are ISO-ish strings from Supabase (date or
+// Tydified needs. All inputs are ISO-ish strings from Supabase (date or
 // timestamptz); all outputs are display strings.
 
 const DAY_MS = 24 * 60 * 60 * 1000;

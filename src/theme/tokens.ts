@@ -1,4 +1,4 @@
-// Single source of truth for Chorely design tokens.
+// Single source of truth for Tydified design tokens.
 // See DESIGN.md for the rationale behind each value.
 
 import type { TextStyle, ViewStyle } from 'react-native';
@@ -8,20 +8,23 @@ import type { TextStyle, ViewStyle } from 'react-native';
 // ---------------------------------------------------------------------------
 
 export const lightC = {
-  // Brand palette
-  // PRIMARY accent — now teal (was hot pink). Token key kept as `pink` so the
-  // ~24 files reading C.pink need no change; it is the primary-accent slot.
+  // Brand palette — Tydified (2026-07 rebrand). All hues are exact samples
+  // from the Tydified logo lockup. Token key kept as `pink` so the ~24 files
+  // reading C.pink need no change; it is the primary-accent slot.
   // See DESIGN.md §12.
-  pink: '#0EA5A4',
-  // Darker teal for accent-colored TEXT on light surfaces. #0EA5A4 is only
-  // ~2.9:1 on white — fine for fills/icons, fails WCAG 4.5:1 for text.
-  pinkText: '#0B807F',
-  orange: '#FF8C42',
-  green: '#00A92A',
+  pink: '#14B0FE', // Tydi blue (wordmark mid-gradient)
+  // Deep Tydi blue (wordmark gradient base) for accent-colored TEXT on light
+  // surfaces. #14B0FE is fine for fills/icons, fails WCAG 4.5:1 for text.
+  pinkText: '#0059AE',
+  orange: '#FEAA01', // trophy amber
+  green: '#60DB01', // tagline green — fills/chips/dark grounds only
+  // Darkened tagline-green hue for TEXT on light surfaces. #60DB01 is ~2.1:1
+  // on white — fails WCAG for text and icons.
+  greenText: '#3D9800',
   bg: '#FAF9FB', // warm near-white canvas (was lavender glass ground)
 
   // Text
-  textDark: '#22222B',
+  textDark: '#00001B', // brand navy (logo outline/pill)
   textMid: '#6B6B80',
   textLight: '#A8A8B8',
   textWhite: '#FFFFFF',
@@ -30,15 +33,15 @@ export const lightC = {
   glass: '#FFFFFF', // primary card surface
   glassLight: '#F3F1F7', // recessed / subtle container
   border: 'rgba(24, 20, 40, 0.06)', // real hairline for definition on near-white
-  borderPink: 'rgba(14, 165, 164, 0.32)', // primary-accent (teal) selected border
+  borderPink: 'rgba(20, 176, 254, 0.32)', // primary-accent (Tydi blue) selected border
 
-  // Tinted alphas (primary accent — teal)
-  pinkAlpha15: 'rgba(14, 165, 164, 0.15)',
-  pinkAlpha10: 'rgba(14, 165, 164, 0.10)',
-  orangeAlpha15: 'rgba(255, 140, 66, 0.15)',
-  orangeAlpha10: 'rgba(255, 140, 66, 0.10)',
-  greenAlpha15: 'rgba(0, 169, 42, 0.15)',
-  greenAlpha20: 'rgba(0, 169, 42, 0.20)',
+  // Tinted alphas (primary accent — Tydi blue)
+  pinkAlpha15: 'rgba(20, 176, 254, 0.15)',
+  pinkAlpha10: 'rgba(20, 176, 254, 0.10)',
+  orangeAlpha15: 'rgba(254, 170, 1, 0.15)',
+  orangeAlpha10: 'rgba(254, 170, 1, 0.10)',
+  greenAlpha15: 'rgba(96, 219, 1, 0.15)',
+  greenAlpha20: 'rgba(96, 219, 1, 0.20)',
   mutedAlpha20: 'rgba(168, 168, 184, 0.20)',
   redAlpha15: 'rgba(220, 38, 38, 0.15)',
 } as const;
@@ -51,6 +54,7 @@ export type Palette = {
   pinkText: string;
   orange: string;
   green: string;
+  greenText: string;
   bg: string;
   textDark: string;
   textMid: string;
@@ -70,29 +74,29 @@ export type Palette = {
   redAlpha15: string;
 };
 
-// Dark glassmorphism palette. Brand accents stay constant; surfaces flip to a
-// deep violet ground with light-translucent glass and inverted text. Green is
-// brightened slightly for contrast on the dark ground.
+// Dark palette. Brand accents stay constant (they're bright enough for the
+// dark ground); surfaces flip to the brand-navy ground with inverted text.
 export const darkC: Palette = {
-  pink: '#1FC2B5', // primary accent (teal), brightened for dark-ground contrast
-  pinkText: '#1FC2B5', // already ≥4.5:1 on the dark ground — same as pink
-  orange: '#FF8C42',
-  green: '#1FBF44',
-  bg: '#141220', // truer near-black violet ground
-  textDark: '#F2EEFF',
-  textMid: '#A8A2BE',
-  textLight: '#6F6986',
+  pink: '#14B0FE', // Tydi blue — ≥4.5:1 on the navy ground as-is
+  pinkText: '#14B0FE',
+  orange: '#FDCB01', // bright trophy gold reads better than amber on navy
+  green: '#60DB01',
+  greenText: '#60DB01', // bright green is fine as text on the dark ground
+  bg: '#00001B', // brand navy (logo outline/pill) as the dark ground
+  textDark: '#F0F2FF',
+  textMid: '#A2A8C4',
+  textLight: '#696F8E',
   textWhite: '#FFFFFF',
-  glass: '#221D31', // solid raised surface (was translucent glass)
-  glassLight: '#1B1726', // recessed surface
+  glass: '#15152F', // solid raised surface, navy-tinted
+  glassLight: '#0C0C26', // recessed surface
   border: 'rgba(255, 255, 255, 0.07)', // hairline on dark
-  borderPink: 'rgba(31, 194, 181, 0.50)',
-  pinkAlpha15: 'rgba(31, 194, 181, 0.24)',
-  pinkAlpha10: 'rgba(31, 194, 181, 0.16)',
-  orangeAlpha15: 'rgba(255, 140, 66, 0.22)',
-  orangeAlpha10: 'rgba(255, 140, 66, 0.15)',
-  greenAlpha15: 'rgba(31, 191, 68, 0.24)',
-  greenAlpha20: 'rgba(31, 191, 68, 0.30)',
+  borderPink: 'rgba(20, 176, 254, 0.50)',
+  pinkAlpha15: 'rgba(20, 176, 254, 0.24)',
+  pinkAlpha10: 'rgba(20, 176, 254, 0.16)',
+  orangeAlpha15: 'rgba(253, 203, 1, 0.22)',
+  orangeAlpha10: 'rgba(253, 203, 1, 0.15)',
+  greenAlpha15: 'rgba(96, 219, 1, 0.24)',
+  greenAlpha20: 'rgba(96, 219, 1, 0.30)',
   mutedAlpha20: 'rgba(168, 168, 184, 0.22)',
   redAlpha15: 'rgba(220, 38, 38, 0.24)',
 };
@@ -106,23 +110,23 @@ export const C = lightC;
 // Avatar gradients (cycled for family members)
 // ---------------------------------------------------------------------------
 
-// One cohesive warm family (peach → pink → coral → amber) instead of a
-// rainbow. Kids stay distinguishable via hue spread, but the set reads as a
-// single designed palette, not "an AI picked five random gradients."
+// The five Tydified logo hue families (cyan-blue, pink, purple, gold, green),
+// each as a light→saturated pair sampled from the lockup. Kids stay
+// distinguishable via hue spread, and every avatar reads as the brand.
 export const AVATAR_GRADIENTS: readonly (readonly [string, string])[] = [
-  ['#FF8C42', '#FF4D8D'], // Peach  -> Pink   (child 1)
-  ['#FF6F91', '#FF4D8D'], // Rose   -> Pink   (child 2)
-  ['#FFB36B', '#FF7A59'], // Amber  -> Coral  (child 3)
-  ['#FF9472', '#FF5C8A'], // Coral  -> Rose   (child 4)
-  ['#FFC04D', '#FF8C42'], // Gold   -> Orange (child 5)
+  ['#5FFCFE', '#14B0FE'], // Cyan   -> Blue   (child 1)
+  ['#FD7A9E', '#FC5499'], // Rose   -> Pink   (child 2)
+  ['#C771FC', '#B353FC'], // Lilac  -> Purple (child 3)
+  ['#FDCB01', '#FEAA01'], // Gold   -> Amber  (child 4)
+  ['#8DF13C', '#60DB01'], // Lime   -> Green  (child 5)
 ] as const;
 
 // Named gradients for hero cards and primary CTAs. Mode-invariant brand colors
 // (they read well on both light and dark grounds).
 export const GRADIENTS = {
-  brand: ['#0EA5A4', '#FF8C42'] as const, // teal → orange (hero, logo border, approve)
-  violet: ['#7A5CFF', '#4D9FFF'] as const, // purple → blue (approval hero)
-  sky: ['#4D9FFF', '#8C42FF'] as const, // blue → purple
+  brand: ['#5FFCFE', '#14B0FE'] as const, // Tydi cyan → blue (hero, logo border, approve)
+  violet: ['#B353FC', '#14B0FE'] as const, // fied purple → Tydi blue (approval hero)
+  sky: ['#14B0FE', '#B353FC'] as const, // Tydi blue → fied purple
 } as const;
 
 // ---------------------------------------------------------------------------

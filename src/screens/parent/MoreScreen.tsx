@@ -15,7 +15,7 @@ import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
-import { ChorelyIcon } from '../../components/brand/ChorelyIcon';
+import { TydifiedIcon } from '../../components/brand/TydifiedIcon';
 import { Header } from '../../components/layout/Header';
 import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { ProfileEditModal } from '../../components/modals/ProfileEditModal';
@@ -155,7 +155,7 @@ export function MoreScreen() {
       // fall through to the friendly note below
     }
     toast.show({
-      message: 'Ratings open once Chorely is published to the store.',
+      message: 'Ratings open once Tydified is published to the store.',
       tone: 'info',
     });
   };
@@ -191,7 +191,7 @@ export function MoreScreen() {
             <View style={styles.planBadge}>
               <Ionicons name="star" size={11} color={C.pink} />
               <Text style={styles.planText} maxFontSizeMultiplier={1.1}>
-                Chorely Free
+                Tydified Free
               </Text>
             </View>
           </View>
@@ -293,7 +293,7 @@ export function MoreScreen() {
       <GlassCard padding={0}>
         <Row
           icon="star-outline"
-          label="Chorely Plus"
+          label="Tydified Plus"
           sub="Unlimited kids & chores"
           onPress={() => nav.navigate('Paywall')}
         />
@@ -313,7 +313,7 @@ export function MoreScreen() {
           onPress={() => nav.navigate('Help')}
         />
         <Divider />
-        <Row icon="heart-outline" label="Rate Chorely" onPress={onRate} />
+        <Row icon="heart-outline" label="Rate Tydified" onPress={onRate} />
       </GlassCard>
 
       <View style={styles.dangerActions}>
@@ -322,9 +322,9 @@ export function MoreScreen() {
       </View>
 
       <View style={styles.footer}>
-        <ChorelyIcon size={40} animated />
+        <TydifiedIcon size={40} animated />
         <Text style={styles.footerText} maxFontSizeMultiplier={1.2}>
-          Chorely v1.0 · made with care
+          Tydified v1.0 · made with care
         </Text>
       </View>
     </ScreenContainer>

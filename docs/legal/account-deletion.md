@@ -5,13 +5,13 @@ including a way to request it from outside the app. Link this page from your sto
 and Data Safety / App Privacy sections.
 -->
 
-# Delete Your Chorely Account
+# Delete Your Tydified Account
 
-Chorely makes it easy to delete your account and associated data at any time.
+Tydified makes it easy to delete your account and associated data at any time.
 
 ## Delete in the app (fastest)
 
-1. Open Chorely and sign in.
+1. Open Tydified and sign in.
 2. Go to the **More** tab.
 3. Tap **Delete account**.
 4. Confirm. Your account and family data are permanently deleted.
@@ -33,11 +33,11 @@ This action **cannot be undone**, and deleted data cannot be recovered.
 
 ## What may be retained
 
-We may retain limited records where required for legal, security, or accounting reasons (for example, records of a transaction). Routine backups are rotated on a schedule and then purged. Subscription/billing records held by **Apple** or **Google** are governed by their policies — deleting your Chorely account does **not** cancel an active subscription.
+We may retain limited records where required for legal, security, or accounting reasons (for example, records of a transaction). Routine backups are rotated on a schedule and then purged. Subscription/billing records held by **Apple** or **Google** are governed by their policies — deleting your Tydified account does **not** cancel an active subscription.
 
 ## Cancel your subscription separately
 
-If you have an active **Chorely Plus** subscription, cancel it in your **App Store** (Apple ID → Subscriptions) or **Google Play** (Payments & subscriptions) settings. Deleting your Chorely account does not automatically cancel billing managed by the app stores.
+If you have an active **Tydified Plus** subscription, cancel it in your **App Store** (Apple ID → Subscriptions) or **Google Play** (Payments & subscriptions) settings. Deleting your Tydified account does not automatically cancel billing managed by the app stores.
 
 ## Questions
 

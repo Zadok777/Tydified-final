@@ -1,4 +1,4 @@
-# Chorely — Build / Play Store Resume Notes
+# Tydified — Build / Play Store Resume Notes
 
 _Last updated: 2026-06-30_
 
@@ -9,8 +9,8 @@ prove ownership by providing the APK signed with your private key" prompt. Uploa
 signed bundle IS the ownership proof — no private key to generate by hand; EAS holds it.
 
 - App: Expo SDK 54 (expo 54.0.35, react-native 0.81.5)
-- Android package: `com.zad0k777.chorely`
-- iOS bundle id: `com.zad0k777.chorely`
+- Android package: `com.zad0k777.tydified`
+- iOS bundle id: `com.zad0k777.tydified`
 - EAS profiles (eas.json): `preview` = APK (internal), `production` = AAB (autoIncrement)
 - EAS login: DONE (logged in successfully)
 
@@ -63,7 +63,7 @@ Node.js v22.17.1
    build details URL it prints.
 
 ## Then in Play Console
-1. Create app (if needed): name **Chorely**, package `com.zad0k777.chorely`.
+1. Create app (if needed): name **Tydified**, package `com.zad0k777.tydified`.
 2. Testing → Internal testing → Create new release → upload the `.aab`.
 3. Add yourself as a tester (email), save, review + roll out.
 4. Install via the opt-in link on your phone to test.

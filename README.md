@@ -1,4 +1,4 @@
-# Chorely
+# Tydified
 
 A family chore and reward management mobile app. Parents create a family, add
 children, assign chores, approve completions, and define rewards. Children earn

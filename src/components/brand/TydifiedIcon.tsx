@@ -12,7 +12,7 @@ import Svg, {
 
 import { C } from '../../theme/tokens';
 
-interface ChorelyIconProps {
+interface TydifiedIconProps {
   // Side length in px. Component is rendered into a square box.
   size?: number;
   // Override the inner face fill — defaults to white. Set to C.bg if you
@@ -41,13 +41,13 @@ const BLINK_INTERVAL_MS = 3500;
 const BOB_RANGE = 2.5;
 const BOB_DURATION_MS = 2000;
 
-export function ChorelyIcon({
+export function TydifiedIcon({
   size = 64,
   faceFill = C.textWhite,
   featureColor = C.textDark,
   animated = false,
   style,
-}: ChorelyIconProps) {
+}: TydifiedIconProps) {
   // Only the right eye animates → a wink (not a both-eye blink). The left eye
   // stays open at OPEN_RY.
   const [rightRy, setRightRy] = useState(OPEN_RY);
@@ -112,7 +112,7 @@ export function ChorelyIcon({
     >
       <Svg width={size} height={size} viewBox="0 0 100 100">
         <Defs>
-          <LinearGradient id="chorelyBorder" x1="0" y1="0" x2="1" y2="1">
+          <LinearGradient id="tydifiedBorder" x1="0" y1="0" x2="1" y2="1">
             <Stop offset="0" stopColor={C.pink} />
             <Stop offset="1" stopColor={C.orange} />
           </LinearGradient>
@@ -125,7 +125,7 @@ export function ChorelyIcon({
           rx={22}
           ry={22}
           fill={faceFill}
-          stroke="url(#chorelyBorder)"
+          stroke="url(#tydifiedBorder)"
           strokeWidth={6}
         />
         <Ellipse cx={36} cy={42} rx={5} ry={OPEN_RY} fill={featureColor} />

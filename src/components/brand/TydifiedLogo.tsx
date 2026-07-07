@@ -3,31 +3,31 @@ import { StyleSheet, Text, View } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 
 import { C, spacing, typography } from '../../theme/tokens';
-import { ChorelyIcon } from './ChorelyIcon';
+import { TydifiedIcon } from './TydifiedIcon';
 
-export type ChorelyLogoVariant = 'full' | 'horizontal' | 'icon';
+export type TydifiedLogoVariant = 'full' | 'horizontal' | 'icon';
 
-interface ChorelyLogoProps {
+interface TydifiedLogoProps {
   // `full` stacks icon over wordmark; `horizontal` places them side-by-side;
   // `icon` returns just the smiley.
-  variant?: ChorelyLogoVariant;
+  variant?: TydifiedLogoVariant;
   // Drives both the icon size and the wordmark font size. The wordmark is
   // proportional so the brand reads consistently.
   iconSize?: number;
-  // Forwarded to ChorelyIcon — when true, the smiley blinks and bobs.
+  // Forwarded to TydifiedIcon — when true, the smiley blinks and bobs.
   // Use on Welcome / Onboarding hero moments.
   animated?: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
-export function ChorelyLogo({
+export function TydifiedLogo({
   variant = 'full',
   iconSize = 64,
   animated = false,
   style,
-}: ChorelyLogoProps) {
+}: TydifiedLogoProps) {
   if (variant === 'icon') {
-    return <ChorelyIcon size={iconSize} animated={animated} style={style} />;
+    return <TydifiedIcon size={iconSize} animated={animated} style={style} />;
   }
 
   const wordmarkFontSize = Math.round(iconSize * 0.55);
@@ -35,7 +35,7 @@ export function ChorelyLogo({
   if (variant === 'horizontal') {
     return (
       <View style={[styles.horizontal, style]}>
-        <ChorelyIcon size={iconSize} animated={animated} />
+        <TydifiedIcon size={iconSize} animated={animated} />
         <Text
           style={[
             styles.wordmark,
@@ -43,7 +43,7 @@ export function ChorelyLogo({
           ]}
           maxFontSizeMultiplier={1.5}
         >
-          Chorely
+          Tydified
         </Text>
       </View>
     );
@@ -51,7 +51,7 @@ export function ChorelyLogo({
 
   return (
     <View style={[styles.stacked, style]}>
-      <ChorelyIcon size={iconSize} animated={animated} />
+      <TydifiedIcon size={iconSize} animated={animated} />
       <Text
         style={[
           styles.wordmark,
@@ -59,7 +59,7 @@ export function ChorelyLogo({
         ]}
         maxFontSizeMultiplier={1.5}
       >
-        Chorely
+        Tydified
       </Text>
     </View>
   );

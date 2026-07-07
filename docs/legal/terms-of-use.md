@@ -4,12 +4,12 @@ STILL TO DO: host publicly, then add the [Website URL]. Governing law / venue de
 Template, not legal advice — have counsel review.
 -->
 
-# Chorely Terms of Use
+# Tydified Terms of Use
 
 **Effective date:** June 1, 2026
 **Last updated:** June 1, 2026
 
-These Terms of Use ("Terms") are a legal agreement between you and **DS Santiago LLC (d/b/a Doulos Nexus)** ("Chorely," "we," "us," or "our") governing your use of the Chorely mobile app and related services (the "App"). By creating an account or using the App, you agree to these Terms and to our Privacy Policy. If you do not agree, do not use the App.
+These Terms of Use ("Terms") are a legal agreement between you and **DS Santiago LLC (d/b/a Doulos Nexus)** ("Tydified," "we," "us," or "our") governing your use of the Tydified mobile app and related services (the "App"). By creating an account or using the App, you agree to these Terms and to our Privacy Policy. If you do not agree, do not use the App.
 
 ## 1. Eligibility
 
@@ -17,7 +17,7 @@ You must be at least 18 years old (or the age of majority where you live) and a 
 
 ## 2. The service
 
-Chorely lets a parent or guardian create a family, add child profiles, assign chores, approve completed chores, award points, and define and redeem rewards. Children do not sign in; the parent manages all activity on their behalf. Features may change, improve, or be discontinued over time.
+Tydified lets a parent or guardian create a family, add child profiles, assign chores, approve completed chores, award points, and define and redeem rewards. Children do not sign in; the parent manages all activity on their behalf. Features may change, improve, or be discontinued over time.
 
 ## 3. Your account and your family
 
@@ -36,17 +36,17 @@ You agree not to:
 
 We may suspend or terminate accounts that violate these Terms.
 
-## 5. Subscriptions and payments (Chorely Plus)
+## 5. Subscriptions and payments (Tydified Plus)
 
-- Chorely offers an optional paid subscription, **Chorely Plus**, which unlocks unlimited children and chores and additional premium features. A free tier with limited capacity is available.
-- Chorely Plus is offered on a **monthly** or **yearly** basis. The two options provide the same features; the yearly option is offered at a lower effective price.
-- **Billing is handled by Apple or Google**, not by Chorely. Purchases are charged to your App Store or Google Play account.
+- Tydified offers an optional paid subscription, **Tydified Plus**, which unlocks unlimited children and chores and additional premium features. A free tier with limited capacity is available.
+- Tydified Plus is offered on a **monthly** or **yearly** basis. The two options provide the same features; the yearly option is offered at a lower effective price.
+- **Billing is handled by Apple or Google**, not by Tydified. Purchases are charged to your App Store or Google Play account.
 - **Auto-renewal:** subscriptions renew automatically unless canceled at least 24 hours before the end of the current period. Manage or cancel anytime in your Apple or Google account settings.
 - **Refunds** are handled according to Apple's or Google's policies. We generally cannot issue refunds directly.
 
 ## 6. Points and rewards
 
-Points and rewards in Chorely are **virtual items with no monetary value**, are not redeemable for cash, and exist solely as a feature of the App for your family's use. You are responsible for honoring any real-world rewards you choose to define for your family.
+Points and rewards in Tydified are **virtual items with no monetary value**, are not redeemable for cash, and exist solely as a feature of the App for your family's use. You are responsible for honoring any real-world rewards you choose to define for your family.
 
 ## 7. Intellectual property
 

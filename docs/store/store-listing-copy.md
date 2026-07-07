@@ -1,4 +1,4 @@
-# Chorely — Store Listing Copy
+# Tydified — Store Listing Copy
 
 Ready-to-paste copy for App Store Connect and Google Play Console. Character limits noted; counts are approximate — verify in the console. Tone: warm, clear, parent-facing.
 
@@ -7,10 +7,10 @@ Ready-to-paste copy for App Store Connect and Google Play Console. Character lim
 ## Apple App Store
 
 ### App Name (max 30 chars)
-**Primary:** `Chorely: Chores & Rewards` (25)
+**Primary:** `Tydified: Chores & Rewards` (25)
 Alternatives:
-- `Chorely – Kids Chores` (21)
-- `Chorely: Family Chores` (22)
+- `Tydified – Kids Chores` (21)
+- `Tydified: Family Chores` (22)
 
 ### Subtitle (max 30 chars)
 **Primary:** `Kids' chores, points & rewards` (30)
@@ -27,7 +27,7 @@ Alternatives:
 
 ### Description (max 4000 chars)
 ```
-Chorely turns everyday chores into a simple, motivating routine the whole family can stick to. Parents stay in control, kids stay motivated, and everyone knows what's expected.
+Tydified turns everyday chores into a simple, motivating routine the whole family can stick to. Parents stay in control, kids stay motivated, and everyone knows what's expected.
 
 Create your family, add your kids, assign chores worth points, and approve them with a tap. Kids watch their points grow and redeem them for rewards you set — screen time, a treat, a special outing, whatever works for your family.
 
@@ -46,28 +46,28 @@ HOW IT WORKS
 5. Track streaks and savings goals along the way
 
 BUILT FOR FAMILIES, SAFELY
-Chorely is parent-managed. Children don't sign in or enter any personal information — a parent manages everything. No ads. No third-party tracking. Just a tool for your family.
+Tydified is parent-managed. Children don't sign in or enter any personal information — a parent manages everything. No ads. No third-party tracking. Just a tool for your family.
 
 CHORELY PLUS
-Chorely is free to start. Upgrade to Chorely Plus for unlimited children and chores plus premium features:
+Tydified is free to start. Upgrade to Tydified Plus for unlimited children and chores plus premium features:
 • Monthly or yearly — same features, the yearly plan saves you about 50%
 • Cancel anytime in your Apple account settings
 
-Start building better routines today — download Chorely and assign your first chore in minutes.
+Start building better routines today — download Tydified and assign your first chore in minutes.
 
 ———
-Chorely Plus is an auto-renewable subscription. Payment is charged to your Apple ID at confirmation of purchase. The subscription renews automatically unless canceled at least 24 hours before the end of the current period. Manage or cancel in your Apple account settings after purchase.
+Tydified Plus is an auto-renewable subscription. Payment is charged to your Apple ID at confirmation of purchase. The subscription renews automatically unless canceled at least 24 hours before the end of the current period. Manage or cancel in your Apple account settings after purchase.
 Privacy Policy: [your-domain]/privacy
 Terms of Use: [your-domain]/terms
 ```
 
 ### What's New (version 1.0 release notes)
-`Welcome to Chorely! This is our first release. Create your family, assign chores, approve them with a tap, and let your kids earn points toward rewards you choose. We'd love your feedback — reach us any time from More → Help center.`
+`Welcome to Tydified! This is our first release. Create your family, assign chores, approve them with a tap, and let your kids earn points toward rewards you choose. We'd love your feedback — reach us any time from More → Help center.`
 
 ### Categories
 - **Primary:** Lifestyle  (or Productivity)
 - **Secondary:** Productivity
-- *Do NOT select the Kids Category (Chorely is a parent/family tool).*
+- *Do NOT select the Kids Category (Tydified is a parent/family tool).*
 
 ### Metadata URLs
 - Support URL: `[your-domain]/support`
@@ -82,7 +82,7 @@ Answer the questionnaire honestly (no objectionable content) → expected **4+**
 ## Google Play
 
 ### App title (max 30 chars)
-**Primary:** `Chorely: Chores & Rewards` (25)
+**Primary:** `Tydified: Chores & Rewards` (25)
 
 ### Short description (max 80 chars)
 **Primary:** `Family chore charts kids love. Assign tasks, approve them, reward points.` (72)
@@ -91,7 +91,7 @@ Alternative:
 
 ### Full description (max 4000 chars)
 ```
-Chorely turns everyday chores into a simple, motivating routine the whole family can stick to. Parents stay in control, kids stay motivated, and everyone knows what's expected.
+Tydified turns everyday chores into a simple, motivating routine the whole family can stick to. Parents stay in control, kids stay motivated, and everyone knows what's expected.
 
 Create your family, add your kids, assign chores worth points, and approve them with a tap. Kids watch their points grow and redeem them for rewards you choose — screen time, a treat, a special outing, whatever works for your family.
 
@@ -110,12 +110,12 @@ HOW IT WORKS
 5. Track streaks and savings goals along the way
 
 BUILT FOR FAMILIES, SAFELY
-Chorely is parent-managed. Children don't sign in or enter any personal information — a parent manages everything. No ads. No third-party tracking.
+Tydified is parent-managed. Children don't sign in or enter any personal information — a parent manages everything. No ads. No third-party tracking.
 
 CHORELY PLUS
-Chorely is free to start. Upgrade to Chorely Plus for unlimited children and chores plus premium features. Available monthly or yearly (same features — the yearly plan saves about 50%). Manage or cancel anytime in your Google Play account settings.
+Tydified is free to start. Upgrade to Tydified Plus for unlimited children and chores plus premium features. Available monthly or yearly (same features — the yearly plan saves about 50%). Manage or cancel anytime in your Google Play account settings.
 
-Download Chorely and assign your first chore in minutes.
+Download Tydified and assign your first chore in minutes.
 ```
 
 ### Category & tags

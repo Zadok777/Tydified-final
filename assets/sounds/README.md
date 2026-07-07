@@ -1,6 +1,6 @@
 # Sound effects
 
-Chorely plays short sound effects on celebratory moments, gated by the
+Tydified plays short sound effects on celebratory moments, gated by the
 **Settings → Sound effects** toggle (`settingsStore.soundEnabled`, default on)
 and routed through `src/utils/sounds.ts`. Playback respects the device's
 silent switch — we do not force audio in silent mode.

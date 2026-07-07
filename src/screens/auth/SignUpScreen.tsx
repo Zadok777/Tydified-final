@@ -165,7 +165,7 @@ export function SignUpScreen() {
         </View>
 
         <Text style={styles.legal} maxFontSizeMultiplier={1.5}>
-          By creating an account you agree to use Chorely with kids whose
+          By creating an account you agree to use Tydified with kids whose
           parental consent you can give.
         </Text>
       </View>

@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { ChorelyLogo } from '../../components/brand/ChorelyLogo';
+import { TydifiedLogo } from '../../components/brand/TydifiedLogo';
 import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
@@ -132,7 +132,7 @@ export function OnboardingWizard() {
   return (
     <ScreenContainer keyboardAvoiding scroll>
       <View style={styles.hero}>
-        <ChorelyLogo variant="full" iconSize={72} animated />
+        <TydifiedLogo variant="full" iconSize={72} animated />
       </View>
 
       {step === 0 ? (
