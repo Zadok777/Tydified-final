@@ -72,7 +72,7 @@ REVENUECAT_ANDROID_API_KEY=
 
 ## 4. Project Directory Structure
 
-On-disk folder is `/Users/santiagos4god/Desktop/Chorely 2/` (note the space; package name in `package.json` stays `chorely`).
+On-disk folder is `/Users/santiagos4god/Projects/Chorely 2/` (note the space; package name in `package.json` stays `chorely`). Moved out of the iCloud-synced Desktop on 2026-07-02 — iCloud materialization made Metro/tsc/git unusably slow. A symlink at `~/Desktop/Chorely 2` points here.
 
 ```
 Chorely 2/

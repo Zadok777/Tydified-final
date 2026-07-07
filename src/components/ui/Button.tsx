@@ -16,6 +16,7 @@ import {
   useTheme,
   type Palette,
 } from '../../theme';
+import { hapticLight } from '../../utils/haptics';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -63,10 +64,14 @@ export function Button({
 }: ButtonProps) {
   const { C, mode } = useTheme();
   const isDisabled = disabled || loading;
+  const handlePress = () => {
+    if (variant === 'primary') hapticLight();
+    onPress();
+  };
 
   return (
     <Pressable
-      onPress={onPress}
+      onPress={handlePress}
       disabled={isDisabled}
       testID={testID}
       accessibilityRole="button"
@@ -140,7 +145,7 @@ function textColorFor(
     case 'secondary':
       return C.textDark;
     case 'ghost':
-      return C.pink;
+      return C.pinkText;
     case 'danger':
       return mode === 'dark' ? '#FF7A7A' : '#B91C1C';
   }

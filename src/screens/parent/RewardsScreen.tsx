@@ -304,7 +304,7 @@ const makeStyles = (C: Palette) =>
     fontFamily: 'DMSans_600SemiBold',
   },
   childChipTextActive: {
-    color: C.pink,
+    color: C.pinkText,
     fontFamily: 'DMSans_700Bold',
   },
   balanceCard: {

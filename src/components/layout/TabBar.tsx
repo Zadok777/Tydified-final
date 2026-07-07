@@ -4,6 +4,7 @@ import type { StyleProp, ViewStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { hapticLight } from '../../utils/haptics';
 import {
   radii,
   shadows,
@@ -63,12 +64,16 @@ export function TabBar({ tabs, activeKey, onChange, style }: TabBarProps) {
               return (
                 <Pressable
                   key={tab.key}
-                  onPress={() => onChange(tab.key)}
+                  onPress={() => {
+                    if (!active) hapticLight();
+                    onChange(tab.key);
+                  }}
                   accessibilityRole="button"
                   accessibilityLabel={tab.label}
                   accessibilityState={{ selected: active }}
                   style={({ pressed }) => [
                     styles.tab,
+                    active && styles.tabActive,
                     pressed && styles.tabPressed,
                   ]}
                 >
@@ -130,17 +135,20 @@ const makeStyles = (C: Palette) =>
     gap: 2,
     borderRadius: radii.r16,
   },
+  tabActive: {
+    backgroundColor: C.pinkAlpha10,
+  },
   tabPressed: {
     opacity: 0.7,
     transform: [{ scale: 0.96 }],
   },
   tabLabel: {
     ...typography.caption,
-    fontSize: 10,
+    fontSize: 11,
     color: C.textMid,
   },
   tabLabelActive: {
-    color: C.pink,
+    color: C.pinkText,
     fontFamily: 'DMSans_700Bold',
   },
   });

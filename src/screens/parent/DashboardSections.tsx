@@ -1,10 +1,11 @@
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Animated, Pressable, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { Avatar } from '../../components/ui/Avatar';
 import { StreakFlame } from '../../components/ui/StreakFlame';
+import { useAnimatedRatio } from '../../hooks/useAnimatedRatio';
 import { useCountUp } from '../../hooks/useCountUp';
 import { ageFromDob } from '../../utils/ageTier';
 import { AVATAR_GRADIENTS, GRADIENTS, useTheme, useThemedStyles } from '../../theme';
@@ -82,6 +83,7 @@ export function KidProgress({
 }) {
   const styles = useThemedStyles(makeStyles);
   const ratio = total > 0 ? done / total : 0;
+  const animatedWidth = useAnimatedRatio(ratio);
   const gradient = AVATAR_GRADIENTS[gradientIndex % AVATAR_GRADIENTS.length];
   const ageLabel = ageFromDob(child.date_of_birth);
 
@@ -120,12 +122,16 @@ export function KidProgress({
         </View>
       </View>
       <View style={styles.barTrack}>
-        <LinearGradient
-          colors={gradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={[styles.barFill, { width: `${Math.round(ratio * 100)}%` }]}
-        />
+        <Animated.View
+          style={[styles.barFill, { width: animatedWidth, overflow: 'hidden' }]}
+        >
+          <LinearGradient
+            colors={gradient}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.barFillGradient}
+          />
+        </Animated.View>
       </View>
     </View>
   );

@@ -1,7 +1,7 @@
 // Single source of truth for Chorely design tokens.
 // See DESIGN.md for the rationale behind each value.
 
-import type { ViewStyle } from 'react-native';
+import type { TextStyle, ViewStyle } from 'react-native';
 
 // ---------------------------------------------------------------------------
 // Colors (C)
@@ -13,6 +13,9 @@ export const lightC = {
   // ~24 files reading C.pink need no change; it is the primary-accent slot.
   // See DESIGN.md §12.
   pink: '#0EA5A4',
+  // Darker teal for accent-colored TEXT on light surfaces. #0EA5A4 is only
+  // ~2.9:1 on white — fine for fills/icons, fails WCAG 4.5:1 for text.
+  pinkText: '#0B807F',
   orange: '#FF8C42',
   green: '#00A92A',
   bg: '#FAF9FB', // warm near-white canvas (was lavender glass ground)
@@ -45,6 +48,7 @@ export const lightC = {
 // (string-typed values) from useTheme().C.
 export type Palette = {
   pink: string;
+  pinkText: string;
   orange: string;
   green: string;
   bg: string;
@@ -71,6 +75,7 @@ export type Palette = {
 // brightened slightly for contrast on the dark ground.
 export const darkC: Palette = {
   pink: '#1FC2B5', // primary accent (teal), brightened for dark-ground contrast
+  pinkText: '#1FC2B5', // already ≥4.5:1 on the dark ground — same as pink
   orange: '#FF8C42',
   green: '#1FBF44',
   bg: '#141220', // truer near-black violet ground
@@ -245,6 +250,8 @@ export const typography = {
     fontFamily: 'Nunito_800ExtraBold',
     fontSize: 52,
     letterSpacing: -1.8,
+    // Fixed-width digits so useCountUp ticks don't jitter horizontally.
+    fontVariant: ['tabular-nums'] as TextStyle['fontVariant'],
   },
 } as const;
 
@@ -266,6 +273,9 @@ export interface BracketTheme {
   spring: { damping: number; stiffness: number };
 }
 
+// NOTE: These values predate the §12 teal/solid-surface refresh (they're the
+// original pink/lavender system). Kid-facing screens are v1.1 — re-tune these
+// against DESIGN.md §12 before building them.
 export const bracketThemes: Record<AgeBracket, BracketTheme> = {
   elementary: {
     primary: '#FF4D8D',

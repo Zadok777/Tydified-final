@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Pressable, RefreshControl, Text, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -312,17 +313,23 @@ export function ParentDashboard() {
         ) : (
           <View style={styles.kidList}>
             {children.map((child, index) => (
-              <KidProgress
+              <Animated.View
                 key={child.id}
-                child={child}
-                gradientIndex={index}
-                total={assignments.filter((a) => a.child_id === child.id).length}
-                done={
-                  assignments.filter(
-                    (a) => a.child_id === child.id && a.status === 'approved'
-                  ).length
-                }
-              />
+                entering={FadeInDown.duration(220).delay(
+                  Math.min(index, 8) * 40
+                )}
+              >
+                <KidProgress
+                  child={child}
+                  gradientIndex={index}
+                  total={assignments.filter((a) => a.child_id === child.id).length}
+                  done={
+                    assignments.filter(
+                      (a) => a.child_id === child.id && a.status === 'approved'
+                    ).length
+                  }
+                />
+              </Animated.View>
             ))}
           </View>
         )}

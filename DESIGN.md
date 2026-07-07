@@ -23,28 +23,31 @@ The wordmark uses **Nunito ExtraBold** (`@expo-google-fonts/nunito`).
 
 Authored in hex for React Native compatibility. Values are perceptually balanced — do not introduce a new hue without recording it here first.
 
+> Updated 2026-07-02 to match the §12 Calm & Refined refresh (teal accent, solid surfaces, warm near-white canvas). `tokens.ts` is the executable source; dark-mode values live in `darkC` there.
+
 ```ts
-// Brand palette
-pink:       '#FF4D8D'   // Primary — CTAs, active nav, progress bars, headings
-orange:     '#FF8C42'   // Secondary — points, reward energy, highlights, coin icons
-green:      '#00A92A'   // Success ONLY — completed/approved states, earned confirmations
-bg:         '#F3F0FF'   // Neutral lavender background, every screen
+// Brand palette (light)
+pink:       '#0EA5A4'   // PRIMARY ACCENT (teal) — CTAs, active nav, progress fills. Token key kept as `pink` (§12).
+pinkText:   '#0B807F'   // Darker teal for accent-colored TEXT on light surfaces (#0EA5A4 is ~2.9:1 on white — fills/icons only)
+orange:     '#FF8C42'   // Points / reward energy ONLY
+green:      '#00A92A'   // Success ONLY — completed/approved states
+bg:         '#FAF9FB'   // Warm near-white canvas, every screen
 
 // Text
-textDark:   '#2D2D3A'   // Headings, primary body
+textDark:   '#22222B'   // Headings, primary body
 textMid:    '#6B6B80'   // Secondary text, captions
 textLight:  '#A8A8B8'   // Placeholder, muted labels
 textWhite:  '#FFFFFF'   // Text on colored/gradient backgrounds
 
-// Surface & glass
-glass:      'rgba(255, 255, 255, 0.70)'   // Main card backgrounds
-glassLight: 'rgba(255, 255, 255, 0.50)'   // Subtle containers, overlays
-border:     'rgba(255, 255, 255, 0.50)'   // Default card borders
-borderPink: 'rgba(255, 77, 141, 0.30)'    // Active/selected card borders
+// Surfaces — SOLID with a hairline border, not frosted glass (§12)
+glass:      '#FFFFFF'                  // Primary card surface (name is historical)
+glassLight: '#F3F1F7'                  // Recessed / subtle container
+border:     'rgba(24, 20, 40, 0.06)'   // Hairline for definition on near-white
+borderPink: 'rgba(14, 165, 164, 0.32)' // Active/selected card borders (teal)
 
-// Tinted alphas
-pinkAlpha15:  'rgba(255, 77, 141, 0.15)'
-pinkAlpha10:  'rgba(255, 77, 141, 0.10)'
+// Tinted alphas (teal-based)
+pinkAlpha15:  'rgba(14, 165, 164, 0.15)'
+pinkAlpha10:  'rgba(14, 165, 164, 0.10)'
 orangeAlpha15:'rgba(255, 140, 66, 0.15)'
 orangeAlpha10:'rgba(255, 140, 66, 0.10)'
 greenAlpha15: 'rgba(0, 169, 42, 0.15)'
@@ -53,18 +56,20 @@ mutedAlpha20: 'rgba(168, 168, 184, 0.20)'
 redAlpha15:   'rgba(220, 38, 38, 0.15)'
 ```
 
+**Accent-text rule:** any teal-colored *text* (ghost buttons, active tab labels, selected chips, the invite code, greeting name) uses `pinkText`, never `pink`. `pink` stays for fills, icons, and borders where 3:1 suffices.
+
 ---
 
 ## 3. Avatar Gradients
 
-Five gradient pairs cycled for family members, in fixed order so the same child always gets the same gradient.
+Five gradient pairs cycled for family members, in fixed order so the same child always gets the same gradient. One cohesive **warm family** (§12) — not a multi-hue rainbow.
 
 ```ts
-['#FF8C42', '#FF4D8D']   // Orange → Pink   (child 1)
-['#4D9FFF', '#8C42FF']   // Blue → Purple   (child 2)
-['#42FFB8', '#42C9FF']   // Green → Cyan    (child 3)
-['#FFD742', '#FF8C42']   // Gold → Orange   (child 4)
-['#A742FF', '#FF4D8D']   // Purple → Pink   (child 5)
+['#FF8C42', '#FF4D8D']   // Peach → Pink    (child 1)
+['#FF6F91', '#FF4D8D']   // Rose  → Pink    (child 2)
+['#FFB36B', '#FF7A59']   // Amber → Coral   (child 3)
+['#FF9472', '#FF5C8A']   // Coral → Rose    (child 4)
+['#FFC04D', '#FF8C42']   // Gold  → Orange  (child 5)
 ```
 
 ---
@@ -87,12 +92,14 @@ rFull: 9999  // Avatars, pill labels
 
 ## 5. Shadows
 
+Softened in the §12 refresh — premium = small, soft, low-opacity.
+
 ```ts
-shadowSm:   { offset: { width: 0, height: 1 },  radius: 4,  opacity: 0.06 }                    // Subtle elevation
-shadowMd:   { offset: { width: 0, height: 4 },  radius: 16, opacity: 0.08 }                    // Standard cards
-shadowLg:   { offset: { width: 0, height: 8 },  radius: 32, opacity: 0.12 }                    // Prominent cards
-shadow2xl:  { offset: { width: 0, height: 16 }, radius: 48, opacity: 0.16 }                    // Modals, bottom nav
-shadowPink: { offset: { width: 0, height: 4 },  radius: 16, opacity: 0.28, color: '#FF4D8D' }  // Primary buttons
+shadowSm:   { offset: { width: 0, height: 1 },  radius: 4,  opacity: 0.06 }                 // Subtle elevation
+shadowMd:   { offset: { width: 0, height: 4 },  radius: 12, opacity: 0.05 }                 // Standard cards
+shadowLg:   { offset: { width: 0, height: 8 },  radius: 24, opacity: 0.07 }                 // Prominent cards
+shadow2xl:  { offset: { width: 0, height: 16 }, radius: 48, opacity: 0.16 }                 // Modals, bottom nav
+shadowPink: { offset: { width: 0, height: 4 },  radius: 12, opacity: 0.16, color: C.pink }  // Primary buttons (teal glow)
 ```
 
 ---
@@ -125,8 +132,11 @@ title:    { fontFamily: 'Nunito_700Bold',      fontSize: 20, letterSpacing: -0.4
 body:     { fontFamily: 'DMSans_400Regular',   fontSize: 15 }
 caption:  { fontFamily: 'DMSans_500Medium',    fontSize: 12, letterSpacing: 0.1 }
 button:   { fontFamily: 'DMSans_700Bold',      fontSize: 15, letterSpacing: -0.1 }
-heroNum:  { fontFamily: 'Nunito_800ExtraBold', fontSize: 52, letterSpacing: -1.8 }
+label:    { fontFamily: 'DMSans_700Bold',      fontSize: 11, letterSpacing: 1.1, uppercase }  // Micro stat captions (§12)
+heroNum:  { fontFamily: 'Nunito_800ExtraBold', fontSize: 52, letterSpacing: -1.8, fontVariant: ['tabular-nums'] }
 ```
+
+`heroNum` uses tabular figures so `useCountUp` numbers don't jitter horizontally while ticking.
 
 App-wide accessibility cap: `maxFontSizeMultiplier: 1.5` on `Text` and `TextInput` (set in App.tsx).
 
@@ -178,13 +188,16 @@ high_school: {  // ages 15–18
 
 ## 9. Component Rules
 
-- All cards use glass background (`glass` token, ~rgba white 70%) with `expo-blur` BlurView on iOS (intensity 12–20). Android falls back to solid semi-transparent fill.
-- Primary buttons: pink (`#FF4D8D`) fill, white text, pink-tinted shadow (`shadowPink`).
-- Inputs: glass or surface background with `border` token; focus state lifts to `borderPink`.
-- Background is **light lavender** (`#F3F0FF`) by default. Dark mode is an opt-in toggle, never the default.
+- All cards use **solid surfaces** (`glass` token = opaque white / `#221D31` dark) with a hairline `border` — no BlurView (§12; the token name is historical).
+- Primary buttons: teal (`C.pink`) fill, white text, teal-tinted shadow (`shadowPink`); a light haptic fires on press.
+- Inputs: surface background with `border` token; focus state lifts to `borderPink`.
+- Background is **warm near-white** (`#FAF9FB`) by default. Dark mode is an opt-in toggle, never the default.
 - Minimum touch target: **48px** standard, **56px** for elementary bracket.
 - Loading: skeleton shimmer, not spinners (lists + cards).
 - Press feedback: `scale(0.98)` on all tappable elements.
+- Progress bars animate to their value (350ms ease-out via `useAnimatedRatio`), never snap.
+- List rows stagger in on first mount: `FadeInDown` 220ms, 40ms/item, delay capped at item 8 (respects system reduced-motion via Reanimated defaults).
+- Active tab: `pinkAlpha10` pill + filled icon + `pinkText` label; tab switches fire a light haptic.
 - Icon set: `@expo/vector-icons` (Ionicons preferred). Stroke variant by bracket per §8.
 
 ---
@@ -288,6 +301,7 @@ The Lumina Bloom glassmorphism was tuned toward a calmer, more premium feel afte
 
 <!--
 CHANGELOG (newest first)
+- 2026-07-02 Visual polish pass: added `pinkText` token + accent-text contrast rule (§2); synced §2/§3/§5/§9 values with tokens.ts (they still showed the pre-§12 pink/lavender/glass system); tabular-nums on heroNum (§7); animated progress fills (useAnimatedRatio); staggered list entrances; active-tab pill + 11px labels; haptics on primary buttons + tab switches.
 - 2026-06-01 Calm & Refined refresh (§12): solid surfaces over glass, warm near-white canvas, softened shadows, one-accent rule (orange=points, green=success), warm avatar family, brand hero gradient, editorial number typography + typography.label, unified quick-action tiles.
 - 2026-05-27 Initial Lumina Bloom system split out of CLAUDE.md §6/§13. Fonts set to Nunito + DM Sans (matching App.tsx). Anti-patterns section added.
 -->

@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { Header } from '../../components/layout/Header';
 import { ScreenContainer } from '../../components/layout/ScreenContainer';
@@ -185,21 +186,27 @@ export function ChoresScreen() {
           />
         ) : (
           <View style={styles.list}>
-            {visible.map((assignment) => {
+            {visible.map((assignment, index) => {
               const chore = choreById(assignment.chore_id);
               if (chore === undefined) return null;
               const child = childById(assignment.child_id);
               return (
-                <ChoreRow
+                <Animated.View
                   key={assignment.id}
-                  title={chore.title}
-                  pointValue={chore.point_value}
-                  status={assignment.status as ChoreStatus}
-                  assigneeName={child?.name}
-                  assigneeGradientIndex={childIndex(assignment.child_id)}
-                  dueLabel={formatDueLabel(assignment.due_date)}
-                  onPress={() => onRowPress(assignment)}
-                />
+                  entering={FadeInDown.duration(220).delay(
+                    Math.min(index, 8) * 40
+                  )}
+                >
+                  <ChoreRow
+                    title={chore.title}
+                    pointValue={chore.point_value}
+                    status={assignment.status as ChoreStatus}
+                    assigneeName={child?.name}
+                    assigneeGradientIndex={childIndex(assignment.child_id)}
+                    dueLabel={formatDueLabel(assignment.due_date)}
+                    onPress={() => onRowPress(assignment)}
+                  />
+                </Animated.View>
               );
             })}
           </View>

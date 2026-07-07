@@ -399,7 +399,7 @@ const makeStyles = (C: Palette) =>
     inviteCode: {
       ...typography.title,
       fontSize: 22,
-      color: C.pink,
+      color: C.pinkText,
       letterSpacing: 2,
       marginTop: 2,
     },

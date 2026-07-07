@@ -37,7 +37,7 @@ export const makeStyles = (C: Palette) =>
       color: C.textDark,
     },
     greetingName: {
-      color: C.pink,
+      color: C.pinkText,
     },
     subGreeting: {
       ...typography.caption,
@@ -244,6 +244,9 @@ export const makeStyles = (C: Palette) =>
     barFill: {
       height: 8,
       borderRadius: radii.rFull,
+    },
+    barFillGradient: {
+      flex: 1,
     },
     // Goals
     goalCard: {
