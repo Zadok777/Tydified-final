@@ -110,15 +110,18 @@ export const C = lightC;
 // Avatar gradients (cycled for family members)
 // ---------------------------------------------------------------------------
 
-// The five Tydified logo hue families (cyan-blue, pink, purple, gold, green),
-// each as a light→saturated pair sampled from the lockup. Kids stay
+// The six Tydified logo hue families (cyan-blue, pink, purple, gold, green,
+// orange), each as a light→saturated pair sampled from the lockup. Kids stay
 // distinguishable via hue spread, and every avatar reads as the brand.
+// Order is load-bearing: `avatar_gradient` rows store indexes into this list,
+// so only append — never reorder or remove.
 export const AVATAR_GRADIENTS: readonly (readonly [string, string])[] = [
   ['#5FFCFE', '#14B0FE'], // Cyan   -> Blue   (child 1)
   ['#FD7A9E', '#FC5499'], // Rose   -> Pink   (child 2)
   ['#C771FC', '#B353FC'], // Lilac  -> Purple (child 3)
   ['#FDCB01', '#FEAA01'], // Gold   -> Amber  (child 4)
   ['#8DF13C', '#60DB01'], // Lime   -> Green  (child 5)
+  ['#FC9000', '#F06C00'], // Orange -> Deep orange (trophy shading) (child 6)
 ] as const;
 
 // Named gradients for hero cards and primary CTAs. Mode-invariant brand colors

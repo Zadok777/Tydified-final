@@ -67,15 +67,18 @@ Reserve hues (in the lockup, available for celebration accents — record usage 
 
 ## 3. Avatar Gradients
 
-Five gradient pairs cycled for family members, in fixed order so the same child always gets the same gradient. The five **Tydified lockup hue families** — kids stay distinguishable while every avatar reads as the brand.
+Six gradient pairs cycled for family members, in fixed order so the same child always gets the same gradient. The six **Tydified lockup hue families** — kids stay distinguishable while every avatar reads as the brand. Order is load-bearing (`avatar_gradient` stores indexes): only append, never reorder.
 
 ```ts
-['#5FFCFE', '#14B0FE']   // Cyan  → Blue    (child 1)
-['#FD7A9E', '#FC5499']   // Rose  → Pink    (child 2)
-['#C771FC', '#B353FC']   // Lilac → Purple  (child 3)
-['#FDCB01', '#FEAA01']   // Gold  → Amber   (child 4)
-['#8DF13C', '#60DB01']   // Lime  → Green   (child 5)
+['#5FFCFE', '#14B0FE']   // Cyan   → Blue        (child 1)
+['#FD7A9E', '#FC5499']   // Rose   → Pink        (child 2)
+['#C771FC', '#B353FC']   // Lilac  → Purple      (child 3)
+['#FDCB01', '#FEAA01']   // Gold   → Amber       (child 4)
+['#8DF13C', '#60DB01']   // Lime   → Green       (child 5)
+['#FC9000', '#F06C00']   // Orange → Deep orange (child 6, trophy shading)
 ```
+
+The Tydified smiley (`AVATAR_FACE`) wears the selected gradient as its border ring (`TydifiedIcon ringColors`), so the winking face comes in all six hue families — in the picker and everywhere avatars render.
 
 ---
 

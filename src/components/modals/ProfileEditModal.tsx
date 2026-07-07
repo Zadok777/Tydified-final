@@ -200,7 +200,14 @@ export function ProfileEditModal({
                     Aa
                   </Text>
                 ) : opt === AVATAR_FACE ? (
-                  <TydifiedIcon size={26} />
+                  <TydifiedIcon
+                    size={26}
+                    ringColors={
+                      AVATAR_GRADIENTS[
+                        Math.abs(gradient) % AVATAR_GRADIENTS.length
+                      ]
+                    }
+                  />
                 ) : (
                   <Ionicons
                     name={opt as IoniconName}

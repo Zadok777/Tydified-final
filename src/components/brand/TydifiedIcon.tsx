@@ -20,6 +20,10 @@ interface TydifiedIconProps {
   faceFill?: string;
   // Override the dark feature color (eyes + smile).
   featureColor?: string;
+  // Border-ring gradient pair. Defaults to the brand primary pair; pass an
+  // AVATAR_GRADIENTS entry to render the face in that lockup hue family
+  // (blue, pink, purple, gold, green, orange).
+  ringColors?: readonly [string, string];
   // When true, the smiley winks (right eye) every few seconds and the icon
   // bobs gently. Use on welcome screens and hero brand moments. Default off so
   // smaller chrome uses (header avatars, list rows) stay still and cheap.
@@ -45,6 +49,7 @@ export function TydifiedIcon({
   size = 64,
   faceFill = C.textWhite,
   featureColor = C.textDark,
+  ringColors,
   animated = false,
   style,
 }: TydifiedIconProps) {
@@ -52,6 +57,7 @@ export function TydifiedIcon({
   // stays open at OPEN_RY.
   const [rightRy, setRightRy] = useState(OPEN_RY);
   const bobY = useRef(new Animated.Value(0)).current;
+  const ringId = `tydifiedBorder-${(ringColors ?? ['brand']).join('').replace(/#/g, '')}`;
 
   // Wink loop. We drive ry through React state rather than a Reanimated
   // worklet because animating SVG props via reanimated has rough edges on
@@ -112,9 +118,12 @@ export function TydifiedIcon({
     >
       <Svg width={size} height={size} viewBox="0 0 100 100">
         <Defs>
-          <LinearGradient id="tydifiedBorder" x1="0" y1="0" x2="1" y2="1">
-            <Stop offset="0" stopColor={C.pink} />
-            <Stop offset="1" stopColor={C.orange} />
+          {/* ID is derived from the ring pair — SVG ids are not reliably
+              scoped per <Svg>, and two faces with different rings on one
+              screen (e.g. the avatar picker) must not share a gradient. */}
+          <LinearGradient id={ringId} x1="0" y1="0" x2="1" y2="1">
+            <Stop offset="0" stopColor={ringColors?.[0] ?? C.pink} />
+            <Stop offset="1" stopColor={ringColors?.[1] ?? C.orange} />
           </LinearGradient>
         </Defs>
         <Rect
@@ -125,7 +134,7 @@ export function TydifiedIcon({
           rx={22}
           ry={22}
           fill={faceFill}
-          stroke="url(#tydifiedBorder)"
+          stroke={`url(#${ringId})`}
           strokeWidth={6}
         />
         <Ellipse cx={36} cy={42} rx={5} ry={OPEN_RY} fill={featureColor} />

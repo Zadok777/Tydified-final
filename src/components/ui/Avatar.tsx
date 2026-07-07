@@ -64,17 +64,25 @@ export function Avatar({
 }: AvatarProps) {
   const px = sizePx[size];
 
-  // The Tydified face replaces the gradient circle entirely (it's the brand
-  // rounded-square smiley, not a circular badge).
-  if (icon === AVATAR_FACE) {
-    return <TydifiedIcon size={px} animated={animated} style={style} />;
-  }
-
   const idx =
     gradientIndex !== undefined
       ? Math.abs(gradientIndex) % AVATAR_GRADIENTS.length
       : hashIndex(name, AVATAR_GRADIENTS.length);
   const gradient = AVATAR_GRADIENTS[idx];
+
+  // The Tydified face replaces the gradient circle entirely (it's the brand
+  // rounded-square smiley, not a circular badge). Its border ring wears the
+  // picked gradient, so the face comes in every lockup hue family.
+  if (icon === AVATAR_FACE) {
+    return (
+      <TydifiedIcon
+        size={px}
+        ringColors={gradient}
+        animated={animated}
+        style={style}
+      />
+    );
+  }
   const hasIcon = icon !== undefined && icon !== null && icon !== '';
 
   return (
