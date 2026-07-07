@@ -67,18 +67,27 @@ Reserve hues (in the lockup, available for celebration accents — record usage 
 
 ## 3. Avatar Gradients
 
-Six gradient pairs cycled for family members, in fixed order so the same child always gets the same gradient. The six **Tydified lockup hue families** — kids stay distinguishable while every avatar reads as the brand. Order is load-bearing (`avatar_gradient` stores indexes): only append, never reorder.
+Eleven gradient pairs cycled for family members, in fixed order so the same child always gets the same gradient: the six **Tydified lockup hue families** plus the five warm pre-rebrand pairs as extra picker choices — kids stay distinguishable while every avatar reads as the brand. Order is load-bearing (`avatar_gradient` stores indexes): only append, never reorder.
 
 ```ts
+// Lockup hue families (exact logo samples)
 ['#5FFCFE', '#14B0FE']   // Cyan   → Blue        (child 1)
 ['#FD7A9E', '#FC5499']   // Rose   → Pink        (child 2)
 ['#C771FC', '#B353FC']   // Lilac  → Purple      (child 3)
 ['#FDCB01', '#FEAA01']   // Gold   → Amber       (child 4)
 ['#8DF13C', '#60DB01']   // Lime   → Green       (child 5)
 ['#FC9000', '#F06C00']   // Orange → Deep orange (child 6, trophy shading)
+// Warm family (pre-rebrand set, kept as extra picker choices)
+['#FF8C42', '#FF4D8D']   // Peach  → Pink
+['#FF6F91', '#FF4D8D']   // Rose   → Pink
+['#FFB36B', '#FF7A59']   // Amber  → Coral
+['#FF9472', '#FF5C8A']   // Coral  → Rose
+['#FFC04D', '#FF8C42']   // Gold   → Orange
 ```
 
-The Tydified smiley (`AVATAR_FACE`) wears the selected gradient as its border ring (`TydifiedIcon ringColors`), so the winking face comes in all six hue families — in the picker and everywhere avatars render.
+The Tydified smiley (`AVATAR_FACE`) wears the selected gradient as its border ring (`TydifiedIcon ringColors`), so the winking face comes in every hue family — in the picker and everywhere avatars render.
+
+**Avatar motion:** `Avatar animated` bobs every avatar style (2.5px sinusoid, shared with `TydifiedIcon`); the ProfileEditModal preview spring-pops on each selection, chips stagger in via `FadeInDown`, and selections fire a light haptic.
 
 ---
 

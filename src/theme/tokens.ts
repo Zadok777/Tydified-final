@@ -116,12 +116,19 @@ export const C = lightC;
 // Order is load-bearing: `avatar_gradient` rows store indexes into this list,
 // so only append — never reorder or remove.
 export const AVATAR_GRADIENTS: readonly (readonly [string, string])[] = [
+  // Lockup hue families (exact logo samples)
   ['#5FFCFE', '#14B0FE'], // Cyan   -> Blue   (child 1)
   ['#FD7A9E', '#FC5499'], // Rose   -> Pink   (child 2)
   ['#C771FC', '#B353FC'], // Lilac  -> Purple (child 3)
   ['#FDCB01', '#FEAA01'], // Gold   -> Amber  (child 4)
   ['#8DF13C', '#60DB01'], // Lime   -> Green  (child 5)
   ['#FC9000', '#F06C00'], // Orange -> Deep orange (trophy shading) (child 6)
+  // Warm family (the pre-rebrand set, kept as extra picker choices)
+  ['#FF8C42', '#FF4D8D'], // Peach  -> Pink
+  ['#FF6F91', '#FF4D8D'], // Rose   -> Pink
+  ['#FFB36B', '#FF7A59'], // Amber  -> Coral
+  ['#FF9472', '#FF5C8A'], // Coral  -> Rose
+  ['#FFC04D', '#FF8C42'], // Gold   -> Orange
 ] as const;
 
 // Named gradients for hero cards and primary CTAs. Mode-invariant brand colors

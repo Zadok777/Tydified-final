@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import Reanimated, { FadeInDown } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -39,17 +40,35 @@ const ICON_OPTIONS: readonly (string | null)[] = [
   AVATAR_FACE,
   'happy',
   'star',
+  'trophy',
+  'medal',
   'paw',
   'football',
   'basketball',
+  'bicycle',
   'game-controller',
   'rocket',
+  'airplane',
+  'boat',
+  'car-sport',
   'heart',
   'planet',
+  'sunny',
+  'moon',
+  'cloud',
   'ice-cream',
+  'pizza',
   'musical-notes',
+  'brush',
+  'book',
   'flower',
+  'leaf',
+  'fish',
 ];
+
+// Preview pop spring — a quick settle, not a wobble. Tuned once here so the
+// selection feedback feels consistent for both color and icon taps.
+const POP_FROM = 0.85;
 
 export type ProfileEditTarget =
   | { kind: 'parent' }
@@ -78,6 +97,19 @@ export function ProfileEditModal({
   const [icon, setIcon] = useState<string | null>(null);
   const [tierOverride, setTierOverride] = useState<AgeTier | null>(null);
   const [saving, setSaving] = useState(false);
+
+  // Preview pop: every color/icon selection snaps the preview to POP_FROM and
+  // springs it back — instant, physical feedback that the tap "took".
+  const previewScale = useRef(new Animated.Value(1)).current;
+  useEffect(() => {
+    previewScale.setValue(POP_FROM);
+    Animated.spring(previewScale, {
+      toValue: 1,
+      friction: 5,
+      tension: 180,
+      useNativeDriver: true,
+    }).start();
+  }, [gradient, icon, previewScale]);
 
   const name =
     target?.kind === 'child'
@@ -148,7 +180,15 @@ export function ProfileEditModal({
       }
     >
       <View style={styles.previewWrap}>
-        <Avatar name={name} gradientIndex={gradient} icon={icon} size="xl" />
+        <Animated.View style={{ transform: [{ scale: previewScale }] }}>
+          <Avatar
+            name={name}
+            gradientIndex={gradient}
+            icon={icon}
+            size="xl"
+            animated
+          />
+        </Animated.View>
       </View>
 
       <View>
@@ -157,25 +197,32 @@ export function ProfileEditModal({
           {AVATAR_GRADIENTS.map((g, i) => {
             const selected = gradient === i;
             return (
-              <Pressable
+              <Reanimated.View
                 key={i}
-                onPress={() => setGradient(i)}
-                accessibilityRole="button"
-                accessibilityLabel={`Color ${i + 1}`}
-                accessibilityState={{ selected }}
-                style={[styles.swatch, selected && styles.swatchSelected]}
+                entering={FadeInDown.duration(220).delay(Math.min(i, 8) * 30)}
               >
-                <LinearGradient
-                  colors={g}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={styles.swatchFill}
+                <Pressable
+                  onPress={() => {
+                    hapticLight();
+                    setGradient(i);
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Color ${i + 1}`}
+                  accessibilityState={{ selected }}
+                  style={[styles.swatch, selected && styles.swatchSelected]}
                 >
-                  {selected ? (
-                    <Ionicons name="checkmark" size={16} color={C.textWhite} />
-                  ) : null}
-                </LinearGradient>
-              </Pressable>
+                  <LinearGradient
+                    colors={g}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.swatchFill}
+                  >
+                    {selected ? (
+                      <Ionicons name="checkmark" size={16} color={C.textWhite} />
+                    ) : null}
+                  </LinearGradient>
+                </Pressable>
+              </Reanimated.View>
             );
           })}
         </View>
@@ -187,35 +234,42 @@ export function ProfileEditModal({
           {ICON_OPTIONS.map((opt, i) => {
             const selected = icon === opt || (opt === null && icon == null);
             return (
-              <Pressable
+              <Reanimated.View
                 key={`${opt ?? 'initials'}-${i}`}
-                onPress={() => setIcon(opt)}
-                accessibilityRole="button"
-                accessibilityLabel={opt ?? 'Initials'}
-                accessibilityState={{ selected }}
-                style={[styles.iconChip, selected && styles.iconChipSelected]}
+                entering={FadeInDown.duration(220).delay(Math.min(i, 8) * 30)}
               >
-                {opt === null ? (
-                  <Text style={styles.iconInitials} maxFontSizeMultiplier={1.2}>
-                    Aa
-                  </Text>
-                ) : opt === AVATAR_FACE ? (
-                  <TydifiedIcon
-                    size={26}
-                    ringColors={
-                      AVATAR_GRADIENTS[
-                        Math.abs(gradient) % AVATAR_GRADIENTS.length
-                      ]
-                    }
-                  />
-                ) : (
-                  <Ionicons
-                    name={opt as IoniconName}
-                    size={20}
-                    color={selected ? C.pink : C.textMid}
-                  />
-                )}
-              </Pressable>
+                <Pressable
+                  onPress={() => {
+                    hapticLight();
+                    setIcon(opt);
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={opt ?? 'Initials'}
+                  accessibilityState={{ selected }}
+                  style={[styles.iconChip, selected && styles.iconChipSelected]}
+                >
+                  {opt === null ? (
+                    <Text style={styles.iconInitials} maxFontSizeMultiplier={1.2}>
+                      Aa
+                    </Text>
+                  ) : opt === AVATAR_FACE ? (
+                    <TydifiedIcon
+                      size={26}
+                      ringColors={
+                        AVATAR_GRADIENTS[
+                          Math.abs(gradient) % AVATAR_GRADIENTS.length
+                        ]
+                      }
+                    />
+                  ) : (
+                    <Ionicons
+                      name={opt as IoniconName}
+                      size={20}
+                      color={selected ? C.pink : C.textMid}
+                    />
+                  )}
+                </Pressable>
+              </Reanimated.View>
             );
           })}
         </View>
@@ -319,6 +373,7 @@ const makeStyles = (C: Palette) =>
     },
     swatchRow: {
       flexDirection: 'row',
+      flexWrap: 'wrap', // 11 swatches — must wrap on phone widths
       gap: spacing.s12,
     },
     swatch: {

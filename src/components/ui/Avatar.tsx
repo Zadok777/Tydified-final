@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Easing, StyleSheet, Text } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -34,10 +34,14 @@ interface AvatarProps {
   size?: AvatarSize;
   style?: StyleProp<ViewStyle>;
   withBorder?: boolean;
-  // When the avatar is the Tydified face (AVATAR_FACE), make it wink + bob.
-  // No-op for gradient/initial avatars.
+  // Gentle idle motion. The Tydified face winks + bobs; gradient/icon/initial
+  // avatars get the same subtle bob. Default off so list rows stay still.
   animated?: boolean;
 }
+
+// Same bob geometry as TydifiedIcon — one shared feel across all avatars.
+const BOB_RANGE = 2.5;
+const BOB_DURATION_MS = 2000;
 
 const sizePx: Record<AvatarSize, number> = {
   sm: 32,
@@ -64,6 +68,33 @@ export function Avatar({
 }: AvatarProps) {
   const px = sizePx[size];
 
+  // Bob loop for non-face avatars — same breath as TydifiedIcon so a mixed
+  // row of avatars moves as one family. Face avatars animate inside
+  // TydifiedIcon and skip this wrapper.
+  const bobY = useRef(new Animated.Value(0)).current;
+  const wantsBob = animated && icon !== AVATAR_FACE;
+  useEffect(() => {
+    if (!wantsBob) return undefined;
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(bobY, {
+          toValue: -BOB_RANGE,
+          duration: BOB_DURATION_MS,
+          easing: Easing.inOut(Easing.sin),
+          useNativeDriver: true,
+        }),
+        Animated.timing(bobY, {
+          toValue: 0,
+          duration: BOB_DURATION_MS,
+          easing: Easing.inOut(Easing.sin),
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [wantsBob, bobY]);
+
   const idx =
     gradientIndex !== undefined
       ? Math.abs(gradientIndex) % AVATAR_GRADIENTS.length
@@ -86,7 +117,7 @@ export function Avatar({
   const hasIcon = icon !== undefined && icon !== null && icon !== '';
 
   return (
-    <View
+    <Animated.View
       style={[
         styles.wrapper,
         {
@@ -96,6 +127,7 @@ export function Avatar({
         },
         withBorder && styles.border,
         shadows.sm,
+        wantsBob && { transform: [{ translateY: bobY }] },
         style,
       ]}
     >
@@ -126,7 +158,7 @@ export function Avatar({
           </Text>
         )}
       </LinearGradient>
-    </View>
+    </Animated.View>
   );
 }
 
