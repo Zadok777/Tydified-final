@@ -2,6 +2,9 @@ import React from 'react';
 import { Animated, Pressable, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import Reanimated from 'react-native-reanimated';
+
+import { usePressBounce } from '../../hooks/usePressBounce';
 
 import { Avatar } from '../../components/ui/Avatar';
 import { StreakFlame } from '../../components/ui/StreakFlame';
@@ -11,6 +14,8 @@ import { ageFromDob } from '../../utils/ageTier';
 import { AVATAR_GRADIENTS, GRADIENTS, useTheme, useThemedStyles } from '../../theme';
 import type { Child, Goal } from '../../types/app.types';
 import { makeStyles } from './dashboard.styles';
+
+const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 type IoniconName = React.ComponentProps<typeof Ionicons>['name'];
 
@@ -67,6 +72,7 @@ export function QuickAction({
 }) {
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
+  const { onPressIn, onPressOut, bounceStyle } = usePressBounce();
   // One lockup hue per action so the grid reads as the brand rainbow.
   // Icon colors are the contrast-safe shade of each hue where needed.
   const tint: Record<QuickActionTone, { bg: string; fg: string }> = {
@@ -76,11 +82,13 @@ export function QuickAction({
     purple: { bg: C.purpleAlpha15, fg: C.purple },
   };
   return (
-    <Pressable
+    <AnimatedPressable
       onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
       accessibilityRole="button"
       accessibilityLabel={label}
-      style={({ pressed }) => [styles.actionItem, pressed && styles.pressed]}
+      style={[styles.actionItem, bounceStyle]}
     >
       <View style={[styles.actionIcon, { backgroundColor: tint[tone].bg }]}>
         <Ionicons name={icon} size={20} color={tint[tone].fg} />
@@ -88,7 +96,7 @@ export function QuickAction({
       <Text style={styles.actionLabel} maxFontSizeMultiplier={1.3} numberOfLines={2}>
         {label}
       </Text>
-    </Pressable>
+    </AnimatedPressable>
   );
 }
 

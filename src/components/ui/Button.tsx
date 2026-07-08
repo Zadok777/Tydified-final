@@ -7,7 +7,9 @@ import {
   View,
 } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
+import Reanimated from 'react-native-reanimated';
 
+import { usePressBounce } from '../../hooks/usePressBounce';
 import {
   radii,
   shadows,
@@ -17,6 +19,8 @@ import {
   type Palette,
 } from '../../theme';
 import { hapticLight } from '../../utils/haptics';
+
+const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -64,20 +68,23 @@ export function Button({
 }: ButtonProps) {
   const { C, mode } = useTheme();
   const isDisabled = disabled || loading;
+  const { onPressIn, onPressOut, bounceStyle } = usePressBounce();
   const handlePress = () => {
     if (variant === 'primary') hapticLight();
     onPress();
   };
 
   return (
-    <Pressable
+    <AnimatedPressable
       onPress={handlePress}
+      onPressIn={isDisabled ? undefined : onPressIn}
+      onPressOut={isDisabled ? undefined : onPressOut}
       disabled={isDisabled}
       testID={testID}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? label}
       accessibilityState={{ disabled: isDisabled, busy: loading }}
-      style={({ pressed }) => [
+      style={[
         styles.base,
         {
           height: heightFor[size],
@@ -86,9 +93,9 @@ export function Button({
         },
         variantContainerStyle(C, variant),
         variant === 'primary' && !isDisabled && shadows.pink,
-        pressed && !isDisabled && styles.pressed,
         isDisabled && styles.disabled,
         style,
+        bounceStyle,
       ]}
     >
       {loading ? (
@@ -108,7 +115,7 @@ export function Button({
           ) : null}
         </View>
       )}
-    </Pressable>
+    </AnimatedPressable>
   );
 }
 
@@ -172,10 +179,6 @@ const styles = StyleSheet.create({
   },
   iconRight: {
     marginLeft: spacing.s8,
-  },
-  pressed: {
-    transform: [{ scale: 0.97 }, { translateY: 1 }],
-    opacity: 0.92,
   },
   disabled: {
     opacity: 0.5,

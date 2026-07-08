@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Reanimated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { hapticLight } from '../../utils/haptics';
 import {
@@ -77,9 +84,9 @@ export function TabBar({ tabs, activeKey, onChange, style }: TabBarProps) {
                     pressed && styles.tabPressed,
                   ]}
                 >
-                  <Ionicons
+                  <TabIcon
+                    active={active}
                     name={active ? tab.iconActive : tab.iconInactive}
-                    size={22}
                     color={active ? C.pink : C.textMid}
                   />
                   <Text
@@ -99,6 +106,36 @@ export function TabBar({ tabs, activeKey, onChange, style }: TabBarProps) {
         </View>
       </View>
     </View>
+  );
+}
+
+// Duolingo-style select pop: the icon overshoots then springs back the
+// moment its tab becomes active.
+function TabIcon({
+  active,
+  name,
+  color,
+}: {
+  active: boolean;
+  name: React.ComponentProps<typeof Ionicons>['name'];
+  color: string;
+}) {
+  const scale = useSharedValue(1);
+  useEffect(() => {
+    if (active) {
+      scale.value = withSequence(
+        withTiming(1.25, { duration: 110 }),
+        withSpring(1, { damping: 10, stiffness: 300 })
+      );
+    }
+  }, [active, scale]);
+  const popStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+  return (
+    <Reanimated.View style={popStyle}>
+      <Ionicons name={name} size={22} color={color} />
+    </Reanimated.View>
   );
 }
 

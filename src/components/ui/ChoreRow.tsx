@@ -2,7 +2,9 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Reanimated from 'react-native-reanimated';
 
+import { usePressBounce } from '../../hooks/usePressBounce';
 import {
   radii,
   shadows,
@@ -82,25 +84,28 @@ export function ChoreRow({
 }: ChoreRowProps) {
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
+  const { onPressIn, onPressOut, bounceStyle } = usePressBounce();
   const visual = statusVisuals[status];
   const interactive = onPress !== undefined;
   const rowTone = tintForStatus(C, status);
 
   return (
-    <Pressable
+    <AnimatedPressable
       onPress={onPress}
+      onPressIn={interactive ? onPressIn : undefined}
+      onPressOut={interactive ? onPressOut : undefined}
       disabled={!interactive}
       accessibilityRole={interactive ? 'button' : undefined}
       accessibilityLabel={`${title}, ${visual.label}, ${pointValue} points`}
-      style={({ pressed }) => [
+      style={[
         styles.row,
         shadows.sm,
         {
           backgroundColor: rowTone.background,
           borderColor: rowTone.border,
         },
-        pressed && interactive && styles.pressed,
         style,
+        bounceStyle,
       ]}
     >
       {assigneeName !== undefined ? (
@@ -169,9 +174,11 @@ export function ChoreRow({
           style={styles.statusBadge}
         />
       </View>
-    </Pressable>
+    </AnimatedPressable>
   );
 }
+
+const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 function tintForStatus(
   C: Palette,
