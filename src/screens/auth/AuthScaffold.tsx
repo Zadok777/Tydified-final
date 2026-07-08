@@ -33,7 +33,12 @@ export function AuthScaffold({
   const styles = useThemedStyles(makeStyles);
 
   return (
-    <ScreenContainer keyboardAvoiding scroll noHorizontalPadding>
+    <ScreenContainer
+      keyboardAvoiding
+      scroll
+      noHorizontalPadding
+      contentStyle={styles.scrollGrow}
+    >
       <View style={styles.root}>
         <View style={styles.scene}>
           {onBack !== undefined ? (
@@ -49,31 +54,15 @@ export function AuthScaffold({
           ) : null}
 
           <View style={styles.sun} />
-          <View style={styles.cloudLeft} />
-          <View style={styles.cloudRight} />
-          <View style={styles.taskCardOne}>
-            <View style={styles.taskDot} />
-            <View style={styles.taskLine} />
-          </View>
-          <View style={styles.taskCardTwo}>
-            <View style={styles.taskDotAmber} />
-            <View style={styles.taskLineShort} />
-          </View>
           <View style={[styles.trophyWrap, shadows.md]}>
             <TydifiedLogo variant="icon" iconSize={112} animated />
           </View>
         </View>
 
         <View style={[styles.sheet, shadows.md]}>
-          {title === 'Tydified' ? (
-            <View style={styles.wordmark}>
-              <TydifiedLogo variant="full" iconSize={102} animated />
-            </View>
-          ) : (
-            <Text style={styles.title} maxFontSizeMultiplier={1.4}>
-              {title}
-            </Text>
-          )}
+          <Text style={styles.title} maxFontSizeMultiplier={1.4}>
+            {title}
+          </Text>
           {subtitle !== undefined ? (
             <Text style={styles.subtitle} maxFontSizeMultiplier={1.4}>
               {subtitle}
@@ -89,11 +78,18 @@ export function AuthScaffold({
 
 const makeStyles = (C: Palette) =>
   StyleSheet.create({
+    scrollGrow: {
+      flexGrow: 1,
+    },
     root: {
       flex: 1,
       paddingBottom: spacing.s24,
     },
+    // flex: 1 so the illustrated scene absorbs leftover height on short
+    // screens (Welcome) instead of leaving a blank strip under the sheet;
+    // shrinks back to minHeight when forms need the room.
     scene: {
+      flex: 1,
       minHeight: 260,
       backgroundColor: C.pinkAlpha10,
       borderBottomLeftRadius: 32,
@@ -122,98 +118,18 @@ const makeStyles = (C: Palette) =>
       justifyContent: 'center',
       zIndex: 2,
     },
+    // Solid amber core + alpha halo: low-alpha amber alone blends to khaki
+    // over both the light-blue scene and the dark navy ground.
     sun: {
       position: 'absolute',
       top: 34,
       right: 44,
-      width: 72,
-      height: 72,
+      width: 64,
+      height: 64,
       borderRadius: radii.rFull,
-      backgroundColor: C.orangeAlpha15,
-    },
-    cloudLeft: {
-      position: 'absolute',
-      left: 26,
-      top: 76,
-      width: 116,
-      height: 42,
-      borderRadius: radii.rFull,
-      backgroundColor: C.glass,
-      borderWidth: 1,
-      borderColor: C.border,
-      opacity: 0.9,
-    },
-    cloudRight: {
-      position: 'absolute',
-      right: 20,
-      top: 132,
-      width: 86,
-      height: 34,
-      borderRadius: radii.rFull,
-      backgroundColor: C.glass,
-      borderWidth: 1,
-      borderColor: C.border,
-      opacity: 0.9,
-    },
-    taskCardOne: {
-      position: 'absolute',
-      left: 22,
-      bottom: 48,
-      width: 118,
-      height: 52,
-      borderRadius: radii.r18,
-      backgroundColor: C.glass,
-      borderWidth: 1,
-      borderColor: C.border,
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: spacing.s12,
-      gap: spacing.s8,
-      transform: [{ rotate: '-4deg' }],
-    },
-    taskCardTwo: {
-      position: 'absolute',
-      right: 24,
-      bottom: 36,
-      width: 126,
-      height: 52,
-      borderRadius: radii.r18,
-      backgroundColor: C.glass,
-      borderWidth: 1,
-      borderColor: C.border,
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: spacing.s12,
-      gap: spacing.s8,
-      transform: [{ rotate: '5deg' }],
-    },
-    taskDot: {
-      width: 24,
-      height: 24,
-      borderRadius: radii.rFull,
-      backgroundColor: C.pinkAlpha15,
-      borderWidth: 1,
-      borderColor: C.borderPink,
-    },
-    taskDotAmber: {
-      width: 24,
-      height: 24,
-      borderRadius: radii.rFull,
-      backgroundColor: C.orangeAlpha15,
-      borderWidth: 1,
+      backgroundColor: C.orange,
+      borderWidth: 10,
       borderColor: C.orangeAlpha15,
-    },
-    taskLine: {
-      flex: 1,
-      height: 8,
-      borderRadius: radii.rFull,
-      backgroundColor: C.mutedAlpha20,
-    },
-    taskLineShort: {
-      width: 54,
-      height: 8,
-      borderRadius: radii.rFull,
-      backgroundColor: C.mutedAlpha20,
     },
     trophyWrap: {
       width: 132,
@@ -239,11 +155,6 @@ const makeStyles = (C: Palette) =>
       fontSize: 28,
       color: C.textDark,
       textAlign: 'center',
-    },
-    wordmark: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: spacing.s4,
     },
     subtitle: {
       ...typography.body,

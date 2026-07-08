@@ -3,8 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
+import { TydifiedLogo } from '../../components/brand/TydifiedLogo';
+import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { Button } from '../../components/ui/Button';
-import { AuthScaffold } from './AuthScaffold';
 import {
   radii,
   spacing,
@@ -29,10 +30,10 @@ export function WelcomeScreen() {
   const styles = useThemedStyles(makeStyles);
 
   return (
-    <AuthScaffold
-      title="Tydified"
-      subtitle="Set chores, approve completions, and let your kids earn rewards they choose."
-      footer={
+    <ScreenContainer>
+      <View style={styles.hero}>
+        <View style={styles.glow} pointerEvents="none" />
+        <TydifiedLogo variant="full" iconSize={112} animated />
         <View style={styles.taglinePill}>
           <Text style={styles.taglineText} maxFontSizeMultiplier={1.3}>
             <Text style={styles.tagWhite}>Do chores. </Text>
@@ -41,8 +42,7 @@ export function WelcomeScreen() {
             <Text style={styles.tagCyan}>Level up!</Text>
           </Text>
         </View>
-      }
-    >
+      </View>
       <View style={styles.cta}>
         <Button
           label="Create an account"
@@ -56,12 +56,27 @@ export function WelcomeScreen() {
           fullWidth
         />
       </View>
-    </AuthScaffold>
+    </ScreenContainer>
   );
 }
 
 const makeStyles = (C: Palette) =>
   StyleSheet.create({
+    hero: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.s24,
+    },
+    // Soft brand-tint disc behind the lockup — depth without clutter, and it
+    // can't go muddy because it's the same hue as the ground it sits on.
+    glow: {
+      position: 'absolute',
+      width: 360,
+      height: 360,
+      borderRadius: radii.rFull,
+      backgroundColor: C.pinkAlpha10,
+    },
     taglinePill: {
       backgroundColor: PILL_NAVY,
       borderRadius: radii.rFull,
@@ -85,5 +100,6 @@ const makeStyles = (C: Palette) =>
     tagCyan: { color: TAG_CYAN },
     cta: {
       gap: spacing.s12,
+      paddingBottom: spacing.s16,
     },
   });

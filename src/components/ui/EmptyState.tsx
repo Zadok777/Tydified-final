@@ -40,7 +40,6 @@ export function EmptyState({
   return (
     <View style={[styles.wrapper, style]}>
       <View style={styles.scene} pointerEvents="none">
-        <View style={styles.sceneOrb} />
         <View style={styles.sceneCardOne} />
         <View style={styles.sceneCardTwo} />
       </View>
@@ -84,14 +83,6 @@ const makeStyles = (C: Palette) =>
       right: spacing.s24,
       height: 72,
       opacity: 0.45,
-    },
-    sceneOrb: {
-      position: 'absolute',
-      alignSelf: 'center',
-      width: 64,
-      height: 64,
-      borderRadius: radii.rFull,
-      backgroundColor: C.orangeAlpha15,
     },
     sceneCardOne: {
       position: 'absolute',
