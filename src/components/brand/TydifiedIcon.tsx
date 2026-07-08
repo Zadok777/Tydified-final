@@ -10,7 +10,7 @@ import Svg, {
   Stop,
 } from 'react-native-svg';
 
-import { C } from '../../theme/tokens';
+import { useTheme } from '../../theme';
 
 interface TydifiedIconProps {
   // Side length in px. Component is rendered into a square box.
@@ -47,12 +47,15 @@ const BOB_DURATION_MS = 2000;
 
 export function TydifiedIcon({
   size = 64,
-  faceFill = C.textWhite,
-  featureColor = C.textDark,
+  faceFill,
+  featureColor,
   ringColors,
   animated = false,
   style,
 }: TydifiedIconProps) {
+  const { C } = useTheme();
+  const resolvedFaceFill = faceFill ?? C.textWhite;
+  const resolvedFeatureColor = featureColor ?? C.textDark;
   // Only the right eye animates → a wink (not a both-eye blink). The left eye
   // stays open at OPEN_RY.
   const [rightRy, setRightRy] = useState(OPEN_RY);
@@ -133,15 +136,15 @@ export function TydifiedIcon({
           height={92}
           rx={22}
           ry={22}
-          fill={faceFill}
+          fill={resolvedFaceFill}
           stroke={`url(#${ringId})`}
           strokeWidth={6}
         />
-        <Ellipse cx={36} cy={42} rx={5} ry={OPEN_RY} fill={featureColor} />
-        <Ellipse cx={64} cy={42} rx={5} ry={rightRy} fill={featureColor} />
+        <Ellipse cx={36} cy={42} rx={5} ry={OPEN_RY} fill={resolvedFeatureColor} />
+        <Ellipse cx={64} cy={42} rx={5} ry={rightRy} fill={resolvedFeatureColor} />
         <Path
           d="M30 62 Q50 82 70 62"
-          stroke={featureColor}
+          stroke={resolvedFeatureColor}
           strokeWidth={5}
           strokeLinecap="round"
           fill="none"

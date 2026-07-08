@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { TydifiedLogo } from '../../components/brand/TydifiedLogo';
-import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toast';
@@ -16,10 +14,10 @@ import { completeOnboarding } from '../../services/rpc';
 import { useFamilyStore } from '../../store/familyStore';
 import {
   spacing,
-  typography,
   useThemedStyles,
   type Palette,
 } from '../../theme';
+import { AuthScaffold } from './AuthScaffold';
 
 // First-run setup for a parent with no family. Two steps:
 //   1. Family name
@@ -129,152 +127,111 @@ export function OnboardingWizard() {
     // onAuthStateChange resets the stores; RootNavigator returns to Welcome.
   };
 
+  const title =
+    step === 0 ? "Let's set up your family" : 'Add your first child';
+  const subtitle =
+    step === 0
+      ? 'Pick a name everyone will recognize. You can change it later in Settings.'
+      : 'Just a name to start. Date of birth is optional and only tailors the experience to their age — we never ask kids for an email or phone.';
+
   return (
-    <ScreenContainer keyboardAvoiding scroll>
-      <View style={styles.hero}>
-        <TydifiedLogo variant="full" iconSize={72} animated />
-      </View>
-
-      {step === 0 ? (
-        <View style={styles.block}>
-          <Text style={styles.title} maxFontSizeMultiplier={1.5}>
-            {"Let's set up your family"}
-          </Text>
-          <Text style={styles.subtitle} maxFontSizeMultiplier={1.5}>
-            Pick a name everyone will recognize. You can change it later in
-            Settings.
-          </Text>
-
-          <View style={styles.form}>
-            <Controller
-              name="familyName"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  label="Family name"
-                  placeholder="The Garcia Family"
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  onBlur={field.onBlur}
-                  autoCapitalize="words"
-                  maxLength={40}
-                  error={errors.familyName?.message}
-                />
-              )}
-            />
-
-            <View style={styles.submit}>
-              <Button label="Continue" onPress={goToChildStep} fullWidth />
-            </View>
-          </View>
-        </View>
-      ) : (
-        <View style={styles.block}>
-          <Text style={styles.title} maxFontSizeMultiplier={1.5}>
-            Add your first child
-          </Text>
-          <Text style={styles.subtitle} maxFontSizeMultiplier={1.5}>
-            Just a name to start. Date of birth is optional and only tailors
-            the experience to their age — we never ask kids for an email or
-            phone.
-          </Text>
-
-          <View style={styles.form}>
-            <Controller
-              name="childName"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  label="Child's name"
-                  placeholder="Sofia"
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  onBlur={field.onBlur}
-                  autoCapitalize="words"
-                  maxLength={40}
-                  error={errors.childName?.message}
-                />
-              )}
-            />
-            <Controller
-              name="childDob"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  label="Date of birth (optional)"
-                  placeholder="YYYY-MM-DD"
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  onBlur={field.onBlur}
-                  keyboardType="numbers-and-punctuation"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  maxLength={10}
-                  helper="Used to pick an age-appropriate look."
-                  error={errors.childDob?.message}
-                />
-              )}
-            />
-
-            <View style={styles.submit}>
-              <Button
-                label="Create my family"
-                onPress={handleSubmit(onSubmit)}
-                loading={submitting}
-                fullWidth
-              />
-              <Button
-                label="Back"
-                variant="ghost"
-                onPress={() => setStep(0)}
-                fullWidth
-              />
-            </View>
-          </View>
-        </View>
-      )}
-
-      <View style={styles.footer}>
+    <AuthScaffold
+      title={title}
+      subtitle={subtitle}
+      footer={
         <Button
           label="Not you? Sign out"
           variant="ghost"
           size="sm"
           onPress={handleSignOut}
         />
-      </View>
-    </ScreenContainer>
+      }
+    >
+      {step === 0 ? (
+        <>
+          <Controller
+            name="familyName"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label="Family name"
+                placeholder="The Garcia Family"
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                autoCapitalize="words"
+                maxLength={40}
+                error={errors.familyName?.message}
+              />
+            )}
+          />
+
+          <View style={styles.submit}>
+            <Button label="Continue" onPress={goToChildStep} fullWidth />
+          </View>
+        </>
+      ) : (
+        <>
+          <Controller
+            name="childName"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label="Child's name"
+                placeholder="Sofia"
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                autoCapitalize="words"
+                maxLength={40}
+                error={errors.childName?.message}
+              />
+            )}
+          />
+          <Controller
+            name="childDob"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label="Date of birth (optional)"
+                placeholder="YYYY-MM-DD"
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                keyboardType="numbers-and-punctuation"
+                autoCapitalize="none"
+                autoCorrect={false}
+                maxLength={10}
+                helper="Used to pick an age-appropriate look."
+                error={errors.childDob?.message}
+              />
+            )}
+          />
+
+          <View style={styles.submit}>
+            <Button
+              label="Create my family"
+              onPress={handleSubmit(onSubmit)}
+              loading={submitting}
+              fullWidth
+            />
+            <Button
+              label="Back"
+              variant="ghost"
+              onPress={() => setStep(0)}
+              fullWidth
+            />
+          </View>
+        </>
+      )}
+    </AuthScaffold>
   );
 }
 
-const makeStyles = (C: Palette) =>
+const makeStyles = (_C: Palette) =>
   StyleSheet.create({
-  hero: {
-    alignItems: 'center',
-    paddingTop: spacing.s32,
-    paddingBottom: spacing.s24,
-  },
-  block: {
-    gap: spacing.s8,
-  },
-  title: {
-    ...typography.headline,
-    fontSize: 26,
-    color: C.textDark,
-  },
-  subtitle: {
-    ...typography.body,
-    color: C.textMid,
-  },
-  form: {
-    gap: spacing.s16,
-    marginTop: spacing.s16,
-  },
-  submit: {
-    gap: spacing.s8,
-    marginTop: spacing.s8,
-  },
-  footer: {
-    alignItems: 'center',
-    marginTop: spacing.s24,
-  },
-});
+    submit: {
+      gap: spacing.s8,
+      marginTop: spacing.s8,
+    },
+  });

@@ -3,9 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
-import { TydifiedLogo } from '../../components/brand/TydifiedLogo';
-import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { Button } from '../../components/ui/Button';
+import { AuthScaffold } from './AuthScaffold';
 import {
   radii,
   spacing,
@@ -30,91 +29,61 @@ export function WelcomeScreen() {
   const styles = useThemedStyles(makeStyles);
 
   return (
-    <ScreenContainer>
-      <View style={styles.root}>
-        <View style={styles.hero}>
-          <TydifiedLogo variant="full" iconSize={110} animated />
-          <View style={styles.taglinePill}>
-            <Text style={styles.taglineText} maxFontSizeMultiplier={1.3}>
-              <Text style={styles.tagWhite}>Do chores. </Text>
-              <Text style={styles.tagGreen}>Earn points. </Text>
-              <Text style={styles.tagGold}>Unlock rewards. </Text>
-              <Text style={styles.tagCyan}>Level up!</Text>
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.copy}>
-          <Text style={styles.subtitle} maxFontSizeMultiplier={1.5}>
-            Set chores, approve completions, and let your kids earn rewards
-            they choose.
+    <AuthScaffold
+      title="Tydified"
+      subtitle="Set chores, approve completions, and let your kids earn rewards they choose."
+      footer={
+        <View style={styles.taglinePill}>
+          <Text style={styles.taglineText} maxFontSizeMultiplier={1.3}>
+            <Text style={styles.tagWhite}>Do chores. </Text>
+            <Text style={styles.tagGreen}>Earn points. </Text>
+            <Text style={styles.tagGold}>Unlock rewards. </Text>
+            <Text style={styles.tagCyan}>Level up!</Text>
           </Text>
         </View>
-
-        <View style={styles.cta}>
-          <Button
-            label="Create an account"
-            onPress={() => nav.navigate('SignUp')}
-            fullWidth
-          />
-          <Button
-            label="I already have an account"
-            onPress={() => nav.navigate('Login')}
-            variant="secondary"
-            fullWidth
-          />
-        </View>
+      }
+    >
+      <View style={styles.cta}>
+        <Button
+          label="Create an account"
+          onPress={() => nav.navigate('SignUp')}
+          fullWidth
+        />
+        <Button
+          label="I already have an account"
+          onPress={() => nav.navigate('Login')}
+          variant="secondary"
+          fullWidth
+        />
       </View>
-    </ScreenContainer>
+    </AuthScaffold>
   );
 }
 
 const makeStyles = (C: Palette) =>
   StyleSheet.create({
-  root: {
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingVertical: spacing.s32,
-  },
-  hero: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.s20,
-  },
-  taglinePill: {
-    backgroundColor: PILL_NAVY,
-    borderRadius: radii.rFull,
-    paddingHorizontal: spacing.s20,
-    paddingVertical: spacing.s12,
-    // Hairline so the navy pill keeps its edge on the dark-mode navy ground.
-    borderWidth: 1,
-    borderColor: C.border,
-    maxWidth: 340,
-  },
-  taglineText: {
-    ...typography.caption,
-    fontFamily: 'Nunito_800ExtraBold',
-    fontSize: 14,
-    letterSpacing: 0.2,
-    textAlign: 'center',
-  },
-  tagWhite: { color: '#FFFFFF' },
-  tagGreen: { color: TAG_GREEN },
-  tagGold: { color: TAG_GOLD },
-  tagCyan: { color: TAG_CYAN },
-  copy: {
-    alignItems: 'center',
-    paddingHorizontal: spacing.s12,
-  },
-  subtitle: {
-    ...typography.body,
-    color: C.textMid,
-    textAlign: 'center',
-    maxWidth: 360,
-  },
-  cta: {
-    gap: spacing.s12,
-    paddingTop: spacing.s24,
-  },
-});
+    taglinePill: {
+      backgroundColor: PILL_NAVY,
+      borderRadius: radii.rFull,
+      paddingHorizontal: spacing.s20,
+      paddingVertical: spacing.s12,
+      // Hairline so the navy pill keeps its edge on the dark-mode navy ground.
+      borderWidth: 1,
+      borderColor: C.border,
+      maxWidth: 340,
+    },
+    taglineText: {
+      ...typography.caption,
+      fontFamily: 'Nunito_800ExtraBold',
+      fontSize: 14,
+      letterSpacing: 0.2,
+      textAlign: 'center',
+    },
+    tagWhite: { color: '#FFFFFF' },
+    tagGreen: { color: TAG_GREEN },
+    tagGold: { color: TAG_GOLD },
+    tagCyan: { color: TAG_CYAN },
+    cta: {
+      gap: spacing.s12,
+    },
+  });

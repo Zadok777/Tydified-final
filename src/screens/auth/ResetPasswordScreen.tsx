@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
@@ -7,8 +7,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Header } from '../../components/layout/Header';
-import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toast';
@@ -18,11 +16,11 @@ import {
 } from '../../services/auth';
 import {
   spacing,
-  typography,
   useThemedStyles,
   type Palette,
 } from '../../theme';
 import type { RootStackParamList } from '../../types/app.types';
+import { AuthScaffold } from './AuthScaffold';
 
 type Nav = StackNavigationProp<RootStackParamList, 'ResetPassword'>;
 type Rt = RouteProp<RootStackParamList, 'ResetPassword'>;
@@ -94,105 +92,87 @@ export function ResetPasswordScreen() {
   };
 
   return (
-    <ScreenContainer keyboardAvoiding scroll>
-      <Header title="Enter code" onBack={() => nav.goBack()} />
-
-      <View style={styles.intro}>
-        <Text style={styles.helper} maxFontSizeMultiplier={1.5}>
-          We sent a code to {email}. Enter the full code below with your new
-          password.
-        </Text>
-      </View>
-
-      <View style={styles.form}>
-        <Controller
-          name="token"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label="Code from email"
-              placeholder="Enter the full code"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              keyboardType="number-pad"
-              autoCapitalize="none"
-              autoCorrect={false}
-              maxLength={10}
-              textContentType="oneTimeCode"
-              error={errors.token?.message}
-            />
-          )}
-        />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label="New password"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              secureTextEntry
-              autoCapitalize="none"
-              autoCorrect={false}
-              textContentType="newPassword"
-              error={errors.password?.message}
-            />
-          )}
-        />
-        <Controller
-          name="confirm"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label="Confirm new password"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              secureTextEntry
-              autoCapitalize="none"
-              autoCorrect={false}
-              textContentType="newPassword"
-              error={errors.confirm?.message}
-            />
-          )}
-        />
-
-        <View style={styles.submit}>
-          <Button
-            label="Update password"
-            onPress={handleSubmit(onSubmit)}
-            loading={submitting}
-            fullWidth
+    <AuthScaffold
+      title="Enter code"
+      subtitle={`We sent a code to ${email}. Enter the full code below with your new password.`}
+      onBack={() => nav.goBack()}
+    >
+      <Controller
+        name="token"
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="Code from email"
+            placeholder="Enter the full code"
+            value={field.value}
+            onChangeText={field.onChange}
+            onBlur={field.onBlur}
+            keyboardType="number-pad"
+            autoCapitalize="none"
+            autoCorrect={false}
+            maxLength={10}
+            textContentType="oneTimeCode"
+            error={errors.token?.message}
           />
-        </View>
+        )}
+      />
+      <Controller
+        name="password"
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="New password"
+            value={field.value}
+            onChangeText={field.onChange}
+            onBlur={field.onBlur}
+            secureTextEntry
+            autoCapitalize="none"
+            autoCorrect={false}
+            textContentType="newPassword"
+            error={errors.password?.message}
+          />
+        )}
+      />
+      <Controller
+        name="confirm"
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="Confirm new password"
+            value={field.value}
+            onChangeText={field.onChange}
+            onBlur={field.onBlur}
+            secureTextEntry
+            autoCapitalize="none"
+            autoCorrect={false}
+            textContentType="newPassword"
+            error={errors.confirm?.message}
+          />
+        )}
+      />
 
+      <View style={styles.submit}>
         <Button
-          label="Resend code"
-          variant="ghost"
-          size="sm"
-          onPress={onResend}
-          loading={resending}
+          label="Update password"
+          onPress={handleSubmit(onSubmit)}
+          loading={submitting}
+          fullWidth
         />
       </View>
-    </ScreenContainer>
+
+      <Button
+        label="Resend code"
+        variant="ghost"
+        size="sm"
+        onPress={onResend}
+        loading={resending}
+      />
+    </AuthScaffold>
   );
 }
 
-const makeStyles = (C: Palette) =>
+const makeStyles = (_C: Palette) =>
   StyleSheet.create({
-    intro: {
-      marginTop: spacing.s8,
-      marginBottom: spacing.s16,
-    },
-    helper: {
-      ...typography.body,
-      color: C.textMid,
-    },
-    form: {
-      gap: spacing.s16,
-    },
     submit: {
       marginTop: spacing.s8,
     },

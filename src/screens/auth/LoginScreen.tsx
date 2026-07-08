@@ -6,8 +6,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Header } from '../../components/layout/Header';
-import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toast';
@@ -19,6 +17,7 @@ import {
   type Palette,
 } from '../../theme';
 import type { RootStackParamList } from '../../types/app.types';
+import { AuthScaffold } from './AuthScaffold';
 
 type Nav = StackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -65,99 +64,82 @@ export function LoginScreen() {
   };
 
   return (
-    <ScreenContainer keyboardAvoiding scroll>
-      <Header title="Sign in" onBack={() => nav.goBack()} />
+    <AuthScaffold
+      title="Sign in"
+      subtitle="Welcome back."
+      onBack={() => nav.goBack()}
+    >
+      <Controller
+        name="email"
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="Email"
+            placeholder="you@example.com"
+            value={field.value}
+            onChangeText={field.onChange}
+            onBlur={field.onBlur}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="email"
+            textContentType="emailAddress"
+            error={errors.email?.message}
+          />
+        )}
+      />
+      <Controller
+        name="password"
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="Password"
+            value={field.value}
+            onChangeText={field.onChange}
+            onBlur={field.onBlur}
+            secureTextEntry
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="password"
+            textContentType="password"
+            error={errors.password?.message}
+          />
+        )}
+      />
 
-      <View style={styles.intro}>
-        <Text style={styles.helper} maxFontSizeMultiplier={1.5}>
-          Welcome back.
-        </Text>
+      <View style={styles.submit}>
+        <Button
+          label="Sign in"
+          onPress={handleSubmit(onSubmit)}
+          loading={submitting}
+          fullWidth
+        />
       </View>
 
-      <View style={styles.form}>
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label="Email"
-              placeholder="you@example.com"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoComplete="email"
-              textContentType="emailAddress"
-              error={errors.email?.message}
-            />
-          )}
-        />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label="Password"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              secureTextEntry
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoComplete="password"
-              textContentType="password"
-              error={errors.password?.message}
-            />
-          )}
-        />
+      <Button
+        label="Forgot password?"
+        variant="ghost"
+        size="sm"
+        onPress={() => nav.navigate('ForgotPassword')}
+      />
 
-        <View style={styles.submit}>
-          <Button
-            label="Sign in"
-            onPress={handleSubmit(onSubmit)}
-            loading={submitting}
-            fullWidth
-          />
-        </View>
-
+      <View style={styles.switchRow}>
+        <Text style={styles.switchText} maxFontSizeMultiplier={1.5}>
+          No account yet?
+        </Text>
         <Button
-          label="Forgot password?"
+          label="Create one"
           variant="ghost"
           size="sm"
-          onPress={() => nav.navigate('ForgotPassword')}
+          onPress={() => nav.navigate('SignUp')}
         />
-
-        <View style={styles.switchRow}>
-          <Text style={styles.switchText} maxFontSizeMultiplier={1.5}>
-            No account yet?
-          </Text>
-          <Button
-            label="Create one"
-            variant="ghost"
-            size="sm"
-            onPress={() => nav.navigate('SignUp')}
-          />
-        </View>
       </View>
-    </ScreenContainer>
+    </AuthScaffold>
   );
 }
 
 const makeStyles = (C: Palette) =>
   StyleSheet.create({
-  intro: {
-    marginTop: spacing.s8,
-    marginBottom: spacing.s16,
-  },
-  helper: {
-    ...typography.body,
-    color: C.textMid,
-  },
-  form: {
-    gap: spacing.s16,
-  },
   submit: {
     marginTop: spacing.s8,
   },
