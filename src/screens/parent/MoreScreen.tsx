@@ -381,7 +381,7 @@ function Row({
       style={({ pressed }) => [styles.row, pressed && interactive && styles.rowPressed]}
     >
       <View style={styles.rowIcon}>
-        <Ionicons name={icon} size={19} color={C.pinkText} />
+        <Ionicons name={icon} size={19} color={C.textMid} />
       </View>
       <View style={styles.rowMeta}>
         <Text style={styles.rowLabel} maxFontSizeMultiplier={1.3}>
@@ -468,11 +468,11 @@ const makeStyles = (C: Palette) =>
       width: 40,
       height: 40,
       borderRadius: radii.rFull,
-      backgroundColor: C.pinkAlpha10,
+      backgroundColor: C.glassLight,
       alignItems: 'center',
       justifyContent: 'center',
       borderWidth: 1,
-      borderColor: C.borderPink,
+      borderColor: C.border,
     },
     rowPressed: {
       opacity: 0.6,

@@ -65,9 +65,15 @@ export function AuthScaffold({
         </View>
 
         <View style={[styles.sheet, shadows.md]}>
-          <Text style={styles.title} maxFontSizeMultiplier={1.4}>
-            {title}
-          </Text>
+          {title === 'Tydified' ? (
+            <View style={styles.wordmark}>
+              <TydifiedLogo variant="full" iconSize={102} animated />
+            </View>
+          ) : (
+            <Text style={styles.title} maxFontSizeMultiplier={1.4}>
+              {title}
+            </Text>
+          )}
           {subtitle !== undefined ? (
             <Text style={styles.subtitle} maxFontSizeMultiplier={1.4}>
               {subtitle}
@@ -233,6 +239,11 @@ const makeStyles = (C: Palette) =>
       fontSize: 28,
       color: C.textDark,
       textAlign: 'center',
+    },
+    wordmark: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: spacing.s4,
     },
     subtitle: {
       ...typography.body,

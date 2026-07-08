@@ -69,6 +69,7 @@ const ICON_OPTIONS: readonly (string | null)[] = [
 // Preview pop spring — a quick settle, not a wobble. Tuned once here so the
 // selection feedback feels consistent for both color and icon taps.
 const POP_FROM = 0.85;
+const PICKER_GRADIENT_INDEXES = [0, 1, 2, 3, 4, 5] as const;
 
 export type ProfileEditTarget =
   | { kind: 'parent' }
@@ -194,17 +195,18 @@ export function ProfileEditModal({
       <View>
         <Text style={styles.label}>Color</Text>
         <View style={styles.swatchRow}>
-          {AVATAR_GRADIENTS.map((g, i) => {
-            const selected = gradient === i;
+          {PICKER_GRADIENT_INDEXES.map((gradientIndex, i) => {
+            const selected = gradient === gradientIndex;
+            const g = AVATAR_GRADIENTS[gradientIndex];
             return (
               <Reanimated.View
-                key={i}
+                key={gradientIndex}
                 entering={FadeInDown.duration(220).delay(Math.min(i, 8) * 30)}
               >
                 <Pressable
                   onPress={() => {
                     hapticLight();
-                    setGradient(i);
+                    setGradient(gradientIndex);
                   }}
                   accessibilityRole="button"
                   accessibilityLabel={`Color ${i + 1}`}

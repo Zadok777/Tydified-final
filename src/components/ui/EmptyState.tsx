@@ -71,10 +71,10 @@ const makeStyles = (C: Palette) =>
       justifyContent: 'center',
       paddingHorizontal: spacing.s24,
       paddingVertical: spacing.s32,
-      backgroundColor: C.pinkAlpha10,
+      backgroundColor: C.glass,
       borderRadius: radii.r20,
       borderWidth: 1,
-      borderColor: C.borderPink,
+      borderColor: C.border,
       overflow: 'hidden',
     },
     scene: {
@@ -83,7 +83,7 @@ const makeStyles = (C: Palette) =>
       left: spacing.s24,
       right: spacing.s24,
       height: 72,
-      opacity: 0.75,
+      opacity: 0.45,
     },
     sceneOrb: {
       position: 'absolute',
@@ -124,7 +124,7 @@ const makeStyles = (C: Palette) =>
       justifyContent: 'center',
       marginBottom: spacing.s16,
       borderWidth: 1,
-      borderColor: C.borderPink,
+      borderColor: C.border,
     },
     title: {
       ...typography.title,
