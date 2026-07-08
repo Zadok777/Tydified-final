@@ -2,7 +2,6 @@ export { ThemeProvider, useTheme, useThemedStyles } from './ThemeProvider';
 export {
   C,
   lightC,
-  darkC,
   AVATAR_GRADIENTS,
   GRADIENTS,
   radii,

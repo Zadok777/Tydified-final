@@ -237,9 +237,9 @@ export function FamilyScreen() {
                     </Pressable>
                   </View>
                   <View style={styles.statRow}>
-                    <MiniStat label="POINTS" value={child.points ?? 0} tone="accent" />
-                    <MiniStat label="STREAK" value={`${child.streak_days ?? 0}d`} tone="plain" />
-                    <MiniStat label="THIS WK" value={thisWeekPoints(child.id)} tone="plain" />
+                    <MiniStat label="POINTS" value={child.points ?? 0} tone="orange" />
+                    <MiniStat label="STREAK" value={`${child.streak_days ?? 0}d`} tone="rose" />
+                    <MiniStat label="THIS WK" value={thisWeekPoints(child.id)} tone="green" />
                   </View>
                 </GlassCard>
               );
@@ -291,15 +291,19 @@ function MiniStat({
 }: {
   label: string;
   value: number | string;
-  // 'accent' = the points figure (orange); 'plain' = neutral dark number.
-  tone: 'accent' | 'plain';
+  // One lockup hue per stat: points = amber, streak = rose, this-week = green.
+  tone: 'orange' | 'rose' | 'green';
 }) {
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
-  const color = tone === 'accent' ? C.orange : C.textDark;
+  const tint = {
+    orange: { color: C.orangeText, bg: C.orangeAlpha10 },
+    rose: { color: C.rose, bg: C.roseAlpha10 },
+    green: { color: C.greenText, bg: C.greenAlpha10 },
+  }[tone];
   return (
-    <View style={styles.miniStat}>
-      <Text style={[styles.miniValue, { color }]} maxFontSizeMultiplier={1.2}>
+    <View style={[styles.miniStat, { backgroundColor: tint.bg }]}>
+      <Text style={[styles.miniValue, { color: tint.color }]} maxFontSizeMultiplier={1.2}>
         {value}
       </Text>
       <Text style={styles.miniLabel} maxFontSizeMultiplier={1.1} numberOfLines={1}>

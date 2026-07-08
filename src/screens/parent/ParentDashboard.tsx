@@ -254,21 +254,25 @@ export function ParentDashboard() {
           <QuickAction
             label="Add Chore"
             icon="add"
+            tone="pink"
             onPress={() => setChoreModal(true)}
           />
           <QuickAction
             label="New Reward"
             icon="gift"
+            tone="orange"
             onPress={() => setRewardModal(true)}
           />
           <QuickAction
             label="Add Kid"
             icon="person-add"
+            tone="green"
             onPress={() => setChildModal(true)}
           />
           <QuickAction
             label="Set Goal"
             icon="trophy"
+            tone="purple"
             onPress={() => setGoalModal(true)}
           />
         </View>

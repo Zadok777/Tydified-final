@@ -25,13 +25,23 @@ export function SnapshotTile({
 }) {
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
-  // Calm & refined: uniform surface tiles + big near-black numbers. Color is
-  // reserved — only Points (orange) pops, the rest stay neutral so the data
-  // reads through size, not a rainbow of backgrounds.
-  const valueColor = tone === 'orange' ? C.orange : C.textDark;
+  // Me+ pastel system: each stat sits on its own lockup-hue tint with a
+  // contrast-safe text shade of the same hue (Tydi blue / green / amber).
+  const valueColor =
+    tone === 'orange'
+      ? C.orangeText
+      : tone === 'green'
+        ? C.greenText
+        : C.pinkText;
+  const tileBg =
+    tone === 'orange'
+      ? C.orangeAlpha10
+      : tone === 'green'
+        ? C.greenAlpha10
+        : C.pinkAlpha10;
   const display = useCountUp(value);
   return (
-    <View style={styles.snapTile}>
+    <View style={[styles.snapTile, { backgroundColor: tileBg }]}>
       <Text style={[styles.snapValue, { color: valueColor }]} maxFontSizeMultiplier={1.3}>
         {display}
       </Text>
@@ -42,17 +52,29 @@ export function SnapshotTile({
   );
 }
 
+export type QuickActionTone = 'pink' | 'orange' | 'green' | 'purple';
+
 export function QuickAction({
   label,
   icon,
   onPress,
+  tone = 'pink',
 }: {
   label: string;
   icon: IoniconName;
   onPress: () => void;
+  tone?: QuickActionTone;
 }) {
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
+  // One lockup hue per action so the grid reads as the brand rainbow.
+  // Icon colors are the contrast-safe shade of each hue where needed.
+  const tint: Record<QuickActionTone, { bg: string; fg: string }> = {
+    pink: { bg: C.pinkAlpha15, fg: C.pink },
+    orange: { bg: C.orangeAlpha15, fg: C.orange },
+    green: { bg: C.greenAlpha15, fg: C.greenText },
+    purple: { bg: C.purpleAlpha15, fg: C.purple },
+  };
   return (
     <Pressable
       onPress={onPress}
@@ -60,8 +82,8 @@ export function QuickAction({
       accessibilityLabel={label}
       style={({ pressed }) => [styles.actionItem, pressed && styles.pressed]}
     >
-      <View style={[styles.actionIcon, { backgroundColor: C.pinkAlpha15 }]}>
-        <Ionicons name={icon} size={20} color={C.pink} />
+      <View style={[styles.actionIcon, { backgroundColor: tint[tone].bg }]}>
+        <Ionicons name={icon} size={20} color={tint[tone].fg} />
       </View>
       <Text style={styles.actionLabel} maxFontSizeMultiplier={1.3} numberOfLines={2}>
         {label}
@@ -157,11 +179,19 @@ export function GoalRow({
   return (
     <View style={styles.goalCard}>
       <View style={styles.goalTop}>
-        <View style={styles.goalIcon}>
+        <View
+          style={[
+            styles.goalIcon,
+            {
+              backgroundColor:
+                goal.kind === 'reward' ? C.orangeAlpha15 : C.purpleAlpha15,
+            },
+          ]}
+        >
           <Ionicons
             name={goal.kind === 'reward' ? 'gift' : 'flag'}
             size={16}
-            color={C.pink}
+            color={goal.kind === 'reward' ? C.orange : C.purple}
           />
         </View>
         <View style={styles.goalMeta}>

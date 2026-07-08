@@ -17,11 +17,19 @@ export const lightC = {
   // surfaces. #14B0FE is fine for fills/icons, fails WCAG 4.5:1 for text.
   pinkText: '#0059AE',
   orange: '#FEAA01', // trophy amber
+  // Deep amber for TEXT on light surfaces — #FEAA01 is ~2:1 on white.
+  orangeText: '#A36A00',
   green: '#60DB01', // tagline green — fills/chips/dark grounds only
   // Darkened tagline-green hue for TEXT on light surfaces. #60DB01 is ~2.1:1
   // on white — fails WCAG for text and icons.
   greenText: '#3D9800',
   bg: '#FAF9FB', // warm near-white canvas (was lavender glass ground)
+
+  // Reserve lockup hues — first-class so every logo color has a slot.
+  // Raw hues are for fills/icons only; they fail 4.5:1 as text on white.
+  purple: '#B353FC', // "fied" purple
+  rose: '#FC5499', // "fied" pink
+  cyan: '#5FFCFE', // wordmark cyan highlight
 
   // Text
   textDark: '#00001B', // brand navy (logo outline/pill)
@@ -42,64 +50,19 @@ export const lightC = {
   orangeAlpha10: 'rgba(254, 170, 1, 0.10)',
   greenAlpha15: 'rgba(96, 219, 1, 0.15)',
   greenAlpha20: 'rgba(96, 219, 1, 0.20)',
+  greenAlpha10: 'rgba(96, 219, 1, 0.10)',
+  purpleAlpha15: 'rgba(179, 83, 252, 0.15)',
+  purpleAlpha10: 'rgba(179, 83, 252, 0.10)',
+  roseAlpha15: 'rgba(252, 84, 153, 0.15)',
+  roseAlpha10: 'rgba(252, 84, 153, 0.10)',
   mutedAlpha20: 'rgba(168, 168, 184, 0.20)',
   redAlpha15: 'rgba(220, 38, 38, 0.15)',
 } as const;
 
-// Public palette shape — every themed color the app consumes. Both the light
-// and dark palettes satisfy this; themed components receive it as `Palette`
-// (string-typed values) from useTheme().C.
-export type Palette = {
-  pink: string;
-  pinkText: string;
-  orange: string;
-  green: string;
-  greenText: string;
-  bg: string;
-  textDark: string;
-  textMid: string;
-  textLight: string;
-  textWhite: string;
-  glass: string;
-  glassLight: string;
-  border: string;
-  borderPink: string;
-  pinkAlpha15: string;
-  pinkAlpha10: string;
-  orangeAlpha15: string;
-  orangeAlpha10: string;
-  greenAlpha15: string;
-  greenAlpha20: string;
-  mutedAlpha20: string;
-  redAlpha15: string;
-};
-
-// Dark palette. Brand accents stay constant (they're bright enough for the
-// dark ground); surfaces flip to the brand-navy ground with inverted text.
-export const darkC: Palette = {
-  pink: '#14B0FE', // Tydi blue — ≥4.5:1 on the navy ground as-is
-  pinkText: '#14B0FE',
-  orange: '#FDCB01', // bright trophy gold reads better than amber on navy
-  green: '#60DB01',
-  greenText: '#60DB01', // bright green is fine as text on the dark ground
-  bg: '#00001B', // brand navy (logo outline/pill) as the dark ground
-  textDark: '#F0F2FF',
-  textMid: '#A2A8C4',
-  textLight: '#696F8E',
-  textWhite: '#FFFFFF',
-  glass: '#15152F', // solid raised surface, navy-tinted
-  glassLight: '#0C0C26', // recessed surface
-  border: 'rgba(255, 255, 255, 0.07)', // hairline on dark
-  borderPink: 'rgba(20, 176, 254, 0.50)',
-  pinkAlpha15: 'rgba(20, 176, 254, 0.24)',
-  pinkAlpha10: 'rgba(20, 176, 254, 0.16)',
-  orangeAlpha15: 'rgba(253, 203, 1, 0.22)',
-  orangeAlpha10: 'rgba(253, 203, 1, 0.15)',
-  greenAlpha15: 'rgba(96, 219, 1, 0.24)',
-  greenAlpha20: 'rgba(96, 219, 1, 0.30)',
-  mutedAlpha20: 'rgba(168, 168, 184, 0.22)',
-  redAlpha15: 'rgba(220, 38, 38, 0.24)',
-};
+// Public palette shape — every themed color the app consumes. The app is
+// light-only (dark mode removed 2026-07-08), so the shape derives directly
+// from the light palette.
+export type Palette = { [K in keyof typeof lightC]: string };
 
 // Backward-compatible default — the light palette. Theme-aware code should
 // prefer useTheme().C; this stays for mode-invariant module-scope use (e.g.

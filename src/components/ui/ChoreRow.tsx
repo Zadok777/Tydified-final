@@ -80,7 +80,7 @@ export function ChoreRow({
   onPress,
   style,
 }: ChoreRowProps) {
-  const { C, mode } = useTheme();
+  const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
   const visual = statusVisuals[status];
   const interactive = onPress !== undefined;
@@ -151,7 +151,7 @@ export function ChoreRow({
           <Ionicons
             name={visual.iconName}
             size={22}
-            color={badgeIconColorFor(C, mode, visual.tone)}
+            color={badgeIconColorFor(C, visual.tone)}
           />
         </View>
         <PointsBadge points={pointValue} size="sm" />
@@ -163,7 +163,7 @@ export function ChoreRow({
             <Ionicons
               name={visual.iconName}
               size={11}
-              color={badgeIconColorFor(C, mode, visual.tone)}
+              color={badgeIconColorFor(C, visual.tone)}
             />
           }
           style={styles.statusBadge}
@@ -189,20 +189,16 @@ function tintForStatus(
   }
 }
 
-function badgeIconColorFor(
-  C: Palette,
-  mode: 'light' | 'dark',
-  tone: StatusVisual['tone']
-): string {
+function badgeIconColorFor(C: Palette, tone: StatusVisual['tone']): string {
   switch (tone) {
     case 'neutral':
       return C.textDark;
     case 'orange':
-      return mode === 'dark' ? C.orange : '#C36321';
+      return '#C36321';
     case 'green':
-      return C.green;
+      return C.greenText;
     case 'danger':
-      return mode === 'dark' ? '#FF7A7A' : '#B91C1C';
+      return '#B91C1C';
   }
 }
 

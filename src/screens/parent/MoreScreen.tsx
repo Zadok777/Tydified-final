@@ -60,7 +60,6 @@ export function MoreScreen() {
   const profile = useAuthStore((s) => s.profile);
   const session = useAuthStore((s) => s.session);
   const family = useFamilyStore((s) => s.family);
-  const darkMode = useSettingsStore((s) => s.darkMode);
   const notificationsEnabled = useSettingsStore((s) => s.notificationsEnabled);
 
   const [editingName, setEditingName] = useState(false);
@@ -70,12 +69,6 @@ export function MoreScreen() {
 
   const displayName = profile?.display_name ?? session?.user?.email ?? 'there';
   const email = session?.user?.email ?? '';
-
-  const onToggleDark = async (v: boolean) => {
-    useSettingsStore.getState().setDarkMode(v);
-    const res = await updateMySettings({ dark_mode: v });
-    if (!res.success) toast.show({ message: res.error, tone: 'error' });
-  };
 
   const onToggleNotifications = async (v: boolean) => {
     useSettingsStore.getState().setNotificationsEnabled(v);
@@ -201,21 +194,8 @@ export function MoreScreen() {
       <SectionLabel text="Preferences" />
       <GlassCard padding={0}>
         <Row
-          icon="moon-outline"
-          label="Dark mode"
-          sub="Switch the whole app to a dark theme"
-          right={
-            <Switch
-              value={darkMode}
-              onValueChange={onToggleDark}
-              trackColor={{ false: C.mutedAlpha20, true: C.pink }}
-              thumbColor={C.textWhite}
-            />
-          }
-        />
-        <Divider />
-        <Row
           icon="notifications-outline"
+          tone="orange"
           label="Notifications"
           sub="Approvals, redemptions, daily"
           right={
@@ -230,6 +210,7 @@ export function MoreScreen() {
         <Divider />
         <Row
           icon="shield-checkmark-outline"
+          tone="green"
           label="Privacy & COPPA"
           sub="Child data protections"
           onPress={() =>
@@ -266,6 +247,7 @@ export function MoreScreen() {
         ) : (
           <Row
             icon="home-outline"
+          tone="pink"
             label="Family name"
             value={family?.name ?? '—'}
             onPress={() => {
@@ -277,6 +259,7 @@ export function MoreScreen() {
         <Divider />
         <Row
           icon="people-outline"
+          tone="purple"
           label="Manage kids"
           value={`${useFamilyStore.getState().children.length}`}
           onPress={() => nav.navigate('Family')}
@@ -284,6 +267,7 @@ export function MoreScreen() {
         <Divider />
         <Row
           icon="gift-outline"
+          tone="rose"
           label="Reward catalog"
           onPress={() => nav.navigate('Rewards')}
         />
@@ -293,6 +277,7 @@ export function MoreScreen() {
       <GlassCard padding={0}>
         <Row
           icon="star-outline"
+          tone="orange"
           label="Tydified Plus"
           sub="Unlimited kids & chores"
           onPress={() => nav.navigate('Paywall')}
@@ -300,6 +285,7 @@ export function MoreScreen() {
         <Divider />
         <Row
           icon="card-outline"
+          tone="pink"
           label="Billing & invoices"
           onPress={() => soon('Billing')}
         />
@@ -309,11 +295,13 @@ export function MoreScreen() {
       <GlassCard padding={0}>
         <Row
           icon="help-circle-outline"
+          tone="green"
           label="Help center"
           onPress={() => nav.navigate('Help')}
         />
         <Divider />
-        <Row icon="heart-outline" label="Rate Tydified" onPress={onRate} />
+        <Row icon="heart-outline"
+          tone="rose" label="Rate Tydified" onPress={onRate} />
       </GlassCard>
 
       <View style={styles.dangerActions}>
@@ -354,6 +342,8 @@ function Divider() {
   return <View style={styles.divider} />;
 }
 
+type RowTone = 'pink' | 'orange' | 'green' | 'purple' | 'rose';
+
 function Row({
   icon,
   label,
@@ -361,6 +351,7 @@ function Row({
   value,
   right,
   onPress,
+  tone = 'pink',
 }: {
   icon: IoniconName;
   label: string;
@@ -368,10 +359,20 @@ function Row({
   value?: string;
   right?: React.ReactNode;
   onPress?: () => void;
+  tone?: RowTone;
 }) {
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
   const interactive = onPress !== undefined;
+  // Me+ settings pattern: every row gets a lockup-hue icon bubble so the
+  // list carries the brand rainbow instead of a wall of gray glyphs.
+  const tint: Record<RowTone, { bg: string; fg: string }> = {
+    pink: { bg: C.pinkAlpha15, fg: C.pink },
+    orange: { bg: C.orangeAlpha15, fg: C.orange },
+    green: { bg: C.greenAlpha15, fg: C.greenText },
+    purple: { bg: C.purpleAlpha15, fg: C.purple },
+    rose: { bg: C.roseAlpha15, fg: C.rose },
+  };
   return (
     <Pressable
       onPress={onPress}
@@ -380,8 +381,8 @@ function Row({
       accessibilityLabel={label}
       style={({ pressed }) => [styles.row, pressed && interactive && styles.rowPressed]}
     >
-      <View style={styles.rowIcon}>
-        <Ionicons name={icon} size={19} color={C.textMid} />
+      <View style={[styles.rowIcon, { backgroundColor: tint[tone].bg }]}>
+        <Ionicons name={icon} size={19} color={tint[tone].fg} />
       </View>
       <View style={styles.rowMeta}>
         <Text style={styles.rowLabel} maxFontSizeMultiplier={1.3}>
