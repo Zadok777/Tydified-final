@@ -54,8 +54,9 @@ export function AuthScaffold({
           ) : null}
 
           <View style={styles.sun} />
+          {/* ~0.65× the circle: bob headroom so the trophy never kisses the ring */}
           <View style={[styles.trophyWrap, shadows.md]}>
-            <TydifiedLogo variant="icon" iconSize={112} animated />
+            <TydifiedLogo variant="icon" iconSize={86} animated />
           </View>
         </View>
 

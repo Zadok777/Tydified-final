@@ -196,7 +196,7 @@ export function RewardsScreen() {
                   </Text>
                 </View>
                 <View style={styles.balanceMascot}>
-                  <TydifiedLogo variant="icon" iconSize={54} animated />
+                  <TydifiedLogo variant="icon" iconSize={42} animated />
                 </View>
                 <PointsBadge points={balance} size="lg" />
               </View>
