@@ -37,9 +37,9 @@ interface ButtonProps {
 }
 
 const heightFor: Record<ButtonSize, number> = {
-  sm: 40,
-  md: 48, // DESIGN §9 minimum touch target
-  lg: 56, // Elementary bracket minimum
+  sm: 44,
+  md: 52,
+  lg: 60,
 };
 
 const horizontalPaddingFor: Record<ButtonSize, number> = {
@@ -115,7 +115,11 @@ export function Button({
 function variantContainerStyle(C: Palette, variant: ButtonVariant): ViewStyle {
   switch (variant) {
     case 'primary':
-      return { backgroundColor: C.pink };
+      return {
+        backgroundColor: C.pink,
+        borderWidth: 1,
+        borderColor: C.borderPink,
+      };
     case 'secondary':
       return {
         backgroundColor: C.glass,
@@ -153,7 +157,7 @@ function textColorFor(
 
 const styles = StyleSheet.create({
   base: {
-    borderRadius: radii.r14,
+    borderRadius: radii.rFull,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
@@ -170,7 +174,7 @@ const styles = StyleSheet.create({
     marginLeft: spacing.s8,
   },
   pressed: {
-    transform: [{ scale: 0.98 }],
+    transform: [{ scale: 0.97 }, { translateY: 1 }],
     opacity: 0.92,
   },
   disabled: {

@@ -372,7 +372,7 @@ const makeStyles = (C: Palette) =>
   tierChip: {
     paddingHorizontal: spacing.s12,
     paddingVertical: spacing.s8,
-    borderRadius: radii.r12,
+    borderRadius: radii.rFull,
     borderWidth: 1,
     borderColor: C.border,
     backgroundColor: C.glassLight,
@@ -396,7 +396,7 @@ const makeStyles = (C: Palette) =>
     backgroundColor: C.pinkAlpha10,
     borderWidth: 1,
     borderColor: C.borderPink,
-    borderRadius: radii.r12,
+    borderRadius: radii.r16,
     paddingHorizontal: spacing.s12,
     paddingVertical: spacing.s8,
     alignItems: 'flex-start',
@@ -409,7 +409,7 @@ const makeStyles = (C: Palette) =>
   },
   suggestChipPts: {
     ...typography.caption,
-    color: C.pink,
+    color: C.pinkText,
     marginTop: 2,
   },
   iconChip: {

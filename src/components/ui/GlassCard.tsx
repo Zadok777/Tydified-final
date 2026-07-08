@@ -45,7 +45,7 @@ function tintBackground(C: Palette, tint: Tint): string {
 export function GlassCard({
   children,
   tint = 'light',
-  radius = radii.r18,
+  radius = radii.r20,
   padding = spacing.s16,
   borderColor,
   shadow = 'md',

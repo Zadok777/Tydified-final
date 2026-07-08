@@ -84,6 +84,7 @@ export function ChoreRow({
   const styles = useThemedStyles(makeStyles);
   const visual = statusVisuals[status];
   const interactive = onPress !== undefined;
+  const rowTone = tintForStatus(C, status);
 
   return (
     <Pressable
@@ -94,16 +95,22 @@ export function ChoreRow({
       style={({ pressed }) => [
         styles.row,
         shadows.sm,
+        {
+          backgroundColor: rowTone.background,
+          borderColor: rowTone.border,
+        },
         pressed && interactive && styles.pressed,
         style,
       ]}
     >
       {assigneeName !== undefined ? (
-        <Avatar
-          name={assigneeName}
-          gradientIndex={assigneeGradientIndex}
-          size="md"
-        />
+        <View style={styles.leadingCircle}>
+          <Avatar
+            name={assigneeName}
+            gradientIndex={assigneeGradientIndex}
+            size="md"
+          />
+        </View>
       ) : (
         <View style={styles.iconBubble}>
           <Ionicons
@@ -140,6 +147,13 @@ export function ChoreRow({
       </View>
 
       <View style={styles.trailing}>
+        <View style={styles.checkCircle}>
+          <Ionicons
+            name={visual.iconName}
+            size={22}
+            color={badgeIconColorFor(C, mode, visual.tone)}
+          />
+        </View>
         <PointsBadge points={pointValue} size="sm" />
         <Badge
           label={visual.label}
@@ -157,6 +171,22 @@ export function ChoreRow({
       </View>
     </Pressable>
   );
+}
+
+function tintForStatus(
+  C: Palette,
+  status: ChoreStatus
+): { background: string; border: string } {
+  switch (status) {
+    case 'assigned':
+      return { background: C.pinkAlpha10, border: C.borderPink };
+    case 'submitted':
+      return { background: C.orangeAlpha10, border: C.orangeAlpha15 };
+    case 'approved':
+      return { background: C.greenAlpha15, border: C.greenAlpha20 };
+    case 'rejected':
+      return { background: C.redAlpha15, border: C.border };
+  }
 }
 
 function badgeIconColorFor(
@@ -181,11 +211,10 @@ const makeStyles = (C: Palette) =>
     row: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: C.glass,
       borderRadius: radii.r18,
       borderWidth: 1,
-      borderColor: C.border,
       padding: spacing.s12,
+      minHeight: 76,
     },
     pressed: {
       transform: [{ scale: 0.98 }],
@@ -195,9 +224,21 @@ const makeStyles = (C: Palette) =>
       width: 48,
       height: 48,
       borderRadius: radii.rFull,
-      backgroundColor: C.pinkAlpha10,
+      backgroundColor: C.glass,
       alignItems: 'center',
       justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: C.border,
+    },
+    leadingCircle: {
+      width: 52,
+      height: 52,
+      borderRadius: radii.rFull,
+      backgroundColor: C.glass,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: C.border,
     },
     body: {
       flex: 1,
@@ -228,6 +269,16 @@ const makeStyles = (C: Palette) =>
     trailing: {
       alignItems: 'flex-end',
       gap: spacing.s4,
+    },
+    checkCircle: {
+      width: 44,
+      height: 44,
+      borderRadius: radii.rFull,
+      backgroundColor: C.glass,
+      borderWidth: 1,
+      borderColor: C.border,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     statusBadge: {
       marginTop: 2,

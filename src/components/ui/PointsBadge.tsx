@@ -56,7 +56,7 @@ export function PointsBadge({
   const styles = useThemedStyles(makeStyles);
   const prefix = tone === 'earn' ? '+' : tone === 'spend' ? '−' : '';
   const formatted = `${prefix}${formatPoints(Math.abs(points))}`;
-  const textColor = mode === 'dark' ? C.orange : '#C36321';
+  const textColor = mode === 'dark' ? C.orange : '#9A4A00';
 
   return (
     <View
@@ -105,6 +105,8 @@ const makeStyles = (C: Palette) =>
       backgroundColor: C.orangeAlpha15,
       borderRadius: radii.rFull,
       alignSelf: 'flex-start',
+      borderWidth: 1,
+      borderColor: C.orangeAlpha15,
     },
     icon: {
       marginRight: spacing.s4,

@@ -26,7 +26,7 @@ export function GradientCard({
   colors,
   children,
   radius = radii.r20,
-  padding = spacing.s20,
+  padding = spacing.s24,
   start = { x: 0, y: 0 },
   end = { x: 1, y: 1 },
   shadow = 'lg',

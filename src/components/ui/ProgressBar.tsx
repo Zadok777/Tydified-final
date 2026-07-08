@@ -31,7 +31,7 @@ interface ProgressBarProps {
 
 export function ProgressBar({
   value,
-  height = 8,
+  height = 10,
   color,
   trackColor,
   label,
@@ -106,5 +106,7 @@ const makeStyles = (C: Palette) =>
     track: {
       overflow: 'hidden',
       borderRadius: radii.rFull,
+      borderWidth: 1,
+      borderColor: C.border,
     },
   });

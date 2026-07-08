@@ -32,7 +32,7 @@ let gradientCounter = 0;
 export function ProgressRing({
   value,
   size = 96,
-  strokeWidth = 8,
+  strokeWidth = 10,
   color,
   trackColor,
   centerLabel,

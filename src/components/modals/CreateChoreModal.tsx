@@ -463,7 +463,7 @@ const makeStyles = (C: Palette) =>
     backgroundColor: C.pinkAlpha10,
     borderWidth: 1,
     borderColor: C.borderPink,
-    borderRadius: radii.r12,
+    borderRadius: radii.r16,
     paddingHorizontal: spacing.s12,
     paddingVertical: spacing.s8,
     alignItems: 'flex-start',
@@ -505,7 +505,7 @@ const makeStyles = (C: Palette) =>
     fontFamily: 'DMSans_600SemiBold',
   },
   childChipTextActive: {
-    color: C.pink,
+    color: C.pinkText,
     fontFamily: 'DMSans_700Bold',
   },
   catChip: {

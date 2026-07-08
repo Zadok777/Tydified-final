@@ -140,10 +140,10 @@ const makeStyles = (C: Palette) =>
     },
     field: {
       backgroundColor: C.glass,
-      borderRadius: radii.r14,
+      borderRadius: radii.r18,
       borderWidth: 1,
       paddingHorizontal: spacing.s16,
-      height: 48,
+      height: 52,
       justifyContent: 'center',
     },
     fieldMultiline: {

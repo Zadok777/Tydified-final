@@ -39,6 +39,11 @@ export function EmptyState({
 
   return (
     <View style={[styles.wrapper, style]}>
+      <View style={styles.scene} pointerEvents="none">
+        <View style={styles.sceneOrb} />
+        <View style={styles.sceneCardOne} />
+        <View style={styles.sceneCardTwo} />
+      </View>
       <View style={styles.iconBubble}>
         <Ionicons name={icon} size={32} color={C.pink} />
       </View>
@@ -66,6 +71,49 @@ const makeStyles = (C: Palette) =>
       justifyContent: 'center',
       paddingHorizontal: spacing.s24,
       paddingVertical: spacing.s32,
+      backgroundColor: C.pinkAlpha10,
+      borderRadius: radii.r20,
+      borderWidth: 1,
+      borderColor: C.borderPink,
+      overflow: 'hidden',
+    },
+    scene: {
+      position: 'absolute',
+      top: spacing.s16,
+      left: spacing.s24,
+      right: spacing.s24,
+      height: 72,
+      opacity: 0.75,
+    },
+    sceneOrb: {
+      position: 'absolute',
+      alignSelf: 'center',
+      width: 64,
+      height: 64,
+      borderRadius: radii.rFull,
+      backgroundColor: C.orangeAlpha15,
+    },
+    sceneCardOne: {
+      position: 'absolute',
+      left: 8,
+      top: 22,
+      width: 72,
+      height: 22,
+      borderRadius: radii.r12,
+      backgroundColor: C.glass,
+      borderWidth: 1,
+      borderColor: C.border,
+    },
+    sceneCardTwo: {
+      position: 'absolute',
+      right: 0,
+      top: 8,
+      width: 82,
+      height: 24,
+      borderRadius: radii.r12,
+      backgroundColor: C.glass,
+      borderWidth: 1,
+      borderColor: C.border,
     },
     iconBubble: {
       width: 64,
@@ -75,6 +123,8 @@ const makeStyles = (C: Palette) =>
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: spacing.s16,
+      borderWidth: 1,
+      borderColor: C.borderPink,
     },
     title: {
       ...typography.title,
@@ -90,5 +140,6 @@ const makeStyles = (C: Palette) =>
     },
     action: {
       marginTop: spacing.s20,
+      alignSelf: 'stretch',
     },
   });

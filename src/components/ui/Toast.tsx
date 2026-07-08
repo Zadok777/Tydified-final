@@ -194,7 +194,7 @@ function ToastView({
   // Opaque base so the toast never lets the header text bleed through. The
   // tonal tint is layered on top of this solid surface, not used as the
   // (translucent) background itself.
-  const surface = mode === 'dark' ? '#221C31' : '#FFFFFF';
+  const surface = mode === 'dark' ? C.glass : '#FFFFFF';
 
   return (
     <Animated.View
@@ -222,7 +222,7 @@ function ToastView({
           pointerEvents="none"
           style={[
             StyleSheet.absoluteFillObject,
-            { backgroundColor: visual.background, borderRadius: radii.r16 },
+            { backgroundColor: visual.background, borderRadius: radii.r18 },
           ]}
         />
         <Ionicons name={visual.iconName} size={20} color={visual.iconColor} />
@@ -249,7 +249,7 @@ const makeStyles = (C: Palette) =>
       alignItems: 'center',
       padding: spacing.s12,
       paddingHorizontal: spacing.s16,
-      borderRadius: radii.r16,
+      borderRadius: radii.r18,
       borderWidth: 1,
       gap: spacing.s12,
     },
