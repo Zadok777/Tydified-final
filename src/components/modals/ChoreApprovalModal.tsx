@@ -150,8 +150,8 @@ export function ChoreApprovalModal({
         <>
           <GradientCard
             colors={GRADIENTS.brand}
-            padding={spacing.s16}
-            radius={radii.r18}
+            padding={spacing.s20}
+            radius={radii.r20}
           >
             <View style={styles.childRow}>
               <View style={styles.bannerAvatar}>
@@ -174,7 +174,7 @@ export function ChoreApprovalModal({
             </View>
           </GradientCard>
 
-          <GlassCard padding={spacing.s16}>
+          <GlassCard tint="pink" padding={spacing.s16}>
             <Text style={styles.choreTitle} maxFontSizeMultiplier={1.4}>
               {chore.title}
             </Text>
@@ -199,7 +199,7 @@ export function ChoreApprovalModal({
             </Text>
           </View>
 
-          <GlassCard padding={spacing.s16}>
+          <GlassCard tint="green" padding={spacing.s16}>
             <Text style={styles.impactLabel} maxFontSizeMultiplier={1.3}>
               Points impact
             </Text>
@@ -258,7 +258,7 @@ function ImpactCell({
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
   const color =
-    tone === 'green' ? C.green : tone === 'pink' ? C.pink : C.textDark;
+    tone === 'green' ? C.greenText : tone === 'pink' ? C.pinkText : C.textDark;
   return (
     <View style={styles.impactCell}>
       <Text style={[styles.impactValue, { color }]} maxFontSizeMultiplier={1.3}>
@@ -328,6 +328,7 @@ const makeStyles = (C: Palette) =>
     alignItems: 'center',
     justifyContent: 'center',
     gap: spacing.s8,
+    backgroundColor: C.glassLight,
   },
   photoProofText: {
     ...typography.caption,
@@ -379,6 +380,7 @@ const makeStyles = (C: Palette) =>
   impactCell: {
     alignItems: 'center',
     flex: 1,
+    minWidth: 68,
   },
   impactValue: {
     ...typography.title,

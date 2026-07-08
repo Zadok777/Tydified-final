@@ -19,7 +19,7 @@ import { submitChore } from '../../services/rpc';
 import { useActivityStore } from '../../store/activityStore';
 import { useChoreStore } from '../../store/choreStore';
 import { useFamilyStore } from '../../store/familyStore';
-import { spacing } from '../../theme/tokens';
+import { spacing, useThemedStyles, type Palette } from '../../theme';
 import type {
   Child,
   Chore,
@@ -39,6 +39,7 @@ const FILTERS = [
 
 export function ChoresScreen() {
   const toast = useToast();
+  const styles = useThemedStyles(makeStyles);
   const family = useFamilyStore((s) => s.family);
   const children = useFamilyStore((s) => s.children);
   const chores = useChoreStore((s) => s.chores);
@@ -231,15 +232,16 @@ export function ChoresScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  content: {
-    paddingBottom: TAB_BAR_CLEARANCE,
-  },
-  filter: {
-    marginTop: spacing.s8,
-    marginBottom: spacing.s16,
-  },
-  list: {
-    gap: spacing.s12,
-  },
-});
+const makeStyles = (_C: Palette) =>
+  StyleSheet.create({
+    content: {
+      paddingBottom: TAB_BAR_CLEARANCE,
+    },
+    filter: {
+      marginTop: spacing.s8,
+      marginBottom: spacing.s16,
+    },
+    list: {
+      gap: spacing.s12,
+    },
+  });

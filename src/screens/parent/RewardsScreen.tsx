@@ -4,6 +4,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
+import { TydifiedLogo } from '../../components/brand/TydifiedLogo';
 import { Header } from '../../components/layout/Header';
 import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { CelebrationOverlay } from '../../components/modals/CelebrationOverlay';
@@ -186,13 +187,16 @@ export function RewardsScreen() {
 
             <GlassCard tint="orange" style={styles.balanceCard}>
               <View style={styles.balanceRow}>
-                <View>
+                <View style={styles.balanceCopy}>
                   <Text style={styles.balanceLabel} maxFontSizeMultiplier={1.3}>
                     {`${selectedChild?.name ?? 'Child'}'s balance`}
                   </Text>
                   <Text style={styles.balanceValue} maxFontSizeMultiplier={1.3}>
                     {displayBalance}
                   </Text>
+                </View>
+                <View style={styles.balanceMascot}>
+                  <TydifiedLogo variant="icon" iconSize={54} animated />
                 </View>
                 <PointsBadge points={balance} size="lg" />
               </View>
@@ -314,6 +318,10 @@ const makeStyles = (C: Palette) =>
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    gap: spacing.s12,
+  },
+  balanceCopy: {
+    flex: 1,
   },
   balanceLabel: {
     ...typography.caption,
@@ -323,6 +331,16 @@ const makeStyles = (C: Palette) =>
     ...typography.heroNum,
     fontSize: 40,
     color: C.orange,
+  },
+  balanceMascot: {
+    width: 68,
+    height: 68,
+    borderRadius: radii.rFull,
+    backgroundColor: C.glass,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: C.border,
   },
   filter: {
     marginTop: spacing.s16,

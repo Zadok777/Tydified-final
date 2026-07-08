@@ -122,7 +122,7 @@ export function ReviewScreen() {
                   accessibilityRole="button"
                   accessibilityLabel={`Review ${chore.title} from ${child?.name ?? 'a child'}`}
                 >
-                  <GlassCard padding={spacing.s12}>
+                  <GlassCard tint="orange" padding={spacing.s12}>
                     <View style={styles.row}>
                       <Avatar
                         name={child?.name ?? '?'}

@@ -380,7 +380,9 @@ function Row({
       accessibilityLabel={label}
       style={({ pressed }) => [styles.row, pressed && interactive && styles.rowPressed]}
     >
-      <Ionicons name={icon} size={20} color={C.textMid} />
+      <View style={styles.rowIcon}>
+        <Ionicons name={icon} size={19} color={C.pinkText} />
+      </View>
       <View style={styles.rowMeta}>
         <Text style={styles.rowLabel} maxFontSizeMultiplier={1.3}>
           {label}
@@ -460,7 +462,17 @@ const makeStyles = (C: Palette) =>
       gap: spacing.s12,
       paddingHorizontal: spacing.s16,
       paddingVertical: spacing.s12,
-      minHeight: 56,
+      minHeight: 64,
+    },
+    rowIcon: {
+      width: 40,
+      height: 40,
+      borderRadius: radii.rFull,
+      backgroundColor: C.pinkAlpha10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: C.borderPink,
     },
     rowPressed: {
       opacity: 0.6,

@@ -176,7 +176,7 @@ const makeStyles = (C: Palette) =>
       marginLeft: spacing.s4,
     },
     qa: {
-      padding: spacing.s16,
+      padding: spacing.s20,
     },
     q: {
       ...typography.title,
@@ -201,12 +201,14 @@ const makeStyles = (C: Palette) =>
       padding: spacing.s16,
     },
     contactIcon: {
-      width: 40,
-      height: 40,
-      borderRadius: radii.r12,
+      width: 44,
+      height: 44,
+      borderRadius: radii.rFull,
       backgroundColor: C.pinkAlpha15,
       alignItems: 'center',
       justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: C.borderPink,
     },
     contactText: {
       flex: 1,
