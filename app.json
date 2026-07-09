@@ -39,22 +39,19 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "81f24291-8c8a-497a-a464-6b09d6454468"
-      }
-    },
     "owner": "zad0k777",
     "plugins": [
       "expo-secure-store",
       "expo-font",
       "expo-asset"
     ],
-    "updates": {
-      "url": "https://u.expo.dev/81f24291-8c8a-497a-a464-6b09d6454468"
-    },
     "runtimeVersion": {
       "policy": "appVersion"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8998f5ab-4891-42e5-8f15-565565ac9519"
+      }
     }
   }
 }

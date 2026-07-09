@@ -1,6 +1,6 @@
 # PLANNING.md — Tydified v1.0 Build
 
-This document describes the architecture, phasing, and key decisions for building Tydified v1.0 in `/Users/santiagos4god/Desktop/Chorely 2/`. The full visual system lives in `DESIGN.md`. Project rules and the Supabase schema live in `CLAUDE.md`. Per-task progress is tracked in `TASKS.md`.
+This document describes the architecture, phasing, and key decisions for building Tydified v1.0 in `/Users/santiagos4god/Projects/Tydified/`. The full visual system lives in `DESIGN.md`. Project rules and the Supabase schema live in `CLAUDE.md`. Per-task progress is tracked in `TASKS.md`.
 
 ---
 

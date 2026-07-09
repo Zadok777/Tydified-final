@@ -74,7 +74,7 @@ for an accurate preview**.
 ## Project layout
 
 ```
-Chorely 2/
+Tydified/
 ├── src/            App source (screens, components, navigation, store, services, theme)
 ├── supabase/
 │   ├── migrations/ SQL migrations (mirror of remote)

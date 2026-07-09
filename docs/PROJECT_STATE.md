@@ -9,7 +9,7 @@ _Last updated: 2026-06-23_
 ## Status at a glance
 
 - **Phase:** v1.0 feature-complete; in App Store / Play readiness.
-- **App folder:** `~/Desktop/Chorely 2/` (package name `tydified`).
+- **App folder:** `~/Projects/Tydified/` (package name `tydified`).
 - **Repo:** `https://github.com/Zadok777/Chorely-final.git` (`origin`, branch `main`).
 - **Supabase:** project **Chorely App** (`zinbukzmkorkawbgckkh`), personal account.
   17 migrations applied; 12 tables (RLS on) + 12 RPCs.

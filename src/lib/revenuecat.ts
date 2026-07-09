@@ -49,6 +49,13 @@ export function initPurchases(): void {
     return;
   }
   const apiKey = Platform.OS === 'ios' ? iosApiKey : androidApiKey;
+  // The SDK force-closes release builds configured with a Test Store key
+  // ("Wrong API Key" alert). Until real appl_/goog_ keys are provided via
+  // env, run release builds with purchases disabled instead of crashing.
+  if (!__DEV__ && apiKey.startsWith('test_')) {
+    useSubscriptionStore.getState().setReady();
+    return;
+  }
   try {
     if (__DEV__) Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
     Purchases.configure({ apiKey });

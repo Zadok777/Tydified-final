@@ -72,10 +72,10 @@ REVENUECAT_ANDROID_API_KEY=
 
 ## 4. Project Directory Structure
 
-On-disk folder is `/Users/santiagos4god/Desktop/Chorely 3/` (note the space; package name in `package.json` is `tydified`). CAUTION: Desktop is iCloud-synced — a previous copy had to move to `~/Projects` because iCloud materialization made Metro/tsc/git unusably slow; if that recurs, move this folder the same way.
+On-disk folder is `/Users/santiagos4god/Projects/Tydified/` (space-free path — renamed 2026-07-09 from `Chorely 2`; the space in the old name broke iOS builds). `~/Desktop/Tydified` is a symlink to it. Keep the real folder OUT of Desktop/Documents: they are iCloud-synced and iCloud materialization made Metro/tsc/git unusably slow.
 
 ```
-Chorely 2/
+Tydified/
 ├── src/
 │   ├── screens/
 │   │   ├── auth/                # WelcomeScreen, LoginScreen, SignUpScreen, OnboardingWizard
