@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { TydifiedLogo } from '../../components/brand/TydifiedLogo';
+import { TydifiedKids } from '../../components/brand/TydifiedKids';
 import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import {
   radii,
@@ -53,11 +53,7 @@ export function AuthScaffold({
             </Pressable>
           ) : null}
 
-          <View style={styles.sun} />
-          {/* ~0.65× the circle: bob headroom so the trophy never kisses the ring */}
-          <View style={[styles.trophyWrap, shadows.md]}>
-            <TydifiedLogo variant="icon" iconSize={86} animated />
-          </View>
+          <TydifiedKids height={128} animated />
         </View>
 
         <View style={[styles.sheet, shadows.md]}>
@@ -118,30 +114,6 @@ const makeStyles = (C: Palette) =>
       alignItems: 'center',
       justifyContent: 'center',
       zIndex: 2,
-    },
-    // Solid amber core + alpha halo: low-alpha amber alone blends to khaki
-    // over both the light-blue scene and the dark navy ground.
-    sun: {
-      position: 'absolute',
-      top: 34,
-      right: 44,
-      width: 64,
-      height: 64,
-      borderRadius: radii.rFull,
-      backgroundColor: C.orange,
-      borderWidth: 10,
-      borderColor: C.orangeAlpha15,
-    },
-    trophyWrap: {
-      width: 132,
-      height: 132,
-      borderRadius: radii.rFull,
-      backgroundColor: C.glass,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: C.border,
-      marginBottom: spacing.s12,
     },
     sheet: {
       marginHorizontal: spacing.s16,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { TydifiedLogo } from '../brand/TydifiedLogo';
+import { TydifiedKids } from '../brand/TydifiedKids';
 import { Avatar } from '../ui/Avatar';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
@@ -154,7 +154,7 @@ export function SetGoalModal({ visible, onClose, onCreated }: SetGoalModalProps)
       }
     >
       <View style={styles.trophyHero}>
-        <TydifiedLogo variant="icon" iconSize={56} animated />
+        <TydifiedKids height={64} animated />
       </View>
       <View>
         <Text style={styles.label}>For which child</Text>

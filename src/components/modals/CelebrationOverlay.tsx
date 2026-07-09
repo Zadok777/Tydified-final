@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, Modal, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { TydifiedLogo } from '../brand/TydifiedLogo';
+import { TydifiedKids } from '../brand/TydifiedKids';
 import {
   radii,
   shadows,
@@ -115,7 +115,7 @@ export function CelebrationOverlay({
           <Animated.View
             style={[styles.badge, shadows.lg, { transform: [{ scale }] }]}
           >
-            <TydifiedLogo variant="icon" iconSize={70} animated />
+            <TydifiedKids height={62} animated />
             <View style={styles.checkPill}>
               <Ionicons name="checkmark" size={18} color={C.textWhite} />
             </View>

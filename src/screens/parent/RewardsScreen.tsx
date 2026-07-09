@@ -4,7 +4,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
-import { TydifiedLogo } from '../../components/brand/TydifiedLogo';
+import { TydifiedKids } from '../../components/brand/TydifiedKids';
 import { Header } from '../../components/layout/Header';
 import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { CelebrationOverlay } from '../../components/modals/CelebrationOverlay';
@@ -154,6 +154,7 @@ export function RewardsScreen() {
         ) : children.length === 0 ? (
           <EmptyState
             icon="happy-outline"
+            cartoon="star"
             title="No kids yet"
             description="Add a child in the Family tab before setting up rewards."
           />
@@ -196,7 +197,7 @@ export function RewardsScreen() {
                   </Text>
                 </View>
                 <View style={styles.balanceMascot}>
-                  <TydifiedLogo variant="icon" iconSize={42} animated />
+                  <TydifiedKids height={44} animated />
                 </View>
                 <PointsBadge points={balance} size="lg" />
               </View>
@@ -212,6 +213,7 @@ export function RewardsScreen() {
             {visibleRewards.length === 0 ? (
               <EmptyState
                 icon="gift-outline"
+                cartoon="gift"
                 title={rewards.length === 0 ? 'No rewards yet' : 'Nothing here'}
                 description={
                   rewards.length === 0
