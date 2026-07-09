@@ -168,6 +168,7 @@ export function ChoresScreen() {
         ) : visible.length === 0 ? (
           <EmptyState
             icon="checkbox-outline"
+            cartoon="books"
             title={
               assignments.length === 0
                 ? 'No chores yet'

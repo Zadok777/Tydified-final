@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
+import { CartoonIcon, CATEGORY_CARTOON } from '../ui/CartoonIcon';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
@@ -386,11 +387,7 @@ export function CreateChoreModal({
                 accessibilityState={{ selected }}
                 style={[styles.catChip, selected && styles.catChipActive]}
               >
-                <Ionicons
-                  name={cat.icon}
-                  size={14}
-                  color={selected ? C.textWhite : C.textMid}
-                />
+                <CartoonIcon name={CATEGORY_CARTOON[cat.value]} size={22} />
                 <Text
                   style={[styles.catChipText, selected && styles.catChipTextActive]}
                   maxFontSizeMultiplier={1.2}

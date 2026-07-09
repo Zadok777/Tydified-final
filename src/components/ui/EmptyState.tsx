@@ -12,12 +12,15 @@ import {
   type Palette,
 } from '../../theme';
 import { Button } from './Button';
+import { CartoonIcon, type CartoonIconName } from './CartoonIcon';
 
 type IoniconName = React.ComponentProps<typeof Ionicons>['name'];
 
 interface EmptyStateProps {
   // Ionicons name. Defaults to a friendly sparkles icon.
   icon?: IoniconName;
+  // Glossy sticker icon; wins over `icon` when provided.
+  cartoon?: CartoonIconName;
   title: string;
   description?: string;
   actionLabel?: string;
@@ -27,6 +30,7 @@ interface EmptyStateProps {
 
 export function EmptyState({
   icon = 'sparkles-outline',
+  cartoon,
   title,
   description,
   actionLabel,
@@ -44,7 +48,11 @@ export function EmptyState({
         <View style={styles.sceneCardTwo} />
       </View>
       <View style={styles.iconBubble}>
-        <Ionicons name={icon} size={32} color={C.pink} />
+        {cartoon !== undefined ? (
+          <CartoonIcon name={cartoon} size={38} />
+        ) : (
+          <Ionicons name={icon} size={32} color={C.pink} />
+        )}
       </View>
       <Text style={styles.title} maxFontSizeMultiplier={1.5}>
         {title}

@@ -260,6 +260,7 @@ export function ParentDashboard() {
           <QuickAction
             label="New Reward"
             icon="gift"
+            cartoon="gift"
             tone="orange"
             onPress={() => setRewardModal(true)}
           />
@@ -272,6 +273,7 @@ export function ParentDashboard() {
           <QuickAction
             label="Set Goal"
             icon="trophy"
+            cartoon="star"
             tone="purple"
             onPress={() => setGoalModal(true)}
           />

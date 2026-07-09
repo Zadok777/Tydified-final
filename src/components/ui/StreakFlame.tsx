@@ -11,6 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { typography, useThemedStyles, type Palette } from '../../theme';
+import { CartoonIcon } from './CartoonIcon';
 
 interface StreakFlameProps {
   // When provided, renders "{days}d" next to the flame.
@@ -54,7 +55,9 @@ export function StreakFlame({ days, size = 14, style }: StreakFlameProps) {
   return (
     <View style={[styles.row, style]}>
       <View style={styles.flameBubble}>
-        <Animated.Text style={[{ fontSize: size }, flameStyle]}>🔥</Animated.Text>
+        <Animated.View style={flameStyle}>
+          <CartoonIcon name="flame" size={size + 4} />
+        </Animated.View>
       </View>
       {days !== undefined ? (
         <Text style={[styles.days, { fontSize: size }]} maxFontSizeMultiplier={1.3}>

@@ -7,6 +7,7 @@ import Reanimated from 'react-native-reanimated';
 import { usePressBounce } from '../../hooks/usePressBounce';
 
 import { Avatar } from '../../components/ui/Avatar';
+import { CartoonIcon, type CartoonIconName } from '../../components/ui/CartoonIcon';
 import { StreakFlame } from '../../components/ui/StreakFlame';
 import { useAnimatedRatio } from '../../hooks/useAnimatedRatio';
 import { useCountUp } from '../../hooks/useCountUp';
@@ -64,11 +65,13 @@ export function QuickAction({
   icon,
   onPress,
   tone = 'pink',
+  cartoon,
 }: {
   label: string;
   icon: IoniconName;
   onPress: () => void;
   tone?: QuickActionTone;
+  cartoon?: CartoonIconName;
 }) {
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
@@ -91,7 +94,11 @@ export function QuickAction({
       style={[styles.actionItem, bounceStyle]}
     >
       <View style={[styles.actionIcon, { backgroundColor: tint[tone].bg }]}>
-        <Ionicons name={icon} size={20} color={tint[tone].fg} />
+        {cartoon !== undefined ? (
+          <CartoonIcon name={cartoon} size={26} />
+        ) : (
+          <Ionicons name={icon} size={20} color={tint[tone].fg} />
+        )}
       </View>
       <Text style={styles.actionLabel} maxFontSizeMultiplier={1.3} numberOfLines={2}>
         {label}
@@ -196,10 +203,9 @@ export function GoalRow({
             },
           ]}
         >
-          <Ionicons
-            name={goal.kind === 'reward' ? 'gift' : 'flag'}
-            size={16}
-            color={goal.kind === 'reward' ? C.orange : C.purple}
+          <CartoonIcon
+            name={goal.kind === 'reward' ? 'gift' : 'star'}
+            size={20}
           />
         </View>
         <View style={styles.goalMeta}>

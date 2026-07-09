@@ -187,6 +187,7 @@ export function FamilyScreen() {
         ) : children.length === 0 ? (
           <EmptyState
             icon="happy-outline"
+            cartoon="star"
             title="No kids yet"
             description="Add your first child to start assigning chores and rewards."
             actionLabel="Add a child"

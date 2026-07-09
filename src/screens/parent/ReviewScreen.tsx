@@ -106,6 +106,7 @@ export function ReviewScreen() {
         ) : pending.length === 0 ? (
           <EmptyState
             icon="checkmark-done-outline"
+            cartoon="star"
             title="All caught up"
             description="No chores are waiting on you right now. New submissions will appear here."
           />
