@@ -61,6 +61,7 @@ export function MoreScreen() {
   const session = useAuthStore((s) => s.session);
   const family = useFamilyStore((s) => s.family);
   const notificationsEnabled = useSettingsStore((s) => s.notificationsEnabled);
+  const soundEnabled = useSettingsStore((s) => s.soundEnabled);
 
   const [editingName, setEditingName] = useState(false);
   const [nameDraft, setNameDraft] = useState('');
@@ -209,6 +210,21 @@ export function MoreScreen() {
         />
         <Divider />
         <Row
+          icon="musical-notes-outline"
+          tone="purple"
+          label="Sound effects"
+          sub="Chimes, pops & celebrations"
+          right={
+            <Switch
+              value={soundEnabled}
+              onValueChange={(v) => useSettingsStore.getState().setSoundEnabled(v)}
+              trackColor={{ false: C.mutedAlpha20, true: C.pink }}
+              thumbColor={C.textWhite}
+            />
+          }
+        />
+        <Divider />
+        <Row
           icon="shield-checkmark-outline"
           tone="green"
           label="Privacy & COPPA"
@@ -293,6 +309,14 @@ export function MoreScreen() {
 
       <SectionLabel text="Support" />
       <GlassCard padding={0}>
+        <Row
+          icon="book-outline"
+          tone="pink"
+          label="How Tydified works"
+          sub="A 5-step quick start"
+          onPress={() => nav.navigate('HowTo')}
+        />
+        <Divider />
         <Row
           icon="help-circle-outline"
           tone="green"

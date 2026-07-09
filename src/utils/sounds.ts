@@ -1,5 +1,7 @@
 import { createAudioPlayer } from 'expo-audio';
 
+import { useSettingsStore } from '../store/settingsStore';
+
 // UI chimes (assets/sounds/*.wav — locally synthesized FM-bell tones).
 // success = a chore was approved; celebrate = goal reached / reward redeemed.
 // Playback respects the iOS silent switch (expo-audio default), and failures
@@ -16,6 +18,7 @@ export type SoundName = keyof typeof SOURCES;
 // ponytail: a fresh player per play, released after the chime — stateless and
 // plenty for sub-second UI sounds; pool players if this ever shows in profiles.
 export function playSound(name: SoundName): void {
+  if (!useSettingsStore.getState().soundEnabled) return;
   try {
     const player = createAudioPlayer(SOURCES[name]);
     player.play();

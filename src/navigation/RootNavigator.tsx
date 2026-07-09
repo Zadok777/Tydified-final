@@ -9,6 +9,7 @@ import { SignUpScreen } from '../screens/auth/SignUpScreen';
 import { WelcomeScreen } from '../screens/auth/WelcomeScreen';
 import { RewardsScreen } from '../screens/parent/RewardsScreen';
 import { HelpCenterScreen } from '../screens/parent/HelpCenterScreen';
+import { HowToScreen } from '../screens/parent/HowToScreen';
 import { PaywallScreen } from '../screens/parent/PaywallScreen';
 import { MainNavigator } from './MainNavigator';
 import { useAuthStore } from '../store/authStore';
@@ -53,6 +54,7 @@ export function RootNavigator() {
           <Stack.Screen name="Main" component={MainNavigator} />
           <Stack.Screen name="Rewards" component={RewardsScreen} />
           <Stack.Screen name="Help" component={HelpCenterScreen} />
+          <Stack.Screen name="HowTo" component={HowToScreen} />
           <Stack.Screen name="Paywall" component={PaywallScreen} />
         </>
       )}
