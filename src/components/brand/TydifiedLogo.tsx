@@ -15,7 +15,7 @@ const TROPHY = require('../../../assets/tydified-trophy.png');
 const BASE_W = 1466;
 const BASE_H = 532;
 const CONFETTI_BOX = { left: 650, top: 0, width: 280, height: 163 };
-const TROPHY_RATIO = 293 / 352;
+const TROPHY_RATIO = 290 / 352;
 
 // Motion — same restraint as TydifiedIcon: small ranges, sinusoidal easing,
 // native driver. The wordmark breathes; the confetti drifts up and settles a
