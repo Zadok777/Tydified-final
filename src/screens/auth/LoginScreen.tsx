@@ -5,11 +5,14 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import Reanimated from 'react-native-reanimated';
 
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toast';
+import { useShake } from '../../hooks/useShake';
 import { signIn as authSignIn } from '../../services/auth';
+import { hapticWarning } from '../../utils/haptics';
 import {
   spacing,
   typography,
@@ -39,6 +42,7 @@ export function LoginScreen() {
   const toast = useToast();
   const styles = useThemedStyles(makeStyles);
   const [submitting, setSubmitting] = useState(false);
+  const { shake, shakeStyle } = useShake();
 
   const {
     control,
@@ -56,6 +60,8 @@ export function LoginScreen() {
     setSubmitting(false);
 
     if (!res.success) {
+      shake();
+      hapticWarning();
       toast.show({ message: res.error, tone: 'error', duration: 5000 });
       return;
     }
@@ -69,6 +75,7 @@ export function LoginScreen() {
       subtitle="Welcome back."
       onBack={() => nav.goBack()}
     >
+      <Reanimated.View style={[styles.shakeWrap, shakeStyle]}>
       <Controller
         name="email"
         control={control}
@@ -106,6 +113,7 @@ export function LoginScreen() {
           />
         )}
       />
+      </Reanimated.View>
 
       <View style={styles.submit}>
         <Button
@@ -140,6 +148,10 @@ export function LoginScreen() {
 
 const makeStyles = (C: Palette) =>
   StyleSheet.create({
+  // Preserves the scaffold form's s16 gap for the two inputs it wraps.
+  shakeWrap: {
+    gap: spacing.s16,
+  },
   submit: {
     marginTop: spacing.s8,
   },
