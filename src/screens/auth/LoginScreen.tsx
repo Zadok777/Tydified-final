@@ -13,6 +13,7 @@ import { useToast } from '../../components/ui/Toast';
 import { useShake } from '../../hooks/useShake';
 import { signIn as authSignIn } from '../../services/auth';
 import { hapticWarning } from '../../utils/haptics';
+import { playSound } from '../../utils/sounds';
 import {
   spacing,
   typography,
@@ -62,6 +63,7 @@ export function LoginScreen() {
     if (!res.success) {
       shake();
       hapticWarning();
+      playSound('womp');
       toast.show({ message: res.error, tone: 'error', duration: 5000 });
       return;
     }

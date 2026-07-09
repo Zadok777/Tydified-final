@@ -12,6 +12,7 @@ import Reanimated, {
 } from 'react-native-reanimated';
 
 import { hapticLight } from '../../utils/haptics';
+import { playSound } from '../../utils/sounds';
 import {
   radii,
   shadows,
@@ -72,7 +73,10 @@ export function TabBar({ tabs, activeKey, onChange, style }: TabBarProps) {
                 <Pressable
                   key={tab.key}
                   onPress={() => {
-                    if (!active) hapticLight();
+                    if (!active) {
+                      hapticLight();
+                      playSound('pop');
+                    }
                     onChange(tab.key);
                   }}
                   accessibilityRole="button"

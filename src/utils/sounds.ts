@@ -7,6 +7,8 @@ import { createAudioPlayer } from 'expo-audio';
 const SOURCES = {
   success: require('../../assets/sounds/success.wav'),
   celebrate: require('../../assets/sounds/celebrate.wav'),
+  pop: require('../../assets/sounds/pop.wav'),
+  womp: require('../../assets/sounds/womp.wav'),
 } as const;
 
 export type SoundName = keyof typeof SOURCES;
