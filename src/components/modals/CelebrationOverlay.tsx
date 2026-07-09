@@ -13,6 +13,7 @@ import {
   type Palette,
 } from '../../theme';
 import { hapticSuccess } from '../../utils/haptics';
+import { playSound } from '../../utils/sounds';
 
 interface CelebrationOverlayProps {
   visible: boolean;
@@ -51,6 +52,7 @@ export function CelebrationOverlay({
   useEffect(() => {
     if (!visible) return;
     hapticSuccess();
+    playSound('celebrate');
     scale.setValue(0);
     progress.setValue(0);
 
