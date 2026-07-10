@@ -131,9 +131,6 @@ export function MoreScreen() {
     );
   };
 
-  const soon = (label: string) =>
-    toast.show({ message: `${label} arrives in a later update.`, tone: 'info' });
-
   const onRate = async () => {
     try {
       if (await StoreReview.isAvailableAsync()) {
@@ -297,13 +294,6 @@ export function MoreScreen() {
           label="Tydified Plus"
           sub="Unlimited kids & chores"
           onPress={() => nav.navigate('Paywall')}
-        />
-        <Divider />
-        <Row
-          icon="card-outline"
-          tone="pink"
-          label="Billing & invoices"
-          onPress={() => soon('Billing')}
         />
       </GlassCard>
 

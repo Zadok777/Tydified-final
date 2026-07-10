@@ -24,10 +24,12 @@ export function SnapshotTile({
   value,
   label,
   tone,
+  onPress,
 }: {
   value: number;
   label: string;
   tone: 'pink' | 'green' | 'orange';
+  onPress?: () => void;
 }) {
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
@@ -47,14 +49,24 @@ export function SnapshotTile({
         : C.pinkAlpha10;
   const display = useCountUp(value);
   return (
-    <View style={[styles.snapTile, { backgroundColor: tileBg }]}>
+    <Pressable
+      onPress={onPress}
+      disabled={onPress === undefined}
+      accessibilityRole={onPress !== undefined ? 'button' : undefined}
+      accessibilityLabel={`${value} ${label}`}
+      style={({ pressed }) => [
+        styles.snapTile,
+        { backgroundColor: tileBg },
+        pressed && onPress !== undefined && styles.pressed,
+      ]}
+    >
       <Text style={[styles.snapValue, { color: valueColor }]} maxFontSizeMultiplier={1.3}>
         {display}
       </Text>
       <Text style={styles.snapLabel} maxFontSizeMultiplier={1.2} numberOfLines={1}>
         {label}
       </Text>
-    </View>
+    </Pressable>
   );
 }
 

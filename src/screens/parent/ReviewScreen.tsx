@@ -70,6 +70,16 @@ export function ReviewScreen() {
   }, [load]);
 
   const pending = assignments.filter((a) => a.status === 'submitted');
+  // Recent approve/reject decisions, newest first — gives the tab a history
+  // instead of a bare empty state.
+  const decided = assignments
+    .filter((a) => a.status === 'approved' || a.status === 'rejected')
+    .sort((x, y) =>
+      (y.completed_at ?? y.assigned_at ?? '').localeCompare(
+        x.completed_at ?? x.assigned_at ?? ''
+      )
+    )
+    .slice(0, 10);
   const childById = (id: string) => children.find((c) => c.id === id);
   const choreById = (id: string) => chores.find((c) => c.id === id);
   const childIndex = (id: string) => children.findIndex((c) => c.id === id);
@@ -163,6 +173,77 @@ export function ReviewScreen() {
             })}
           </View>
         )}
+
+        {!loading && decided.length > 0 ? (
+          <>
+            <Text style={styles.sectionTitle} maxFontSizeMultiplier={1.5}>
+              Recent decisions
+            </Text>
+            <View style={styles.list}>
+              {decided.map((assignment) => {
+                const chore = choreById(assignment.chore_id);
+                if (chore === undefined) return null;
+                const child = childById(assignment.child_id);
+                const approved = assignment.status === 'approved';
+                return (
+                  <GlassCard key={assignment.id} padding={spacing.s12}>
+                    <View style={styles.row}>
+                      <Avatar
+                        name={child?.name ?? '?'}
+                        gradientIndex={childIndex(assignment.child_id)}
+                        size="sm"
+                      />
+                      <View style={styles.meta}>
+                        <Text
+                          style={styles.title}
+                          maxFontSizeMultiplier={1.4}
+                          numberOfLines={1}
+                        >
+                          {chore.title}
+                        </Text>
+                        <Text
+                          style={styles.sub}
+                          maxFontSizeMultiplier={1.3}
+                          numberOfLines={1}
+                        >
+                          {child?.name ?? 'Child'}
+                          {assignment.completed_at != null
+                            ? ` · ${formatRelativeTime(assignment.completed_at)}`
+                            : ''}
+                        </Text>
+                      </View>
+                      <View
+                        style={[
+                          styles.decisionBadge,
+                          {
+                            backgroundColor: approved
+                              ? C.greenAlpha10
+                              : C.pinkAlpha10,
+                          },
+                        ]}
+                      >
+                        <Ionicons
+                          name={approved ? 'checkmark' : 'close'}
+                          size={14}
+                          color={approved ? C.greenText : C.pinkText}
+                        />
+                        <Text
+                          style={[
+                            styles.decisionText,
+                            { color: approved ? C.greenText : C.pinkText },
+                          ]}
+                          maxFontSizeMultiplier={1.2}
+                        >
+                          {approved ? `+${chore.point_value}` : 'Sent back'}
+                        </Text>
+                      </View>
+                    </View>
+                  </GlassCard>
+                );
+              })}
+            </View>
+          </>
+        ) : null}
       </ScreenContainer>
 
       <ChoreApprovalModal
@@ -206,5 +287,23 @@ const makeStyles = (C: Palette) =>
     },
     chevron: {
       marginLeft: spacing.s4,
+    },
+    sectionTitle: {
+      ...typography.title,
+      fontSize: 17,
+      color: C.textDark,
+      marginTop: spacing.s24,
+    },
+    decisionBadge: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      paddingHorizontal: spacing.s8,
+      paddingVertical: spacing.s4,
+      borderRadius: 999,
+    },
+    decisionText: {
+      ...typography.caption,
+      fontFamily: 'DMSans_700Bold',
     },
   });

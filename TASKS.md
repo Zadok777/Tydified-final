@@ -277,3 +277,12 @@ Tailor chore & reward SUGGESTIONS (and default point values) to a child's age/gr
 - [x] Migration 016 — `children.age_tier_override` (nullable text + CHECK in early/lower/middle/upper); applied remote + local mirror; `database.types.ts` updated.
 - [x] Tier override picker in ProfileEditModal ("Age group": Auto + 4 tiers; tap a kid's avatar to edit).
 - [ ] (v1.1) Kid-facing visual tiers — expand `bracketThemes` from the old 3-bracket/pre-teal system to 4 tiers + teal.
+
+## UI polish round 3 (2026-07-10)
+
+- [x] CreateChoreModal due date: MM-DD-YYYY entry (placeholder, validation, ISO conversion via `usDateToIso`) — was still YYYY-MM-DD
+- [x] Quick actions: all four tiles now use cartoon stickers (Add Chore=star, Add Kid=happy, Set Goal=trophy; happy/trophy added to CartoonIcon from avatars set)
+- [x] Home: snapshot tiles tappable (Assigned→Chores, Done→Review, Points→Family)
+- [x] More: removed "Billing & invoices" stub row (IAP apps have no invoices; native subscription management comes with RevenueCat)
+- [x] Review: "Recent decisions" history section (last 10 approved/rejected, from already-loaded assignments)
+- [-] Tab bar / More / Family row icons stay Ionicons by design: stickers = content surfaces, line glyphs = chrome

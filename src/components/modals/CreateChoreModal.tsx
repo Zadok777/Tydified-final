@@ -19,6 +19,7 @@ import { useAuthStore } from '../../store/authStore';
 import { useChoreStore } from '../../store/choreStore';
 import { useFamilyStore } from '../../store/familyStore';
 import { hapticLight } from '../../utils/haptics';
+import { usDateToIso } from '../../utils/date';
 import {
   radii,
   spacing,
@@ -40,8 +41,6 @@ import {
   CHORE_SUGGESTIONS,
   type ChoreSuggestion,
 } from '../../data/choreSuggestions';
-
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 const FREQUENCY_OPTIONS = [
   { value: 'once', label: 'Once' },
@@ -81,10 +80,9 @@ const schema = yup.object({
     .string()
     .trim()
     .default('')
-    .test('valid-date', 'Use a real date (YYYY-MM-DD)', (value) => {
+    .test('valid-date', 'Use a real date (MM-DD-YYYY)', (value) => {
       if (value === undefined || value === '') return true;
-      if (!DATE_PATTERN.test(value)) return false;
-      return !Number.isNaN(new Date(`${value}T00:00:00`).getTime());
+      return usDateToIso(value) !== null;
     }),
 });
 
@@ -195,7 +193,7 @@ export function CreateChoreModal({
 
     setSubmitting(true);
     const actorId = session?.user?.id ?? null;
-    const dueDate = values.dueDate.trim();
+    const dueDate = values.dueDate.trim() === '' ? '' : (usDateToIso(values.dueDate) ?? '');
 
     const choreRes = await createChore({
       family_id: family.id,
@@ -406,7 +404,7 @@ export function CreateChoreModal({
         render={({ field }) => (
           <Input
             label="Due date (optional)"
-            placeholder="YYYY-MM-DD"
+            placeholder="MM-DD-YYYY"
             value={field.value}
             onChangeText={field.onChange}
             onBlur={field.onBlur}

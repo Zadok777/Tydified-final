@@ -15,6 +15,8 @@ const ICONS = {
   gift: require('../../../assets/cartoon/gift.png'),
   flame: require('../../../assets/cartoon/flame.png'),
   star: require('../../../assets/cartoon/star.png'),
+  happy: require('../../../assets/cartoon/avatars/happy.png'),
+  trophy: require('../../../assets/cartoon/avatars/trophy.png'),
 } as const;
 
 export type CartoonIconName = keyof typeof ICONS;

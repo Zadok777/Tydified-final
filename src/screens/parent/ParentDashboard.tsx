@@ -241,9 +241,24 @@ export function ParentDashboard() {
           {"Today's snapshot"}
         </Text>
         <View style={styles.snapshotRow}>
-          <SnapshotTile value={assignedCount} label="Assigned" tone="pink" />
-          <SnapshotTile value={doneCount} label="Done" tone="green" />
-          <SnapshotTile value={totalPoints} label="Points" tone="orange" />
+          <SnapshotTile
+            value={assignedCount}
+            label="Assigned"
+            tone="pink"
+            onPress={() => nav.navigate('Chores')}
+          />
+          <SnapshotTile
+            value={doneCount}
+            label="Done"
+            tone="green"
+            onPress={() => nav.navigate('Review')}
+          />
+          <SnapshotTile
+            value={totalPoints}
+            label="Points"
+            tone="orange"
+            onPress={() => nav.navigate('Family')}
+          />
         </View>
 
         {/* Quick actions */}
@@ -254,6 +269,7 @@ export function ParentDashboard() {
           <QuickAction
             label="Add Chore"
             icon="add"
+            cartoon="star"
             tone="pink"
             onPress={() => setChoreModal(true)}
           />
@@ -267,13 +283,14 @@ export function ParentDashboard() {
           <QuickAction
             label="Add Kid"
             icon="person-add"
+            cartoon="happy"
             tone="green"
             onPress={() => setChildModal(true)}
           />
           <QuickAction
             label="Set Goal"
             icon="trophy"
-            cartoon="star"
+            cartoon="trophy"
             tone="purple"
             onPress={() => setGoalModal(true)}
           />
