@@ -22,13 +22,13 @@ Product IDs (use these exact strings everywhere):
       Paid Apps → accept + enter DS Santiago LLC bank account + tax forms.
       (Apple approval can take 1–2 days — start early.)
 - [x] 1.2 (2026-07-10) Agreement status **Active** immediately (bank + W-9 also Active).
-- [ ] 1.3 Create subscription group `Tydified Plus`: Tydified app page →
+- [x] 1.3 (2026-07-10) Create subscription group `Tydified Plus`: Tydified app page →
       Monetization → Subscriptions → Create.
-- [ ] 1.4 Create `tydified_plus_monthly` in the group — duration 1 month,
+- [x] 1.4 (2026-07-10) Create `tydified_plus_monthly` in the group — duration 1 month,
       price $4.99, localization name "Tydified Plus Monthly".
-- [ ] 1.5 Create `tydified_plus_yearly` — duration 1 year, price $29.99,
+- [x] 1.5 (2026-07-10) Create `tydified_plus_yearly` — duration 1 year, price $29.99,
       localization name "Tydified Plus Yearly".
-- [ ] 1.6 On the yearly: add **Introductory Offer** → Free trial → 7 days.
+- [x] 1.6 (2026-07-10) On the yearly: add **Introductory Offer** → Free trial → 7 days.
 - [ ] 1.7 Both products: add review screenshot + notes later (needed only for
       App Store review, not sandbox testing).
 
