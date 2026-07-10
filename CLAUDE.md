@@ -17,6 +17,12 @@ During every session:
 
 - Mark tasks complete in TASKS.md as soon as they are finished.
 - Add newly discovered tasks to TASKS.md immediately when they surface.
+- **Record everything new, the same session it is added.** Any new asset, doc,
+  checklist, account, service, env var, build step, or decision must land in the
+  file this protocol already reads (this file, DESIGN.md, PLANNING.md, TASKS.md)
+  or in a doc linked from one of them — otherwise the next session cannot see it.
+  Active cross-session checklists get a ⭐ banner at the top of TASKS.md
+  (current example: docs/launch/PLUS_PAYWALL_SETUP.md).
 - Commit working code at the end of every feature or phase. Never leave the project in a broken state between sessions.
 - Ask before making changes that affect the database schema, navigation structure, or authentication logic.
 
@@ -294,6 +300,8 @@ Per-child savings goals. `kind='reward'` saves toward a specific reward (target 
 ## 6. Visual System
 
 The visual system — colors, gradients, shadows, radii, spacing, typography, age-bracket overrides, component rules, anti-patterns, and screen specifications — lives in **`DESIGN.md`**. Read it at session start. CLAUDE.md never duplicates design tokens.
+
+Full brand kit (logo files, palette, voice, usage rules): **docs/brand/BRAND_KIT.md** — read it before any store listing, marketing, or new visual asset work. Logo exports live in `assets/brand/`.
 
 Branding summary (context only — not load-bearing):
 
