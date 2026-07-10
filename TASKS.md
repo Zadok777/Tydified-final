@@ -2,6 +2,11 @@
 
 Legend: `[ ]` pending, `[x]` complete, `[-]` skipped
 
+> **⭐ ACTIVE (2026-07-09): Tydified Plus payment setup** — resume at the first
+> unchecked box in [docs/launch/PLUS_PAYWALL_SETUP.md](docs/launch/PLUS_PAYWALL_SETUP.md).
+> Both stores' testing is LIVE (TestFlight + direct APK); payments are the
+> remaining gate before sandbox purchase tests.
+
 ---
 
 ## Phase 0: Prep (completed 2026-05-27)
