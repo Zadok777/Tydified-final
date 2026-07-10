@@ -11,6 +11,7 @@ import { useToast } from '../ui/Toast';
 import { ModalSheet } from './ModalSheet';
 import { FREE_LIMITS } from '../../config/entitlements';
 import { createChild } from '../../services/children';
+import { usDateToIso } from '../../utils/date';
 import { useFamilyStore } from '../../store/familyStore';
 import { useSubscriptionStore } from '../../store/subscriptionStore';
 import type { RootStackParamList } from '../../types/app.types';
@@ -19,8 +20,6 @@ import { hapticLight } from '../../utils/haptics';
 // COPPA: we collect a child's display name and (optional) date of birth only —
 // never email, phone, or any other PII. When a DOB makes the child under 13,
 // we flag the row and record that the parent (who is adding them) consented.
-
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 const schema = yup.object({
   name: yup
@@ -34,21 +33,20 @@ const schema = yup.object({
     .default('')
     .test(
       'valid-past-date',
-      'Use a real past date (YYYY-MM-DD)',
+      'Use a real past date (MM-DD-YYYY)',
       (value) => {
         if (value === undefined || value === '') return true;
-        if (!DATE_PATTERN.test(value)) return false;
-        const parsed = new Date(`${value}T00:00:00`);
-        return !Number.isNaN(parsed.getTime()) && parsed.getTime() <= Date.now();
+        const iso = usDateToIso(value);
+        if (iso === null) return false;
+        return new Date(`${iso}T00:00:00`).getTime() <= Date.now();
       }
     ),
 });
 
 type FormValues = yup.InferType<typeof schema>;
 
-function ageFromDob(dob: string): number | null {
-  if (!DATE_PATTERN.test(dob)) return null;
-  const d = new Date(`${dob}T00:00:00`);
+function ageFromDob(isoDob: string): number | null {
+  const d = new Date(`${isoDob}T00:00:00`);
   if (Number.isNaN(d.getTime())) return null;
   const now = new Date();
   let age = now.getFullYear() - d.getFullYear();
@@ -101,7 +99,7 @@ export function AddChildModal({ visible, onClose, onAdded }: AddChildModalProps)
       return;
     }
     setSubmitting(true);
-    const dob = values.dob.trim();
+    const dob = values.dob.trim() === '' ? '' : (usDateToIso(values.dob) ?? '');
     const age = dob === '' ? null : ageFromDob(dob);
     const under13 = age !== null && age < 13;
 
@@ -166,7 +164,7 @@ export function AddChildModal({ visible, onClose, onAdded }: AddChildModalProps)
         render={({ field }) => (
           <Input
             label="Date of birth (optional)"
-            placeholder="YYYY-MM-DD"
+            placeholder="MM-DD-YYYY"
             value={field.value}
             onChangeText={field.onChange}
             onBlur={field.onBlur}

@@ -192,6 +192,7 @@ A task is done only when:
 * The requested behavior is implemented.
 * The change is limited to the necessary files.
 * TypeScript still passes, or any inability to run it is clearly reported.
+* Code generated or changed by an agent is scanned with Semgrep for security vulnerabilities, or any inability to run Semgrep is clearly reported.
 * Tests are run when relevant, or the reason they were not run is stated.
 * The final response explains what changed, where it changed, and what still needs attention.
 

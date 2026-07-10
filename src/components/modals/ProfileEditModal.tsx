@@ -65,6 +65,10 @@ const ICON_OPTIONS: readonly (string | null)[] = [
   'flower',
   'leaf',
   'fish',
+  'crown',
+  'rainbow',
+  'dinosaur',
+  'unicorn',
 ];
 
 // Preview pop spring — a quick settle, not a wobble. Tuned once here so the

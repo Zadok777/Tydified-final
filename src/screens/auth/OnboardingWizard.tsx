@@ -10,6 +10,7 @@ import { useToast } from '../../components/ui/Toast';
 import { signOut as authSignOut } from '../../services/auth';
 import { listChildren } from '../../services/children';
 import { listFamilyMembers } from '../../services/families';
+import { usDateToIso } from '../../utils/date';
 import { completeOnboarding } from '../../services/rpc';
 import { useFamilyStore } from '../../store/familyStore';
 import {
@@ -30,7 +31,6 @@ import { AuthScaffold } from './AuthScaffold';
 // COPPA: we collect a child's display name and (optional) date of birth only.
 // Never an email, phone, or any other PII for a child.
 
-const DOB_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 const schema = yup.object({
   familyName: yup
@@ -53,12 +53,12 @@ const schema = yup.object({
     .default('')
     .test(
       'optional-past-date',
-      'Use a real past date (YYYY-MM-DD)',
+      'Use a real past date (MM-DD-YYYY)',
       (value) => {
         if (value === undefined || value === '') return true;
-        if (!DOB_PATTERN.test(value)) return false;
-        const parsed = new Date(`${value}T00:00:00`);
-        return !Number.isNaN(parsed.getTime()) && parsed.getTime() <= Date.now();
+        const iso = usDateToIso(value);
+        if (iso === null) return false;
+        return new Date(`${iso}T00:00:00`).getTime() <= Date.now();
       }
     ),
 });
@@ -90,7 +90,8 @@ export function OnboardingWizard() {
     if (submitting) return;
     setSubmitting(true);
 
-    const dob = values.childDob.trim();
+    const raw = values.childDob.trim();
+    const dob = raw === '' ? '' : (usDateToIso(raw) ?? '');
     const res = await completeOnboarding(
       values.familyName,
       values.childName,
@@ -194,7 +195,7 @@ export function OnboardingWizard() {
             render={({ field }) => (
               <Input
                 label="Date of birth (optional)"
-                placeholder="YYYY-MM-DD"
+                placeholder="MM-DD-YYYY"
                 value={field.value}
                 onChangeText={field.onChange}
                 onBlur={field.onBlur}

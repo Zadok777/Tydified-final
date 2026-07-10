@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -12,6 +12,7 @@ import {
   useThemedStyles,
   type Palette,
 } from '../../theme';
+import { AVATAR_CARTOON } from './avatarCartoon';
 import { PointsBadge } from './PointsBadge';
 
 type IoniconName = React.ComponentProps<typeof Ionicons>['name'];
@@ -80,11 +81,19 @@ export function RewardCard({
             { backgroundColor: withAlpha(accent, locked ? 0.08 : 0.16) },
           ]}
         >
-          <Ionicons
-            name={locked ? 'lock-closed' : iconName}
-            size={30}
-            color={locked ? C.textLight : accent}
-          />
+          {!locked && AVATAR_CARTOON[iconName] !== undefined ? (
+            <Image
+              source={AVATAR_CARTOON[iconName]}
+              style={styles.artSticker}
+              resizeMode="contain"
+            />
+          ) : (
+            <Ionicons
+              name={locked ? 'lock-closed' : iconName}
+              size={30}
+              color={locked ? C.textLight : accent}
+            />
+          )}
         </View>
       </View>
       <View style={styles.body}>
@@ -147,6 +156,10 @@ const makeStyles = (C: Palette) =>
       alignItems: 'center',
       justifyContent: 'center',
       paddingTop: spacing.s16,
+    },
+    artSticker: {
+      width: 38,
+      height: 38,
     },
     artBubble: {
       width: 64,

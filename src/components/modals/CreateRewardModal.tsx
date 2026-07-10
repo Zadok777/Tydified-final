@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
 
+import { AVATAR_CARTOON } from '../ui/avatarCartoon';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { useToast } from '../ui/Toast';
@@ -292,11 +293,19 @@ export function CreateRewardModal({
                 accessibilityState={{ selected }}
                 style={[styles.iconChip, selected && styles.iconChipActive]}
               >
-                <Ionicons
-                  name={name}
-                  size={20}
-                  color={selected ? C.textWhite : C.textMid}
-                />
+                {AVATAR_CARTOON[name] !== undefined ? (
+                  <Image
+                    source={AVATAR_CARTOON[name]}
+                    style={styles.iconSticker}
+                    resizeMode="contain"
+                  />
+                ) : (
+                  <Ionicons
+                    name={name}
+                    size={20}
+                    color={selected ? C.textWhite : C.textMid}
+                  />
+                )}
               </Pressable>
             );
           })}
@@ -411,6 +420,10 @@ const makeStyles = (C: Palette) =>
     ...typography.caption,
     color: C.pinkText,
     marginTop: 2,
+  },
+  iconSticker: {
+    width: 26,
+    height: 26,
   },
   iconChip: {
     width: 44,
