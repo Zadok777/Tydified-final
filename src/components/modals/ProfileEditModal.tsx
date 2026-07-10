@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import Reanimated, { FadeInDown } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
 import { TydifiedIcon } from '../brand/TydifiedIcon';
 import { Avatar, AVATAR_FACE } from '../ui/Avatar';
+import { AVATAR_CARTOON } from '../ui/avatarCartoon';
 import { Button } from '../ui/Button';
 import { useToast } from '../ui/Toast';
 import { ModalSheet } from './ModalSheet';
@@ -263,6 +264,12 @@ export function ProfileEditModal({
                         ]
                       }
                     />
+                  ) : AVATAR_CARTOON[opt] !== undefined ? (
+                    <Image
+                      source={AVATAR_CARTOON[opt]}
+                      style={styles.iconSticker}
+                      resizeMode="contain"
+                    />
                   ) : (
                     <Ionicons
                       name={opt as IoniconName}
@@ -399,6 +406,10 @@ const makeStyles = (C: Palette) =>
       flexDirection: 'row',
       flexWrap: 'wrap',
       gap: spacing.s8,
+    },
+    iconSticker: {
+      width: 26,
+      height: 26,
     },
     iconChip: {
       width: 46,

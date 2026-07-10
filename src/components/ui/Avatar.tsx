@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Easing, StyleSheet, Text } from 'react-native';
+import { Animated, Easing, Image, StyleSheet, Text } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+
+import { AVATAR_CARTOON } from './avatarCartoon';
 
 import {
   AVATAR_GRADIENTS,
@@ -140,7 +142,16 @@ export function Avatar({
           { width: px, height: px, borderRadius: radii.rFull },
         ]}
       >
-        {hasIcon ? (
+        {hasIcon && AVATAR_CARTOON[icon] !== undefined ? (
+          <Image
+            source={AVATAR_CARTOON[icon]}
+            style={{
+              width: Math.round(px * 0.68),
+              height: Math.round(px * 0.68),
+            }}
+            resizeMode="contain"
+          />
+        ) : hasIcon ? (
           <Ionicons
             name={icon as React.ComponentProps<typeof Ionicons>['name']}
             size={Math.round(px * 0.5)}
