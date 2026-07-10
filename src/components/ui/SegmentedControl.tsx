@@ -63,7 +63,7 @@ const makeStyles = (C: Palette) =>
   StyleSheet.create({
     track: {
       flexDirection: 'row',
-      backgroundColor: C.glassLight,
+      backgroundColor: C.glass,
       borderRadius: radii.rFull,
       borderWidth: 1,
       borderColor: C.border,
@@ -76,9 +76,13 @@ const makeStyles = (C: Palette) =>
       justifyContent: 'center',
       paddingVertical: spacing.s8,
       borderRadius: radii.rFull,
+      borderWidth: 1,
+      borderColor: 'transparent',
     },
     segmentActive: {
-      backgroundColor: C.pink,
+      backgroundColor: C.pinkAlpha15,
+      borderWidth: 1,
+      borderColor: C.borderPink,
     },
     label: {
       ...typography.caption,
@@ -86,7 +90,7 @@ const makeStyles = (C: Palette) =>
       fontFamily: 'DMSans_600SemiBold',
     },
     labelActive: {
-      color: C.textWhite,
+      color: C.pinkText,
       fontFamily: 'DMSans_700Bold',
     },
   });

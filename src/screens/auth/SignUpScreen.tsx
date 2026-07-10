@@ -6,8 +6,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Header } from '../../components/layout/Header';
-import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toast';
@@ -19,6 +17,7 @@ import {
   type Palette,
 } from '../../theme';
 import type { RootStackParamList } from '../../types/app.types';
+import { AuthScaffold } from './AuthScaffold';
 
 type Nav = StackNavigationProp<RootStackParamList, 'SignUp'>;
 
@@ -89,103 +88,86 @@ export function SignUpScreen() {
   };
 
   return (
-    <ScreenContainer keyboardAvoiding scroll>
-      <Header title="Create account" onBack={() => nav.goBack()} />
-
-      <View style={styles.intro}>
-        <Text style={styles.helper} maxFontSizeMultiplier={1.5}>
-          Parents only — kids are added inside the app after onboarding.
-        </Text>
-      </View>
-
-      <View style={styles.form}>
-        <Controller
-          name="displayName"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label="Your name"
-              placeholder="Alex Parent"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              autoCapitalize="words"
-              autoComplete="name"
-              textContentType="name"
-              error={errors.displayName?.message}
-            />
-          )}
-        />
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label="Email"
-              placeholder="you@example.com"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoComplete="email"
-              textContentType="emailAddress"
-              error={errors.email?.message}
-            />
-          )}
-        />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label="Password"
-              placeholder="At least 8 characters"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              secureTextEntry
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoComplete="password"
-              textContentType="password"
-              error={errors.password?.message}
-            />
-          )}
-        />
-
-        <View style={styles.submit}>
-          <Button
-            label="Create account"
-            onPress={handleSubmit(onSubmit)}
-            loading={submitting}
-            fullWidth
+    <AuthScaffold
+      title="Create account"
+      subtitle="Parents only — kids are added inside the app after onboarding."
+      onBack={() => nav.goBack()}
+    >
+      <Controller
+        name="displayName"
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="Your name"
+            placeholder="Alex Parent"
+            value={field.value}
+            onChangeText={field.onChange}
+            onBlur={field.onBlur}
+            autoCapitalize="words"
+            autoComplete="name"
+            textContentType="name"
+            error={errors.displayName?.message}
           />
-        </View>
+        )}
+      />
+      <Controller
+        name="email"
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="Email"
+            placeholder="you@example.com"
+            value={field.value}
+            onChangeText={field.onChange}
+            onBlur={field.onBlur}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="email"
+            textContentType="emailAddress"
+            error={errors.email?.message}
+          />
+        )}
+      />
+      <Controller
+        name="password"
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="Password"
+            placeholder="At least 8 characters"
+            value={field.value}
+            onChangeText={field.onChange}
+            onBlur={field.onBlur}
+            secureTextEntry
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="password"
+            textContentType="password"
+            error={errors.password?.message}
+          />
+        )}
+      />
 
-        <Text style={styles.legal} maxFontSizeMultiplier={1.5}>
-          By creating an account you agree to use Chorely with kids whose
-          parental consent you can give.
-        </Text>
+      <View style={styles.submit}>
+        <Button
+          label="Create account"
+          onPress={handleSubmit(onSubmit)}
+          loading={submitting}
+          fullWidth
+        />
       </View>
-    </ScreenContainer>
+
+      <Text style={styles.legal} maxFontSizeMultiplier={1.5}>
+        By creating an account you agree to use Tydified with kids whose
+        parental consent you can give.
+      </Text>
+    </AuthScaffold>
   );
 }
 
 const makeStyles = (C: Palette) =>
   StyleSheet.create({
-  intro: {
-    marginTop: spacing.s8,
-    marginBottom: spacing.s16,
-  },
-  helper: {
-    ...typography.body,
-    color: C.textMid,
-  },
-  form: {
-    gap: spacing.s16,
-  },
   submit: {
     marginTop: spacing.s8,
   },

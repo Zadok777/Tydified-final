@@ -20,7 +20,7 @@ import {
 import type { RootStackParamList } from '../../types/app.types';
 import { TAB_BAR_CLEARANCE } from './layout';
 
-// Swap for a dedicated support@chorely.app inbox before launch.
+// Swap for a dedicated support@tydified.app inbox before launch.
 const SUPPORT_EMAIL = 'doulosnexus@gmail.com';
 
 type Nav = StackNavigationProp<RootStackParamList, 'Help'>;
@@ -69,7 +69,7 @@ const SECTIONS: readonly { title: string; items: readonly QA[] }[] = [
     title: 'Subscription & billing',
     items: [
       {
-        q: 'What does Chorely Plus include?',
+        q: 'What does Tydified Plus include?',
         a: 'Plus unlocks unlimited children and chores plus premium features. It’s available monthly or yearly — the yearly plan is the same features at a lower price.',
       },
       {
@@ -90,8 +90,8 @@ const SECTIONS: readonly { title: string; items: readonly QA[] }[] = [
         a: 'Your data is stored securely and used only to run the app. Children’s profiles store just a name and optional birthday — never an email, phone, or location.',
       },
       {
-        q: 'Is Chorely safe for kids?',
-        a: 'Chorely is parent-managed: children don’t sign in or enter personal information, in line with children’s privacy rules (COPPA).',
+        q: 'Is Tydified safe for kids?',
+        a: 'Tydified is parent-managed: children don’t sign in or enter personal information, in line with children’s privacy rules (COPPA).',
       },
     ],
   },
@@ -106,7 +106,7 @@ export function HelpCenterScreen() {
 
   const emailSupport = () => {
     const url = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(
-      'Chorely support'
+      'Tydified support'
     )}`;
     Linking.openURL(url).catch(() =>
       toast.show({ message: `Email us at ${SUPPORT_EMAIL}`, tone: 'info' })
@@ -155,7 +155,7 @@ export function HelpCenterScreen() {
         </GlassCard>
       </View>
 
-      <Text style={styles.version}>Chorely v{version}</Text>
+      <Text style={styles.version}>Tydified v{version}</Text>
     </ScreenContainer>
   );
 }
@@ -176,7 +176,7 @@ const makeStyles = (C: Palette) =>
       marginLeft: spacing.s4,
     },
     qa: {
-      padding: spacing.s16,
+      padding: spacing.s20,
     },
     q: {
       ...typography.title,
@@ -201,12 +201,14 @@ const makeStyles = (C: Palette) =>
       padding: spacing.s16,
     },
     contactIcon: {
-      width: 40,
-      height: 40,
-      borderRadius: radii.r12,
+      width: 44,
+      height: 44,
+      borderRadius: radii.rFull,
       backgroundColor: C.pinkAlpha15,
       alignItems: 'center',
       justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: C.borderPink,
     },
     contactText: {
       flex: 1,

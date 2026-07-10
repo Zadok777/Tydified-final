@@ -1,12 +1,17 @@
-# TASKS.md — Chorely Frontend Build
+# TASKS.md — Tydified Frontend Build
 
 Legend: `[ ]` pending, `[x]` complete, `[-]` skipped
+
+> **⭐ ACTIVE (2026-07-09): Tydified Plus payment setup** — resume at the first
+> unchecked box in [docs/launch/PLUS_PAYWALL_SETUP.md](docs/launch/PLUS_PAYWALL_SETUP.md).
+> Both stores' testing is LIVE (TestFlight + direct APK); payments are the
+> remaining gate before sandbox purchase tests.
 
 ---
 
 ## Phase 0: Prep (completed 2026-05-27)
 
-- [x] Delete other Chorely folders and IDE caches outside `~/Desktop/Chorely 2/`
+- [x] Delete other Tydified folders and IDE caches outside `~/Desktop/Chorely 2/`
 - [x] Flatten `uploads/` contents into project root; remove `uploads/`
 - [x] Split CLAUDE.md → CLAUDE.md (project rules) + DESIGN.md (visual system)
 - [x] Reset TASKS.md to match actual project state (no code yet)
@@ -24,11 +29,11 @@ Legend: `[ ]` pending, `[x]` complete, `[-]` skipped
 - [x] Write `src/theme/tokens.ts` (Lumina Bloom tokens)
 - [x] Write `src/theme/ThemeProvider.tsx` (light default, dark stub)
 - [x] Write `src/theme/index.ts` (re-exports for App.tsx)
-- [x] Write `src/navigation/RootNavigator.tsx` (Hello-Chorely placeholder via `@react-navigation/stack`)
+- [x] Write `src/navigation/RootNavigator.tsx` (Hello-Tydified placeholder via `@react-navigation/stack`)
 - [x] `npm install` clean (953 packages, 14s)
 - [x] `npx tsc --noEmit` clean (no type errors)
-- [x] First commit (`chore: scaffold Chorely v1.0 (Phase 1 foundation)`) pushed to `origin/main`
-- [ ] **Visual verification**: launch `npx expo start` and confirm the Hello-Chorely placeholder renders in iOS Simulator / Expo Go
+- [x] First commit (`chore: scaffold Tydified v1.0 (Phase 1 foundation)`) pushed to `origin/main`
+- [ ] **Visual verification**: launch `npx expo start` and confirm the Hello-Tydified placeholder renders in iOS Simulator / Expo Go
 
 ## Phase 2: Supabase Wiring
 
@@ -92,8 +97,8 @@ Legend: `[ ]` pending, `[x]` complete, `[-]` skipped
 
 ### Batch 2 — Composites + polish (completed 2026-05-28)
 
-- [x] `brand/ChorelyIcon.tsx` (SVG rounded-square smiley with pink→orange gradient stroke)
-- [x] `brand/ChorelyLogo.tsx` (3 variants: `full` stacked, `horizontal` inline, `icon` smiley-only)
+- [x] `brand/TydifiedIcon.tsx` (SVG rounded-square smiley with pink→orange gradient stroke)
+- [x] `brand/TydifiedLogo.tsx` (3 variants: `full` stacked, `horizontal` inline, `icon` smiley-only)
 - [x] `ui/ProgressBar.tsx` (clamp + optional label/valueLabel header)
 - [x] `ui/ProgressRing.tsx` (SVG, optional gradient stroke, custom center label, unique gradient id per instance)
 - [x] `ui/ChoreRow.tsx` (status-tone Badge + PointsBadge + Avatar; pure-UI props decoupled from DB row shapes)
@@ -113,7 +118,7 @@ Legend: `[ ]` pending, `[x]` complete, `[-]` skipped
 
 - [x] `src/hooks/useAuthBootstrap.ts` — restores session at launch + subscribes to onAuthStateChange; hydrates authStore
 - [x] `src/navigation/RootNavigator.tsx` — Auth ↔ Main switch driven by `authStore.session` (conditional `<Stack.Screen>` blocks; React Navigation 7 idiomatic)
-- [x] `src/screens/auth/WelcomeScreen.tsx` — animated ChorelyLogo hero + Create account / I already have an account CTAs
+- [x] `src/screens/auth/WelcomeScreen.tsx` — animated TydifiedLogo hero + Create account / I already have an account CTAs
 - [x] `src/screens/auth/SignUpScreen.tsx` — RHF + Yup (displayName + email + password); calls `auth.signUp`; handles email-confirmation case by redirecting to Login with an info toast
 - [x] `src/screens/auth/LoginScreen.tsx` — RHF + Yup (email + password); calls `auth.signIn`; ghost "Create one" link to SignUp
 - [x] `src/screens/parent/DashboardStub.tsx` — placeholder post-sign-in landing; greeting + status card + showcase shortcut + sign-out
@@ -129,7 +134,7 @@ Legend: `[ ]` pending, `[x]` complete, `[-]` skipped
 
 - [x] `src/screens/auth/OnboardingWizard.tsx` — 2-step wizard (family name → first child + optional DOB); calls `rpc.completeOnboarding`, hydrates familyStore, plus a "Not you? Sign out" escape hatch
 - [x] Detect post-signup state (no family yet) and route to OnboardingWizard — `useFamilyBootstrap` loads family context; RootNavigator gates session → Onboarding → Main
-- [x] `src/navigation/MainNavigator.tsx` — bottom tabs (Home / Chores / Rewards / Family / Settings) using TabBar via a `ChorelyTabBar` React Navigation adapter (emits `tabPress`)
+- [x] `src/navigation/MainNavigator.tsx` — bottom tabs (Home / Chores / Rewards / Family / Settings) using TabBar via a `TydifiedTabBar` React Navigation adapter (emits `tabPress`)
 - [x] Replace DashboardStub with the tabbed Main shell — deleted `DashboardStub.tsx`; `HomeScreen` is minimal-real (family summary + roster + pending-approvals placeholder); Chores/Rewards stubs; Family read-only roster; Settings carries sign-out + dev showcase link
 - [x] `App.tsx` gates navigator on fontsReady && authReady && **familyReady** (no flash of Welcome or Onboarding for returning users)
 - [x] `src/screens/parent/layout.ts` — `TAB_BAR_CLEARANCE` so scroll content clears the floating glass tab bar
@@ -194,7 +199,7 @@ Added a complete dark theme, app-wide:
 - `theme/ThemeProvider.tsx` — reactive to `settingsStore.darkMode`; exposes active `C` + `mode`; new `useThemedStyles(makeStyles)` hook
 - Converted ~24 components/screens from static `C` to `useTheme().C` + `useThemedStyles` (primitives, layout, all 5 modals, auth + parent screens). `BlurView` tint + StatusBar + App loading bg now follow the mode.
 - `hooks/useSettingsBootstrap.ts` syncs `user_settings` → store on sign-in
-- Static `C` intentionally retained for: Avatar/ChorelyIcon/ChorelyLogo/CelebrationOverlay (mode-invariant brand colors), ComponentShowcase (dev-only), and shadow colors. ChoresScreen uses no colors (theme-agnostic).
+- Static `C` intentionally retained for: Avatar/TydifiedIcon/TydifiedLogo/CelebrationOverlay (mode-invariant brand colors), ComponentShowcase (dev-only), and shadow colors. ChoresScreen uses no colors (theme-agnostic).
 
 ## Design Alignment — Lumina Bloom prototype (2026-05-29, tsc + Metro green)
 
@@ -244,7 +249,7 @@ Aligned the parent app to the prototype screenshots (the original design intent)
 - [ ] Strip all `console.log`
 - [ ] COPPA audit (no PII prompts for children data)
 - [ ] Verify RLS policies block cross-family reads (test with two accounts)
-- [x] Replace placeholder app icons + add missing Android adaptive-icon assets (2026-05-29): branded Chorely smiley generated via `scripts/gen-icons.py` (icon/adaptive fg+bg+mono/splash logo/favicon); expo-doctor config-schema check now passes.
+- [x] Replace placeholder app icons + add missing Android adaptive-icon assets (2026-05-29): branded Tydified smiley generated via `scripts/gen-icons.py` (icon/adaptive fg+bg+mono/splash logo/favicon); expo-doctor config-schema check now passes.
 - [ ] Install `expo-asset` peer dep (`npx expo install expo-asset`) — flagged by expo-doctor (needed by expo-audio for non-Expo-Go builds); + resolve minor expo/expo-font patch drift via `npx expo install --check`
 - [ ] Decide on `ProgressBar` primitive (still unused — wire in or remove); `SkeletonLoader`/`SkeletonRow` now wired into all list screens
 - [ ] EAS build → TestFlight + Google internal track
@@ -272,3 +277,12 @@ Tailor chore & reward SUGGESTIONS (and default point values) to a child's age/gr
 - [x] Migration 016 — `children.age_tier_override` (nullable text + CHECK in early/lower/middle/upper); applied remote + local mirror; `database.types.ts` updated.
 - [x] Tier override picker in ProfileEditModal ("Age group": Auto + 4 tiers; tap a kid's avatar to edit).
 - [ ] (v1.1) Kid-facing visual tiers — expand `bracketThemes` from the old 3-bracket/pre-teal system to 4 tiers + teal.
+
+## UI polish round 3 (2026-07-10)
+
+- [x] CreateChoreModal due date: MM-DD-YYYY entry (placeholder, validation, ISO conversion via `usDateToIso`) — was still YYYY-MM-DD
+- [x] Quick actions: all four tiles now use cartoon stickers (Add Chore=star, Add Kid=happy, Set Goal=trophy; happy/trophy added to CartoonIcon from avatars set)
+- [x] Home: snapshot tiles tappable (Assigned→Chores, Done→Review, Points→Family)
+- [x] More: removed "Billing & invoices" stub row (IAP apps have no invoices; native subscription management comes with RevenueCat)
+- [x] Review: "Recent decisions" history section (last 10 approved/rejected, from already-loaded assignments)
+- [-] Tab bar / More / Family row icons stay Ionicons by design: stickers = content surfaces, line glyphs = chrome

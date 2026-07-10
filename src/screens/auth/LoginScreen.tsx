@@ -5,13 +5,15 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import Reanimated from 'react-native-reanimated';
 
-import { Header } from '../../components/layout/Header';
-import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toast';
+import { useShake } from '../../hooks/useShake';
 import { signIn as authSignIn } from '../../services/auth';
+import { hapticWarning } from '../../utils/haptics';
+import { playSound } from '../../utils/sounds';
 import {
   spacing,
   typography,
@@ -19,6 +21,7 @@ import {
   type Palette,
 } from '../../theme';
 import type { RootStackParamList } from '../../types/app.types';
+import { AuthScaffold } from './AuthScaffold';
 
 type Nav = StackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -40,6 +43,7 @@ export function LoginScreen() {
   const toast = useToast();
   const styles = useThemedStyles(makeStyles);
   const [submitting, setSubmitting] = useState(false);
+  const { shake, shakeStyle } = useShake();
 
   const {
     control,
@@ -57,6 +61,9 @@ export function LoginScreen() {
     setSubmitting(false);
 
     if (!res.success) {
+      shake();
+      hapticWarning();
+      playSound('womp');
       toast.show({ message: res.error, tone: 'error', duration: 5000 });
       return;
     }
@@ -65,97 +72,86 @@ export function LoginScreen() {
   };
 
   return (
-    <ScreenContainer keyboardAvoiding scroll>
-      <Header title="Sign in" onBack={() => nav.goBack()} />
+    <AuthScaffold
+      title="Sign in"
+      subtitle="Welcome back."
+      onBack={() => nav.goBack()}
+    >
+      <Reanimated.View style={[styles.shakeWrap, shakeStyle]}>
+      <Controller
+        name="email"
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="Email"
+            placeholder="you@example.com"
+            value={field.value}
+            onChangeText={field.onChange}
+            onBlur={field.onBlur}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="email"
+            textContentType="emailAddress"
+            error={errors.email?.message}
+          />
+        )}
+      />
+      <Controller
+        name="password"
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="Password"
+            value={field.value}
+            onChangeText={field.onChange}
+            onBlur={field.onBlur}
+            secureTextEntry
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="password"
+            textContentType="password"
+            error={errors.password?.message}
+          />
+        )}
+      />
+      </Reanimated.View>
 
-      <View style={styles.intro}>
-        <Text style={styles.helper} maxFontSizeMultiplier={1.5}>
-          Welcome back.
-        </Text>
+      <View style={styles.submit}>
+        <Button
+          label="Sign in"
+          onPress={handleSubmit(onSubmit)}
+          loading={submitting}
+          fullWidth
+        />
       </View>
 
-      <View style={styles.form}>
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label="Email"
-              placeholder="you@example.com"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoComplete="email"
-              textContentType="emailAddress"
-              error={errors.email?.message}
-            />
-          )}
-        />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label="Password"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              secureTextEntry
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoComplete="password"
-              textContentType="password"
-              error={errors.password?.message}
-            />
-          )}
-        />
+      <Button
+        label="Forgot password?"
+        variant="ghost"
+        size="sm"
+        onPress={() => nav.navigate('ForgotPassword')}
+      />
 
-        <View style={styles.submit}>
-          <Button
-            label="Sign in"
-            onPress={handleSubmit(onSubmit)}
-            loading={submitting}
-            fullWidth
-          />
-        </View>
-
+      <View style={styles.switchRow}>
+        <Text style={styles.switchText} maxFontSizeMultiplier={1.5}>
+          No account yet?
+        </Text>
         <Button
-          label="Forgot password?"
+          label="Create one"
           variant="ghost"
           size="sm"
-          onPress={() => nav.navigate('ForgotPassword')}
+          onPress={() => nav.navigate('SignUp')}
         />
-
-        <View style={styles.switchRow}>
-          <Text style={styles.switchText} maxFontSizeMultiplier={1.5}>
-            No account yet?
-          </Text>
-          <Button
-            label="Create one"
-            variant="ghost"
-            size="sm"
-            onPress={() => nav.navigate('SignUp')}
-          />
-        </View>
       </View>
-    </ScreenContainer>
+    </AuthScaffold>
   );
 }
 
 const makeStyles = (C: Palette) =>
   StyleSheet.create({
-  intro: {
-    marginTop: spacing.s8,
-    marginBottom: spacing.s16,
-  },
-  helper: {
-    ...typography.body,
-    color: C.textMid,
-  },
-  form: {
+  // Preserves the scaffold form's s16 gap for the two inputs it wraps.
+  shakeWrap: {
     gap: spacing.s16,
   },
   submit: {

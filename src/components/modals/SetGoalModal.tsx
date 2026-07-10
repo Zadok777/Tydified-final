@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import { TydifiedKids } from '../brand/TydifiedKids';
 import { Avatar } from '../ui/Avatar';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
@@ -152,6 +153,9 @@ export function SetGoalModal({ visible, onClose, onCreated }: SetGoalModalProps)
         </>
       }
     >
+      <View style={styles.trophyHero}>
+        <TydifiedKids height={64} animated />
+      </View>
       <View>
         <Text style={styles.label}>For which child</Text>
         {children.length === 0 ? (
@@ -257,6 +261,10 @@ export function SetGoalModal({ visible, onClose, onCreated }: SetGoalModalProps)
 
 const makeStyles = (C: Palette) =>
   StyleSheet.create({
+    trophyHero: {
+      alignItems: 'center',
+      paddingVertical: spacing.s8,
+    },
     label: {
       ...typography.caption,
       color: C.textMid,
@@ -293,7 +301,7 @@ const makeStyles = (C: Palette) =>
       fontFamily: 'DMSans_600SemiBold',
     },
     childChipTextActive: {
-      color: C.pink,
+      color: C.pinkText,
       fontFamily: 'DMSans_700Bold',
     },
     rewardList: {
@@ -321,6 +329,6 @@ const makeStyles = (C: Palette) =>
       flex: 1,
     },
     rewardTitleActive: {
-      color: C.pink,
+      color: C.pinkText,
     },
   });

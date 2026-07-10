@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -12,6 +12,7 @@ import {
   useThemedStyles,
   type Palette,
 } from '../../theme';
+import { AVATAR_CARTOON } from './avatarCartoon';
 import { PointsBadge } from './PointsBadge';
 
 type IoniconName = React.ComponentProps<typeof Ionicons>['name'];
@@ -64,6 +65,7 @@ export function RewardCard({
       style={({ pressed }) => [
         styles.card,
         shadows.md,
+        { borderColor: locked ? C.border : withAlpha(accent, 0.35) },
         locked && styles.cardLocked,
         justUnlocked && styles.cardUnlocked,
         pressed && interactive && styles.pressed,
@@ -71,16 +73,28 @@ export function RewardCard({
       ]}
     >
       <View
-        style={[
-          styles.art,
-          { backgroundColor: withAlpha(accent, locked ? 0.06 : 0.15) },
-        ]}
+        style={styles.art}
       >
-        <Ionicons
-          name={locked ? 'lock-closed' : iconName}
-          size={36}
-          color={locked ? C.textLight : accent}
-        />
+        <View
+          style={[
+            styles.artBubble,
+            { backgroundColor: withAlpha(accent, locked ? 0.08 : 0.16) },
+          ]}
+        >
+          {!locked && AVATAR_CARTOON[iconName] !== undefined ? (
+            <Image
+              source={AVATAR_CARTOON[iconName]}
+              style={styles.artSticker}
+              resizeMode="contain"
+            />
+          ) : (
+            <Ionicons
+              name={locked ? 'lock-closed' : iconName}
+              size={30}
+              color={locked ? C.textLight : accent}
+            />
+          )}
+        </View>
       </View>
       <View style={styles.body}>
         <Text
@@ -122,10 +136,9 @@ function withAlpha(color: string, alpha: number): string {
 const makeStyles = (C: Palette) =>
   StyleSheet.create({
     card: {
-      backgroundColor: C.glass,
+      backgroundColor: C.orangeAlpha10,
       borderRadius: radii.r20,
       borderWidth: 1,
-      borderColor: C.border,
       overflow: 'hidden',
     },
     cardLocked: {
@@ -139,9 +152,24 @@ const makeStyles = (C: Palette) =>
       opacity: 0.95,
     },
     art: {
-      height: 88,
+      height: 84,
       alignItems: 'center',
       justifyContent: 'center',
+      paddingTop: spacing.s16,
+    },
+    artSticker: {
+      width: 38,
+      height: 38,
+    },
+    artBubble: {
+      width: 64,
+      height: 64,
+      borderRadius: radii.rFull,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: C.glass,
+      borderWidth: 1,
+      borderColor: C.border,
     },
     body: {
       padding: spacing.s16,

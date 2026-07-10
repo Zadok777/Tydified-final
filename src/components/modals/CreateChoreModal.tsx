@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
+import { CartoonIcon, CATEGORY_CARTOON } from '../ui/CartoonIcon';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
@@ -18,6 +19,7 @@ import { useAuthStore } from '../../store/authStore';
 import { useChoreStore } from '../../store/choreStore';
 import { useFamilyStore } from '../../store/familyStore';
 import { hapticLight } from '../../utils/haptics';
+import { usDateToIso } from '../../utils/date';
 import {
   radii,
   spacing,
@@ -39,8 +41,6 @@ import {
   CHORE_SUGGESTIONS,
   type ChoreSuggestion,
 } from '../../data/choreSuggestions';
-
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 const FREQUENCY_OPTIONS = [
   { value: 'once', label: 'Once' },
@@ -80,10 +80,9 @@ const schema = yup.object({
     .string()
     .trim()
     .default('')
-    .test('valid-date', 'Use a real date (YYYY-MM-DD)', (value) => {
+    .test('valid-date', 'Use a real date (MM-DD-YYYY)', (value) => {
       if (value === undefined || value === '') return true;
-      if (!DATE_PATTERN.test(value)) return false;
-      return !Number.isNaN(new Date(`${value}T00:00:00`).getTime());
+      return usDateToIso(value) !== null;
     }),
 });
 
@@ -194,7 +193,7 @@ export function CreateChoreModal({
 
     setSubmitting(true);
     const actorId = session?.user?.id ?? null;
-    const dueDate = values.dueDate.trim();
+    const dueDate = values.dueDate.trim() === '' ? '' : (usDateToIso(values.dueDate) ?? '');
 
     const choreRes = await createChore({
       family_id: family.id,
@@ -386,11 +385,7 @@ export function CreateChoreModal({
                 accessibilityState={{ selected }}
                 style={[styles.catChip, selected && styles.catChipActive]}
               >
-                <Ionicons
-                  name={cat.icon}
-                  size={14}
-                  color={selected ? C.textWhite : C.textMid}
-                />
+                <CartoonIcon name={CATEGORY_CARTOON[cat.value]} size={22} />
                 <Text
                   style={[styles.catChipText, selected && styles.catChipTextActive]}
                   maxFontSizeMultiplier={1.2}
@@ -409,7 +404,7 @@ export function CreateChoreModal({
         render={({ field }) => (
           <Input
             label="Due date (optional)"
-            placeholder="YYYY-MM-DD"
+            placeholder="MM-DD-YYYY"
             value={field.value}
             onChangeText={field.onChange}
             onBlur={field.onBlur}
@@ -463,7 +458,7 @@ const makeStyles = (C: Palette) =>
     backgroundColor: C.pinkAlpha10,
     borderWidth: 1,
     borderColor: C.borderPink,
-    borderRadius: radii.r12,
+    borderRadius: radii.r16,
     paddingHorizontal: spacing.s12,
     paddingVertical: spacing.s8,
     alignItems: 'flex-start',
@@ -505,7 +500,7 @@ const makeStyles = (C: Palette) =>
     fontFamily: 'DMSans_600SemiBold',
   },
   childChipTextActive: {
-    color: C.pink,
+    color: C.pinkText,
     fontFamily: 'DMSans_700Bold',
   },
   catChip: {

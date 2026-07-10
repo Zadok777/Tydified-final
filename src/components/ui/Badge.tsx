@@ -38,14 +38,14 @@ function tonePalette(
     case 'neutral':
       return { background: C.glassLight, text: C.textDark };
     case 'pink':
-      return { background: C.pinkAlpha15, text: C.pink };
+      return { background: C.pinkAlpha15, text: C.pinkText };
     case 'orange':
       return {
         background: C.orangeAlpha15,
         text: mode === 'dark' ? C.orange : '#C36321',
       };
     case 'green':
-      return { background: C.greenAlpha15, text: C.green };
+      return { background: C.greenAlpha15, text: C.greenText };
     case 'danger':
       return {
         background: C.redAlpha15,
@@ -57,8 +57,8 @@ function tonePalette(
 }
 
 const heightFor: Record<BadgeSize, number> = {
-  sm: 22,
-  md: 28,
+  sm: 24,
+  md: 30,
 };
 
 const horizontalPaddingFor: Record<BadgeSize, number> = {
@@ -118,13 +118,15 @@ export function Badge({
 }
 
 const styles = StyleSheet.create({
-  base: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: radii.rFull,
-    alignSelf: 'flex-start',
-  },
+    base: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: radii.rFull,
+      alignSelf: 'flex-start',
+      borderWidth: 1,
+      borderColor: 'rgba(255,255,255,0.22)',
+    },
   iconLeft: {
     marginRight: spacing.s4,
   },

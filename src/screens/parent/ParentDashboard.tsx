@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Pressable, RefreshControl, Text, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -240,9 +241,24 @@ export function ParentDashboard() {
           {"Today's snapshot"}
         </Text>
         <View style={styles.snapshotRow}>
-          <SnapshotTile value={assignedCount} label="Assigned" tone="pink" />
-          <SnapshotTile value={doneCount} label="Done" tone="green" />
-          <SnapshotTile value={totalPoints} label="Points" tone="orange" />
+          <SnapshotTile
+            value={assignedCount}
+            label="Assigned"
+            tone="pink"
+            onPress={() => nav.navigate('Chores')}
+          />
+          <SnapshotTile
+            value={doneCount}
+            label="Done"
+            tone="green"
+            onPress={() => nav.navigate('Review')}
+          />
+          <SnapshotTile
+            value={totalPoints}
+            label="Points"
+            tone="orange"
+            onPress={() => nav.navigate('Family')}
+          />
         </View>
 
         {/* Quick actions */}
@@ -253,21 +269,29 @@ export function ParentDashboard() {
           <QuickAction
             label="Add Chore"
             icon="add"
+            cartoon="star"
+            tone="pink"
             onPress={() => setChoreModal(true)}
           />
           <QuickAction
             label="New Reward"
             icon="gift"
+            cartoon="gift"
+            tone="orange"
             onPress={() => setRewardModal(true)}
           />
           <QuickAction
             label="Add Kid"
             icon="person-add"
+            cartoon="happy"
+            tone="green"
             onPress={() => setChildModal(true)}
           />
           <QuickAction
             label="Set Goal"
             icon="trophy"
+            cartoon="trophy"
+            tone="purple"
             onPress={() => setGoalModal(true)}
           />
         </View>
@@ -312,17 +336,23 @@ export function ParentDashboard() {
         ) : (
           <View style={styles.kidList}>
             {children.map((child, index) => (
-              <KidProgress
+              <Animated.View
                 key={child.id}
-                child={child}
-                gradientIndex={index}
-                total={assignments.filter((a) => a.child_id === child.id).length}
-                done={
-                  assignments.filter(
-                    (a) => a.child_id === child.id && a.status === 'approved'
-                  ).length
-                }
-              />
+                entering={FadeInDown.duration(220).delay(
+                  Math.min(index, 8) * 40
+                )}
+              >
+                <KidProgress
+                  child={child}
+                  gradientIndex={index}
+                  total={assignments.filter((a) => a.child_id === child.id).length}
+                  done={
+                    assignments.filter(
+                      (a) => a.child_id === child.id && a.status === 'approved'
+                    ).length
+                  }
+                />
+              </Animated.View>
             ))}
           </View>
         )}

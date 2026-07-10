@@ -50,7 +50,7 @@ const TAB_META: Record<keyof MainTabParamList, TabItem> = {
   },
 };
 
-function ChorelyTabBar({ state, navigation }: BottomTabBarProps) {
+function TydifiedTabBar({ state, navigation }: BottomTabBarProps) {
   const tabs = state.routes.map(
     (route) => TAB_META[route.name as keyof MainTabParamList]
   );
@@ -79,7 +79,7 @@ function ChorelyTabBar({ state, navigation }: BottomTabBarProps) {
 export function MainNavigator() {
   return (
     <Tab.Navigator
-      tabBar={(props) => <ChorelyTabBar {...props} />}
+      tabBar={(props) => <TydifiedTabBar {...props} />}
       screenOptions={{
         headerShown: false,
         sceneStyle: { backgroundColor: C.bg },

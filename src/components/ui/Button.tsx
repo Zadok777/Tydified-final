@@ -7,7 +7,9 @@ import {
   View,
 } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
+import Reanimated from 'react-native-reanimated';
 
+import { usePressBounce } from '../../hooks/usePressBounce';
 import {
   radii,
   shadows,
@@ -16,6 +18,9 @@ import {
   useTheme,
   type Palette,
 } from '../../theme';
+import { hapticLight } from '../../utils/haptics';
+
+const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -36,9 +41,9 @@ interface ButtonProps {
 }
 
 const heightFor: Record<ButtonSize, number> = {
-  sm: 40,
-  md: 48, // DESIGN §9 minimum touch target
-  lg: 56, // Elementary bracket minimum
+  sm: 44,
+  md: 52,
+  lg: 60,
 };
 
 const horizontalPaddingFor: Record<ButtonSize, number> = {
@@ -63,16 +68,23 @@ export function Button({
 }: ButtonProps) {
   const { C, mode } = useTheme();
   const isDisabled = disabled || loading;
+  const { onPressIn, onPressOut, bounceStyle } = usePressBounce();
+  const handlePress = () => {
+    if (variant === 'primary') hapticLight();
+    onPress();
+  };
 
   return (
-    <Pressable
-      onPress={onPress}
+    <AnimatedPressable
+      onPress={handlePress}
+      onPressIn={isDisabled ? undefined : onPressIn}
+      onPressOut={isDisabled ? undefined : onPressOut}
       disabled={isDisabled}
       testID={testID}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? label}
       accessibilityState={{ disabled: isDisabled, busy: loading }}
-      style={({ pressed }) => [
+      style={[
         styles.base,
         {
           height: heightFor[size],
@@ -81,9 +93,9 @@ export function Button({
         },
         variantContainerStyle(C, variant),
         variant === 'primary' && !isDisabled && shadows.pink,
-        pressed && !isDisabled && styles.pressed,
         isDisabled && styles.disabled,
         style,
+        bounceStyle,
       ]}
     >
       {loading ? (
@@ -103,14 +115,18 @@ export function Button({
           ) : null}
         </View>
       )}
-    </Pressable>
+    </AnimatedPressable>
   );
 }
 
 function variantContainerStyle(C: Palette, variant: ButtonVariant): ViewStyle {
   switch (variant) {
     case 'primary':
-      return { backgroundColor: C.pink };
+      return {
+        backgroundColor: C.pink,
+        borderWidth: 1,
+        borderColor: C.borderPink,
+      };
     case 'secondary':
       return {
         backgroundColor: C.glass,
@@ -140,7 +156,7 @@ function textColorFor(
     case 'secondary':
       return C.textDark;
     case 'ghost':
-      return C.pink;
+      return C.pinkText;
     case 'danger':
       return mode === 'dark' ? '#FF7A7A' : '#B91C1C';
   }
@@ -148,7 +164,7 @@ function textColorFor(
 
 const styles = StyleSheet.create({
   base: {
-    borderRadius: radii.r14,
+    borderRadius: radii.rFull,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
@@ -163,10 +179,6 @@ const styles = StyleSheet.create({
   },
   iconRight: {
     marginLeft: spacing.s8,
-  },
-  pressed: {
-    transform: [{ scale: 0.98 }],
-    opacity: 0.92,
   },
   disabled: {
     opacity: 0.5,

@@ -1,6 +1,6 @@
 # Test Plan
 
-Testing strategy for Chorely. Current coverage is minimal — this plan defines
+Testing strategy for Tydified. Current coverage is minimal — this plan defines
 the target and the order to build it.
 
 ## Tooling

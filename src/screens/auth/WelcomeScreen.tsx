@@ -3,10 +3,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 
-import { ChorelyLogo } from '../../components/brand/ChorelyLogo';
+import { TydifiedLogo } from '../../components/brand/TydifiedLogo';
 import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { Button } from '../../components/ui/Button';
 import {
+  radii,
   spacing,
   typography,
   useThemedStyles,
@@ -16,40 +17,44 @@ import type { RootStackParamList } from '../../types/app.types';
 
 type Nav = StackNavigationProp<RootStackParamList, 'Welcome'>;
 
+// Tagline pill — mirrors the navy pill in the logo lockup, with each phrase
+// in its lockup color (white / green / gold / cyan). Mode-invariant brand
+// literals, like GRADIENTS in tokens.ts.
+const PILL_NAVY = '#00001B';
+const TAG_GREEN = '#60DB01';
+const TAG_GOLD = '#FDCB01';
+const TAG_CYAN = '#02F4FA';
+
 export function WelcomeScreen() {
   const nav = useNavigation<Nav>();
   const styles = useThemedStyles(makeStyles);
 
   return (
     <ScreenContainer>
-      <View style={styles.root}>
-        <View style={styles.hero}>
-          <ChorelyLogo variant="full" iconSize={104} animated />
-        </View>
-
-        <View style={styles.copy}>
-          <Text style={styles.tagline} maxFontSizeMultiplier={1.5}>
-            Chores and rewards your kids actually look forward to.
-          </Text>
-          <Text style={styles.subtitle} maxFontSizeMultiplier={1.5}>
-            Set chores, approve completions, and let your kids earn rewards
-            they choose.
+      <View style={styles.hero}>
+        <View style={styles.glow} pointerEvents="none" />
+        <TydifiedLogo variant="full" iconSize={112} animated />
+        <View style={styles.taglinePill}>
+          <Text style={styles.taglineText} maxFontSizeMultiplier={1.3}>
+            <Text style={styles.tagWhite}>Do chores. </Text>
+            <Text style={styles.tagGreen}>Earn points. </Text>
+            <Text style={styles.tagGold}>Unlock rewards. </Text>
+            <Text style={styles.tagCyan}>Level up!</Text>
           </Text>
         </View>
-
-        <View style={styles.cta}>
-          <Button
-            label="Create an account"
-            onPress={() => nav.navigate('SignUp')}
-            fullWidth
-          />
-          <Button
-            label="I already have an account"
-            onPress={() => nav.navigate('Login')}
-            variant="secondary"
-            fullWidth
-          />
-        </View>
+      </View>
+      <View style={styles.cta}>
+        <Button
+          label="Create an account"
+          onPress={() => nav.navigate('SignUp')}
+          fullWidth
+        />
+        <Button
+          label="I already have an account"
+          onPress={() => nav.navigate('Login')}
+          variant="secondary"
+          fullWidth
+        />
       </View>
     </ScreenContainer>
   );
@@ -57,35 +62,44 @@ export function WelcomeScreen() {
 
 const makeStyles = (C: Palette) =>
   StyleSheet.create({
-  root: {
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingVertical: spacing.s32,
-  },
-  hero: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  copy: {
-    alignItems: 'center',
-    paddingHorizontal: spacing.s12,
-    gap: spacing.s12,
-  },
-  tagline: {
-    ...typography.headline,
-    fontSize: 26,
-    color: C.textDark,
-    textAlign: 'center',
-  },
-  subtitle: {
-    ...typography.body,
-    color: C.textMid,
-    textAlign: 'center',
-    maxWidth: 360,
-  },
-  cta: {
-    gap: spacing.s12,
-    paddingTop: spacing.s24,
-  },
-});
+    hero: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.s24,
+    },
+    // Soft brand-tint disc behind the lockup — depth without clutter, and it
+    // can't go muddy because it's the same hue as the ground it sits on.
+    glow: {
+      position: 'absolute',
+      width: 360,
+      height: 360,
+      borderRadius: radii.rFull,
+      backgroundColor: C.pinkAlpha10,
+    },
+    taglinePill: {
+      backgroundColor: PILL_NAVY,
+      borderRadius: radii.rFull,
+      paddingHorizontal: spacing.s20,
+      paddingVertical: spacing.s12,
+      // Hairline so the navy pill keeps its edge on the dark-mode navy ground.
+      borderWidth: 1,
+      borderColor: C.border,
+      maxWidth: 340,
+    },
+    taglineText: {
+      ...typography.caption,
+      fontFamily: 'Nunito_800ExtraBold',
+      fontSize: 14,
+      letterSpacing: 0.2,
+      textAlign: 'center',
+    },
+    tagWhite: { color: '#FFFFFF' },
+    tagGreen: { color: TAG_GREEN },
+    tagGold: { color: TAG_GOLD },
+    tagCyan: { color: TAG_CYAN },
+    cta: {
+      gap: spacing.s12,
+      paddingBottom: spacing.s16,
+    },
+  });

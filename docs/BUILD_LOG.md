@@ -16,7 +16,7 @@ record; this is the human-readable summary.
 - Added the project documentation set (README, AGENTS.md, `docs/*`, `seed.sql`,
   `tests/` scaffold).
 - Added Stage 1 security hardening (migration 017), dependency cleanup, and the
-  custom Chorely Plus paywall/free-tier gate implementation.
+  custom Tydified Plus paywall/free-tier gate implementation.
 
 ## 2026-06-01 — RevenueCat + design refresh + legal/store prep
 

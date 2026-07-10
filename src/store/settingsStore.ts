@@ -14,7 +14,10 @@ interface SettingsState {
   notificationChoreComplete: boolean;
   notificationRewardRedeemed: boolean;
   notificationDailySummary: boolean;
+  /** UI chimes on/off. Per-device (not synced to user_settings). */
+  soundEnabled: boolean;
   setDarkMode(value: boolean): void;
+  setSoundEnabled(value: boolean): void;
   setNotificationsEnabled(value: boolean): void;
   setNotificationChoreComplete(value: boolean): void;
   setNotificationRewardRedeemed(value: boolean): void;
@@ -35,6 +38,7 @@ const defaults = {
   notificationChoreComplete: true,
   notificationRewardRedeemed: true,
   notificationDailySummary: true,
+  soundEnabled: true,
 };
 
 export const useSettingsStore = create<SettingsState>()(
@@ -42,6 +46,7 @@ export const useSettingsStore = create<SettingsState>()(
     (set) => ({
       ...defaults,
       setDarkMode: (darkMode) => set({ darkMode }),
+      setSoundEnabled: (soundEnabled) => set({ soundEnabled }),
       setNotificationsEnabled: (notificationsEnabled) =>
         set({ notificationsEnabled }),
       setNotificationChoreComplete: (notificationChoreComplete) =>
@@ -61,7 +66,7 @@ export const useSettingsStore = create<SettingsState>()(
       reset: () => set(defaults),
     }),
     {
-      name: 'chorely.settings',
+      name: 'tydified.settings',
       storage: createJSONStorage(() => AsyncStorage),
     }
   )

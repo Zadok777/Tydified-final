@@ -1,6 +1,6 @@
 # Stage 1 — Beta Readiness Work Log
 
-A step-by-step, auditable record of the work to get Chorely into testers' hands.
+A step-by-step, auditable record of the work to get Tydified into testers' hands.
 Each step documents: **objective → investigation (how we concluded) → decision →
 change → verification → result → follow-ups**. Newest steps are appended.
 
@@ -114,7 +114,7 @@ Ensure the app ships with a real, store-compliant icon (the old checklist said
 - Listed `assets/` icons and `app.json` config: `icon.png`, `favicon.png`, and a
   full Android adaptive set (`android-icon-foreground/background/monochrome.png`)
   are all present and wired in `app.json`.
-- Opened `icon.png`: it is a real, on-brand **Chorely smiley** (pink→orange
+- Opened `icon.png`: it is a real, on-brand **Tydified smiley** (pink→orange
   gradient border, white rounded square, smiley) on the lavender brand
   background — **not** an Expo default or blank placeholder.
 - Checked Apple's hard requirement (icons must not carry an alpha channel):
@@ -185,7 +185,7 @@ free-tier gates, and public env-key wiring.
   offerings, no purchase/restore actions existed, and the More tab still showed
   a "coming soon" toast.
 - Confirmed product rules in `CLAUDE.md` and store copy: one paid tier,
-  **Chorely Plus**, with monthly/yearly billing; entitlement id is exactly
+  **Tydified Plus**, with monthly/yearly billing; entitlement id is exactly
   `Chorely Pro`; free tier is 1 child and 4 active chores per child.
 - Found an env mismatch: `src/lib/revenuecat.ts` reads
   `EXPO_PUBLIC_REVENUECAT_*`, but `.env.example` and `.env.local` still used
@@ -208,7 +208,7 @@ Restore Purchases in code, and avoids a dashboard styling dependency.
   - App Store / Google Play auto-renew disclosure;
   - Terms + Privacy links.
 - Wired navigation:
-  - More → Chorely Plus opens Paywall;
+  - More → Tydified Plus opens Paywall;
   - Add Child opens Paywall after 1 free child;
   - Create Chore opens Paywall when a selected child already has 4 active chores.
 - Updated `.env.example` and `.env.local` to use
@@ -242,7 +242,7 @@ purchases, and update local entitlement state when RevenueCat reports the
 ## Step 6b — Allow Plus users to switch monthly/yearly plans · 2026-06-23 · ✅ Code Done
 
 ### Objective
-Keep plan options visible after a user already has Chorely Plus, so a monthly
+Keep plan options visible after a user already has Tydified Plus, so a monthly
 subscriber can move to yearly later without needing a reset or new account.
 
 ### Investigation (how we concluded)
@@ -255,7 +255,7 @@ subscriber can move to yearly later without needing a reset or new account.
 
 ### Decision / Change
 - Store the active RevenueCat product id in `subscriptionStore`.
-- Keep the Chorely Plus active-status card, but still render the monthly/yearly
+- Keep the Tydified Plus active-status card, but still render the monthly/yearly
   package cards underneath.
 - Label the active package as **Current plan** and disable re-purchasing that
   same package.

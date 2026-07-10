@@ -1,6 +1,6 @@
 # tests/
 
-Jest test suite for Chorely. Mirrors the `src/` layout (e.g.
+Jest test suite for Tydified. Mirrors the `src/` layout (e.g.
 `tests/utils/` ↔ `src/utils/`). See [../docs/TEST_PLAN.md](../docs/TEST_PLAN.md)
 for strategy and priorities.
 

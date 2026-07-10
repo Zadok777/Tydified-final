@@ -1,18 +1,18 @@
-# PLANNING.md — Chorely v1.0 Build
+# PLANNING.md — Tydified v1.0 Build
 
-This document describes the architecture, phasing, and key decisions for building Chorely v1.0 in `/Users/santiagos4god/Desktop/Chorely 2/`. The full visual system lives in `DESIGN.md`. Project rules and the Supabase schema live in `CLAUDE.md`. Per-task progress is tracked in `TASKS.md`.
+This document describes the architecture, phasing, and key decisions for building Tydified v1.0 in `/Users/santiagos4god/Projects/Tydified/`. The full visual system lives in `DESIGN.md`. Project rules and the Supabase schema live in `CLAUDE.md`. Per-task progress is tracked in `TASKS.md`.
 
 ---
 
 ## Build Approach
 
-This is a **fresh build**, not a rebuild. The folder starts with the Expo skeleton (`App.tsx`, `package.json`, `app.json`, `eas.json`, `babel.config.js`, `metro.config.js`, `tsconfig.json`, `index.ts`) and the brand asset (`assets/chorely-logo.png`). Everything else is built phase by phase per `TASKS.md`.
+This is a **fresh build**, not a rebuild. The folder starts with the Expo skeleton (`App.tsx`, `package.json`, `app.json`, `eas.json`, `babel.config.js`, `metro.config.js`, `tsconfig.json`, `index.ts`) and the brand asset (`assets/tydified-logo.png`). Everything else is built phase by phase per `TASKS.md`.
 
 ### What exists ahead of time
 
 - **Supabase backend**: the live project at the Supabase URL (provided when wiring Phase 2) already has migrations 001–010 applied, all RPC functions deployed, and RLS policies enforced. The schema is documented in CLAUDE.md §5. We connect to it from the new app; we do not re-create it.
 - **GitHub repo**: hosted on the personal GitHub account as of the 2026-06-23 migration. Phase 1 wires the local folder to the remote and pushes the first commit.
-- **Brand asset**: `assets/chorely-logo.png` is the pink→orange smiley used by the `ChorelyLogo` and `ChorelyIcon` components.
+- **Brand asset**: `assets/tydified-logo.png` is the pink→orange smiley used by the `TydifiedLogo` and `TydifiedIcon` components.
 - **App.tsx**: stubs in font loading (Nunito + DM Sans), `SafeAreaProvider`, `GestureHandlerRootView`, `NavigationContainer`, and `ThemeProvider` + `RootNavigator`. The imports it references (`./src/theme`, `./src/navigation/RootNavigator`) are created in Phase 1 / Phase 4.
 
 ### What does NOT exist yet
@@ -23,7 +23,7 @@ This is a **fresh build**, not a rebuild. The folder starts with the Expo skelet
 
 ### What we will NOT salvage
 
-Anything from prior `~/Desktop/Chorely-new` or earlier Chorely attempts. Those folders and their IDE caches were deleted on 2026-05-27. This build references the prototype design (captured in DESIGN.md) and the live Supabase schema (captured in CLAUDE.md §5) as its only inputs.
+Anything from prior `~/Desktop/Chorely-new` or earlier Tydified attempts. Those folders and their IDE caches were deleted on 2026-05-27. This build references the prototype design (captured in DESIGN.md) and the live Supabase schema (captured in CLAUDE.md §5) as its only inputs.
 
 ---
 
@@ -73,8 +73,8 @@ Exports:
 ```
 src/components/
 ├── brand/                  # Logo and brand assets
-│   ├── ChorelyLogo.tsx     # Full/horizontal/icon variants
-│   ├── ChorelyIcon.tsx     # Standalone smiley-square icon
+│   ├── TydifiedLogo.tsx     # Full/horizontal/icon variants
+│   ├── TydifiedIcon.tsx     # Standalone smiley-square icon
 │   └── index.ts
 ├── ui/                     # Atomic design elements
 │   ├── GlassCard.tsx       # Glass card with blur + border
@@ -191,3 +191,46 @@ src/components/          ← NEW (rebuilt)
 | No Expo Router | Stay with React Navigation 6 (already in dependencies) |
 | Modals over new screens | Create/edit flows use modals to reduce navigation complexity |
 | Dark mode toggle in Settings | Added by request. Theme state persists through `settingsStore`; v1.0 keeps the light visual system as the default. |
+
+## v1.1 Spec — Teen Self-Serve Accounts (decided 2026-07-10)
+
+**Headline v1.1 feature** (promoted above PIN profile switching, which can ship
+after). Teens (15–18, optionally 13–14) with their own phones get a real,
+kid-scoped login linked to their existing `children` record. Under-13s are
+unchanged: records only, parent's device, COPPA rules intact — COPPA does not
+restrict 13+, so teen accounts may use email/password auth.
+
+### Flow
+
+1. Parent taps **Invite to phone** on a kid (Manage Kids / Family screen) →
+   app shows a short-lived kid invite code (crypto-secure, like family codes).
+2. Teen installs Tydified on their own device, signs up with email + password
+   (normal Supabase auth), and enters the code.
+3. `join_as_child_by_code(p_code)` RPC links `auth.uid()` to that child row →
+   same points, chores, streak, goals. One auth user per child row, and a
+   linked teen account cannot also be a parent in the same family.
+
+### Teen-scoped app
+
+Teens see: My Chores (submit with a tap → parent's Review), Rewards (request
+redemption — parent still confirms), own progress/streak/goals, own avatar.
+Teens cannot: create/approve chores, manage kids, see siblings' detail, touch
+settings/subscription. Reuses the v1.1 child-facing screens already planned;
+age-tier theming already exists via `getAgeBracket`.
+
+### Schema + security sketch
+
+- `children.child_user_id uuid NULL REFERENCES auth.users(id)` + unique index.
+- `child_invite_codes` table (or column on children) with expiry.
+- New RPCs: `create_child_invite(p_child_id)` (parent-only),
+  `join_as_child_by_code(p_code)`, `submit_chore` opened to the linked child
+  (`child_user_id = auth.uid()`) for own assignments only.
+- **Bulk of the work is RLS:** every policy today assumes the authed user is a
+  parent (`is_family_member()`). Add a `is_child_self()` path granting
+  read-own-row / submit-own-assignment / read-family-rewards, and nothing else.
+  Point mutations stay RPC-only (migration 017 hardening already enforces this).
+
+### Out of scope for this feature
+
+Photo verification, push notifications, PIN profiles (separate v1.1 items).
+Nothing here ships before the v1.0 App Store submission (CLAUDE.md §9).

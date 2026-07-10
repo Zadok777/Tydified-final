@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Reanimated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 
+import { hapticLight } from '../../utils/haptics';
+import { playSound } from '../../utils/sounds';
 import {
   radii,
   shadows,
@@ -63,18 +72,25 @@ export function TabBar({ tabs, activeKey, onChange, style }: TabBarProps) {
               return (
                 <Pressable
                   key={tab.key}
-                  onPress={() => onChange(tab.key)}
+                  onPress={() => {
+                    if (!active) {
+                      hapticLight();
+                      playSound('pop');
+                    }
+                    onChange(tab.key);
+                  }}
                   accessibilityRole="button"
                   accessibilityLabel={tab.label}
                   accessibilityState={{ selected: active }}
                   style={({ pressed }) => [
                     styles.tab,
+                    active && styles.tabActive,
                     pressed && styles.tabPressed,
                   ]}
                 >
-                  <Ionicons
+                  <TabIcon
+                    active={active}
                     name={active ? tab.iconActive : tab.iconInactive}
-                    size={22}
                     color={active ? C.pink : C.textMid}
                   />
                   <Text
@@ -94,6 +110,36 @@ export function TabBar({ tabs, activeKey, onChange, style }: TabBarProps) {
         </View>
       </View>
     </View>
+  );
+}
+
+// Duolingo-style select pop: the icon overshoots then springs back the
+// moment its tab becomes active.
+function TabIcon({
+  active,
+  name,
+  color,
+}: {
+  active: boolean;
+  name: React.ComponentProps<typeof Ionicons>['name'];
+  color: string;
+}) {
+  const scale = useSharedValue(1);
+  useEffect(() => {
+    if (active) {
+      scale.value = withSequence(
+        withTiming(1.25, { duration: 110 }),
+        withSpring(1, { damping: 10, stiffness: 300 })
+      );
+    }
+  }, [active, scale]);
+  const popStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+  return (
+    <Reanimated.View style={popStyle}>
+      <Ionicons name={name} size={22} color={color} />
+    </Reanimated.View>
   );
 }
 
@@ -130,17 +176,20 @@ const makeStyles = (C: Palette) =>
     gap: 2,
     borderRadius: radii.r16,
   },
+  tabActive: {
+    backgroundColor: C.pinkAlpha10,
+  },
   tabPressed: {
     opacity: 0.7,
     transform: [{ scale: 0.96 }],
   },
   tabLabel: {
     ...typography.caption,
-    fontSize: 10,
+    fontSize: 11,
     color: C.textMid,
   },
   tabLabelActive: {
-    color: C.pink,
+    color: C.pinkText,
     fontFamily: 'DMSans_700Bold',
   },
   });

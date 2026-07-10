@@ -1,10 +1,10 @@
--- Chorely dev seed data.
+-- Tydified dev seed data.
 --
 -- Prerequisite: a parent must already exist in auth.users — sign up in the app
 -- first, then run this against the dev project (Supabase SQL editor, or
 -- `supabase db execute --file supabase/seed.sql` when linked).
 --
--- It targets the parent with email 'demo@chorely.app' if present, otherwise the
+-- It targets the parent with email 'demo@tydified.app' if present, otherwise the
 -- first user. Re-running is safe: it skips if the demo family already exists.
 -- Seeds bypass RLS (run as the table owner), so direct inserts are fine here.
 
@@ -18,7 +18,7 @@ declare
   v_reward uuid;
 begin
   select id into v_user from auth.users
-    where email = 'demo@chorely.app' order by created_at limit 1;
+    where email = 'demo@tydified.app' order by created_at limit 1;
   if v_user is null then
     select id into v_user from auth.users order by created_at limit 1;
   end if;

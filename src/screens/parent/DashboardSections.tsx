@@ -1,15 +1,22 @@
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Animated, Pressable, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import Reanimated from 'react-native-reanimated';
+
+import { usePressBounce } from '../../hooks/usePressBounce';
 
 import { Avatar } from '../../components/ui/Avatar';
+import { CartoonIcon, type CartoonIconName } from '../../components/ui/CartoonIcon';
 import { StreakFlame } from '../../components/ui/StreakFlame';
+import { useAnimatedRatio } from '../../hooks/useAnimatedRatio';
 import { useCountUp } from '../../hooks/useCountUp';
 import { ageFromDob } from '../../utils/ageTier';
 import { AVATAR_GRADIENTS, GRADIENTS, useTheme, useThemedStyles } from '../../theme';
 import type { Child, Goal } from '../../types/app.types';
 import { makeStyles } from './dashboard.styles';
+
+const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 type IoniconName = React.ComponentProps<typeof Ionicons>['name'];
 
@@ -17,55 +24,98 @@ export function SnapshotTile({
   value,
   label,
   tone,
+  onPress,
 }: {
   value: number;
   label: string;
   tone: 'pink' | 'green' | 'orange';
+  onPress?: () => void;
 }) {
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
-  // Calm & refined: uniform surface tiles + big near-black numbers. Color is
-  // reserved — only Points (orange) pops, the rest stay neutral so the data
-  // reads through size, not a rainbow of backgrounds.
-  const valueColor = tone === 'orange' ? C.orange : C.textDark;
+  // Me+ pastel system: each stat sits on its own lockup-hue tint with a
+  // contrast-safe text shade of the same hue (Tydi blue / green / amber).
+  const valueColor =
+    tone === 'orange'
+      ? C.orangeText
+      : tone === 'green'
+        ? C.greenText
+        : C.pinkText;
+  const tileBg =
+    tone === 'orange'
+      ? C.orangeAlpha10
+      : tone === 'green'
+        ? C.greenAlpha10
+        : C.pinkAlpha10;
   const display = useCountUp(value);
   return (
-    <View style={styles.snapTile}>
+    <Pressable
+      onPress={onPress}
+      disabled={onPress === undefined}
+      accessibilityRole={onPress !== undefined ? 'button' : undefined}
+      accessibilityLabel={`${value} ${label}`}
+      style={({ pressed }) => [
+        styles.snapTile,
+        { backgroundColor: tileBg },
+        pressed && onPress !== undefined && styles.pressed,
+      ]}
+    >
       <Text style={[styles.snapValue, { color: valueColor }]} maxFontSizeMultiplier={1.3}>
         {display}
       </Text>
       <Text style={styles.snapLabel} maxFontSizeMultiplier={1.2} numberOfLines={1}>
         {label}
       </Text>
-    </View>
+    </Pressable>
   );
 }
+
+export type QuickActionTone = 'pink' | 'orange' | 'green' | 'purple';
 
 export function QuickAction({
   label,
   icon,
   onPress,
+  tone = 'pink',
+  cartoon,
 }: {
   label: string;
   icon: IoniconName;
   onPress: () => void;
+  tone?: QuickActionTone;
+  cartoon?: CartoonIconName;
 }) {
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
+  const { onPressIn, onPressOut, bounceStyle } = usePressBounce();
+  // One lockup hue per action so the grid reads as the brand rainbow.
+  // Icon colors are the contrast-safe shade of each hue where needed.
+  const tint: Record<QuickActionTone, { bg: string; fg: string }> = {
+    pink: { bg: C.pinkAlpha15, fg: C.pink },
+    orange: { bg: C.orangeAlpha15, fg: C.orange },
+    green: { bg: C.greenAlpha15, fg: C.greenText },
+    purple: { bg: C.purpleAlpha15, fg: C.purple },
+  };
   return (
-    <Pressable
+    <AnimatedPressable
       onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
       accessibilityRole="button"
       accessibilityLabel={label}
-      style={({ pressed }) => [styles.actionItem, pressed && styles.pressed]}
+      style={[styles.actionItem, bounceStyle]}
     >
-      <View style={[styles.actionIcon, { backgroundColor: C.pinkAlpha15 }]}>
-        <Ionicons name={icon} size={20} color={C.pink} />
+      <View style={[styles.actionIcon, { backgroundColor: tint[tone].bg }]}>
+        {cartoon !== undefined ? (
+          <CartoonIcon name={cartoon} size={26} />
+        ) : (
+          <Ionicons name={icon} size={20} color={tint[tone].fg} />
+        )}
       </View>
       <Text style={styles.actionLabel} maxFontSizeMultiplier={1.3} numberOfLines={2}>
         {label}
       </Text>
-    </Pressable>
+    </AnimatedPressable>
   );
 }
 
@@ -82,6 +132,7 @@ export function KidProgress({
 }) {
   const styles = useThemedStyles(makeStyles);
   const ratio = total > 0 ? done / total : 0;
+  const animatedWidth = useAnimatedRatio(ratio);
   const gradient = AVATAR_GRADIENTS[gradientIndex % AVATAR_GRADIENTS.length];
   const ageLabel = ageFromDob(child.date_of_birth);
 
@@ -120,12 +171,16 @@ export function KidProgress({
         </View>
       </View>
       <View style={styles.barTrack}>
-        <LinearGradient
-          colors={gradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={[styles.barFill, { width: `${Math.round(ratio * 100)}%` }]}
-        />
+        <Animated.View
+          style={[styles.barFill, { width: animatedWidth, overflow: 'hidden' }]}
+        >
+          <LinearGradient
+            colors={gradient}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.barFillGradient}
+          />
+        </Animated.View>
       </View>
     </View>
   );
@@ -151,11 +206,18 @@ export function GoalRow({
   return (
     <View style={styles.goalCard}>
       <View style={styles.goalTop}>
-        <View style={styles.goalIcon}>
-          <Ionicons
-            name={goal.kind === 'reward' ? 'gift' : 'flag'}
-            size={16}
-            color={C.pink}
+        <View
+          style={[
+            styles.goalIcon,
+            {
+              backgroundColor:
+                goal.kind === 'reward' ? C.orangeAlpha15 : C.purpleAlpha15,
+            },
+          ]}
+        >
+          <CartoonIcon
+            name={goal.kind === 'reward' ? 'gift' : 'star'}
+            size={20}
           />
         </View>
         <View style={styles.goalMeta}>

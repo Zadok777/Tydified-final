@@ -1,6 +1,6 @@
 # Security
 
-Security model for Chorely. See also CLAUDE.md §7 (auth), §10 (code standards),
+Security model for Tydified. See also CLAUDE.md §7 (auth), §10 (code standards),
 §11 (Supabase rules), and [DATA_MODEL.md](./DATA_MODEL.md).
 
 ## Authentication & authorization

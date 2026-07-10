@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { Header } from '../../components/layout/Header';
 import { ScreenContainer } from '../../components/layout/ScreenContainer';
@@ -18,7 +19,7 @@ import { submitChore } from '../../services/rpc';
 import { useActivityStore } from '../../store/activityStore';
 import { useChoreStore } from '../../store/choreStore';
 import { useFamilyStore } from '../../store/familyStore';
-import { spacing } from '../../theme/tokens';
+import { spacing, useThemedStyles, type Palette } from '../../theme';
 import type {
   Child,
   Chore,
@@ -38,6 +39,7 @@ const FILTERS = [
 
 export function ChoresScreen() {
   const toast = useToast();
+  const styles = useThemedStyles(makeStyles);
   const family = useFamilyStore((s) => s.family);
   const children = useFamilyStore((s) => s.children);
   const chores = useChoreStore((s) => s.chores);
@@ -166,6 +168,7 @@ export function ChoresScreen() {
         ) : visible.length === 0 ? (
           <EmptyState
             icon="checkbox-outline"
+            cartoon="books"
             title={
               assignments.length === 0
                 ? 'No chores yet'
@@ -185,21 +188,27 @@ export function ChoresScreen() {
           />
         ) : (
           <View style={styles.list}>
-            {visible.map((assignment) => {
+            {visible.map((assignment, index) => {
               const chore = choreById(assignment.chore_id);
               if (chore === undefined) return null;
               const child = childById(assignment.child_id);
               return (
-                <ChoreRow
+                <Animated.View
                   key={assignment.id}
-                  title={chore.title}
-                  pointValue={chore.point_value}
-                  status={assignment.status as ChoreStatus}
-                  assigneeName={child?.name}
-                  assigneeGradientIndex={childIndex(assignment.child_id)}
-                  dueLabel={formatDueLabel(assignment.due_date)}
-                  onPress={() => onRowPress(assignment)}
-                />
+                  entering={FadeInDown.duration(220).delay(
+                    Math.min(index, 8) * 40
+                  )}
+                >
+                  <ChoreRow
+                    title={chore.title}
+                    pointValue={chore.point_value}
+                    status={assignment.status as ChoreStatus}
+                    assigneeName={child?.name}
+                    assigneeGradientIndex={childIndex(assignment.child_id)}
+                    dueLabel={formatDueLabel(assignment.due_date)}
+                    onPress={() => onRowPress(assignment)}
+                  />
+                </Animated.View>
               );
             })}
           </View>
@@ -224,15 +233,16 @@ export function ChoresScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  content: {
-    paddingBottom: TAB_BAR_CLEARANCE,
-  },
-  filter: {
-    marginTop: spacing.s8,
-    marginBottom: spacing.s16,
-  },
-  list: {
-    gap: spacing.s12,
-  },
-});
+const makeStyles = (_C: Palette) =>
+  StyleSheet.create({
+    content: {
+      paddingBottom: TAB_BAR_CLEARANCE,
+    },
+    filter: {
+      marginTop: spacing.s8,
+      marginBottom: spacing.s16,
+    },
+    list: {
+      gap: spacing.s12,
+    },
+  });

@@ -1,4 +1,4 @@
-# Chorely
+# Tydified
 
 A family chore and reward management mobile app. Parents create a family, add
 children, assign chores, approve completions, and define rewards. Children earn
@@ -74,7 +74,7 @@ for an accurate preview**.
 ## Project layout
 
 ```
-Chorely 2/
+Tydified/
 ├── src/            App source (screens, components, navigation, store, services, theme)
 ├── supabase/
 │   ├── migrations/ SQL migrations (mirror of remote)

@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 
+import { useAnimatedRatio } from '../../hooks/useAnimatedRatio';
 import {
   radii,
   spacing,
@@ -30,7 +31,7 @@ interface ProgressBarProps {
 
 export function ProgressBar({
   value,
-  height = 8,
+  height = 10,
   color,
   trackColor,
   label,
@@ -39,8 +40,7 @@ export function ProgressBar({
 }: ProgressBarProps) {
   const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
-  const clamped = Math.max(0, Math.min(1, value));
-  const percent = `${clamped * 100}%` as const;
+  const animatedWidth = useAnimatedRatio(value);
   const hasHeader = label !== undefined || valueLabel !== undefined;
   const fillColor = color ?? C.pink;
   const resolvedTrack = trackColor ?? C.mutedAlpha20;
@@ -73,10 +73,10 @@ export function ProgressBar({
           },
         ]}
       >
-        <View
+        <Animated.View
           style={{
             height,
-            width: percent,
+            width: animatedWidth,
             backgroundColor: fillColor,
             borderRadius: height / 2,
           }}
@@ -106,5 +106,7 @@ const makeStyles = (C: Palette) =>
     track: {
       overflow: 'hidden',
       borderRadius: radii.rFull,
+      borderWidth: 1,
+      borderColor: C.border,
     },
   });

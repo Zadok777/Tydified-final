@@ -1,8 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Easing, Image, StyleSheet, Text } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+
+import { AVATAR_CARTOON } from './avatarCartoon';
 
 import {
   AVATAR_GRADIENTS,
@@ -11,11 +13,11 @@ import {
   shadows,
   typography,
 } from '../../theme/tokens';
-import { ChorelyIcon } from '../brand/ChorelyIcon';
+import { TydifiedIcon } from '../brand/TydifiedIcon';
 
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
 
-// Sentinel `avatar_icon` value that renders the Chorely smiley instead of a
+// Sentinel `avatar_icon` value that renders the Tydified smiley instead of a
 // gradient circle. Anything else non-empty is treated as an Ionicon name.
 export const AVATAR_FACE = 'face';
 
@@ -27,17 +29,21 @@ interface AvatarProps {
   // a stable hash of `name` picks one — same name always lands on the same
   // gradient across the app.
   gradientIndex?: number;
-  // Optional override of the center content. `AVATAR_FACE` renders the Chorely
+  // Optional override of the center content. `AVATAR_FACE` renders the Tydified
   // smiley as the whole avatar; any other non-empty value is an Ionicon name
   // rendered white-on-gradient; null/undefined falls back to the initial.
   icon?: string | null;
   size?: AvatarSize;
   style?: StyleProp<ViewStyle>;
   withBorder?: boolean;
-  // When the avatar is the Chorely face (AVATAR_FACE), make it wink + bob.
-  // No-op for gradient/initial avatars.
+  // Gentle idle motion. The Tydified face winks + bobs; gradient/icon/initial
+  // avatars get the same subtle bob. Default off so list rows stay still.
   animated?: boolean;
 }
+
+// Same bob geometry as TydifiedIcon — one shared feel across all avatars.
+const BOB_RANGE = 2.5;
+const BOB_DURATION_MS = 2000;
 
 const sizePx: Record<AvatarSize, number> = {
   sm: 32,
@@ -64,21 +70,56 @@ export function Avatar({
 }: AvatarProps) {
   const px = sizePx[size];
 
-  // The Chorely face replaces the gradient circle entirely (it's the brand
-  // rounded-square smiley, not a circular badge).
-  if (icon === AVATAR_FACE) {
-    return <ChorelyIcon size={px} animated={animated} style={style} />;
-  }
+  // Bob loop for non-face avatars — same breath as TydifiedIcon so a mixed
+  // row of avatars moves as one family. Face avatars animate inside
+  // TydifiedIcon and skip this wrapper.
+  const bobY = useRef(new Animated.Value(0)).current;
+  const wantsBob = animated && icon !== AVATAR_FACE;
+  useEffect(() => {
+    if (!wantsBob) return undefined;
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(bobY, {
+          toValue: -BOB_RANGE,
+          duration: BOB_DURATION_MS,
+          easing: Easing.inOut(Easing.sin),
+          useNativeDriver: true,
+        }),
+        Animated.timing(bobY, {
+          toValue: 0,
+          duration: BOB_DURATION_MS,
+          easing: Easing.inOut(Easing.sin),
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [wantsBob, bobY]);
 
   const idx =
     gradientIndex !== undefined
       ? Math.abs(gradientIndex) % AVATAR_GRADIENTS.length
       : hashIndex(name, AVATAR_GRADIENTS.length);
   const gradient = AVATAR_GRADIENTS[idx];
+
+  // The Tydified face replaces the gradient circle entirely (it's the brand
+  // rounded-square smiley, not a circular badge). Its border ring wears the
+  // picked gradient, so the face comes in every lockup hue family.
+  if (icon === AVATAR_FACE) {
+    return (
+      <TydifiedIcon
+        size={px}
+        ringColors={gradient}
+        animated={animated}
+        style={style}
+      />
+    );
+  }
   const hasIcon = icon !== undefined && icon !== null && icon !== '';
 
   return (
-    <View
+    <Animated.View
       style={[
         styles.wrapper,
         {
@@ -88,6 +129,7 @@ export function Avatar({
         },
         withBorder && styles.border,
         shadows.sm,
+        wantsBob && { transform: [{ translateY: bobY }] },
         style,
       ]}
     >
@@ -100,7 +142,16 @@ export function Avatar({
           { width: px, height: px, borderRadius: radii.rFull },
         ]}
       >
-        {hasIcon ? (
+        {hasIcon && AVATAR_CARTOON[icon] !== undefined ? (
+          <Image
+            source={AVATAR_CARTOON[icon]}
+            style={{
+              width: Math.round(px * 0.68),
+              height: Math.round(px * 0.68),
+            }}
+            resizeMode="contain"
+          />
+        ) : hasIcon ? (
           <Ionicons
             name={icon as React.ComponentProps<typeof Ionicons>['name']}
             size={Math.round(px * 0.5)}
@@ -118,7 +169,7 @@ export function Avatar({
           </Text>
         )}
       </LinearGradient>
-    </View>
+    </Animated.View>
   );
 }
 

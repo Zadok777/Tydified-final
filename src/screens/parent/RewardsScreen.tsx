@@ -4,6 +4,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
+import { TydifiedKids } from '../../components/brand/TydifiedKids';
 import { Header } from '../../components/layout/Header';
 import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { CelebrationOverlay } from '../../components/modals/CelebrationOverlay';
@@ -153,6 +154,7 @@ export function RewardsScreen() {
         ) : children.length === 0 ? (
           <EmptyState
             icon="happy-outline"
+            cartoon="star"
             title="No kids yet"
             description="Add a child in the Family tab before setting up rewards."
           />
@@ -186,13 +188,16 @@ export function RewardsScreen() {
 
             <GlassCard tint="orange" style={styles.balanceCard}>
               <View style={styles.balanceRow}>
-                <View>
+                <View style={styles.balanceCopy}>
                   <Text style={styles.balanceLabel} maxFontSizeMultiplier={1.3}>
                     {`${selectedChild?.name ?? 'Child'}'s balance`}
                   </Text>
                   <Text style={styles.balanceValue} maxFontSizeMultiplier={1.3}>
                     {displayBalance}
                   </Text>
+                </View>
+                <View style={styles.balanceMascot}>
+                  <TydifiedKids height={44} animated />
                 </View>
                 <PointsBadge points={balance} size="lg" />
               </View>
@@ -208,6 +213,7 @@ export function RewardsScreen() {
             {visibleRewards.length === 0 ? (
               <EmptyState
                 icon="gift-outline"
+                cartoon="gift"
                 title={rewards.length === 0 ? 'No rewards yet' : 'Nothing here'}
                 description={
                   rewards.length === 0
@@ -304,7 +310,7 @@ const makeStyles = (C: Palette) =>
     fontFamily: 'DMSans_600SemiBold',
   },
   childChipTextActive: {
-    color: C.pink,
+    color: C.pinkText,
     fontFamily: 'DMSans_700Bold',
   },
   balanceCard: {
@@ -314,6 +320,10 @@ const makeStyles = (C: Palette) =>
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    gap: spacing.s12,
+  },
+  balanceCopy: {
+    flex: 1,
   },
   balanceLabel: {
     ...typography.caption,
@@ -323,6 +333,16 @@ const makeStyles = (C: Palette) =>
     ...typography.heroNum,
     fontSize: 40,
     color: C.orange,
+  },
+  balanceMascot: {
+    width: 68,
+    height: 68,
+    borderRadius: radii.rFull,
+    backgroundColor: C.glass,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: C.border,
   },
   filter: {
     marginTop: spacing.s16,

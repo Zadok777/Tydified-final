@@ -8,6 +8,8 @@
 // ENTITLEMENT_ID must match the RevenueCat dashboard entitlement identifier
 // EXACTLY, including the space.
 
+// ponytail: identifier stays 'Chorely Pro' — it must match the RevenueCat dashboard
+// entitlement exactly; rename it there first (pre-launch) before changing this.
 export const ENTITLEMENT_ID = 'Chorely Pro';
 
 export const FREE_LIMITS = {

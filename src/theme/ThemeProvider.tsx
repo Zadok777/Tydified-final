@@ -5,9 +5,7 @@ import React, {
   type ReactNode,
 } from 'react';
 
-import { useSettingsStore } from '../store/settingsStore';
 import {
-  darkC,
   lightC,
   radii,
   shadows,
@@ -38,15 +36,13 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-// The active palette is driven by the persisted `darkMode` flag in
-// settingsStore, so the whole tree recolors the instant the Settings toggle
-// flips (and dark mode is already applied at launch, before sign-in, since the
-// store rehydrates from AsyncStorage). radii/spacing/typography/shadows are
-// mode-invariant and stay constant.
+// Dark mode was removed 2026-07-08 — the app is light-only. The useTheme /
+// useThemedStyles architecture stays so components keep one code path; the
+// provider simply always serves the light palette. `mode` remains in the
+// context shape for the few consumers that branch on it.
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const darkMode = useSettingsStore((s) => s.darkMode);
-  const mode: ThemeMode = darkMode ? 'dark' : 'light';
-  const palette: Palette = darkMode ? darkC : lightC;
+  const mode: ThemeMode = 'light';
+  const palette: Palette = lightC;
 
   const value = useMemo<ThemeContextValue>(
     () => ({

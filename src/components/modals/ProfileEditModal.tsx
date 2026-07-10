@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import Reanimated, { FadeInDown } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
-import { ChorelyIcon } from '../brand/ChorelyIcon';
+import { TydifiedIcon } from '../brand/TydifiedIcon';
 import { Avatar, AVATAR_FACE } from '../ui/Avatar';
+import { AVATAR_CARTOON } from '../ui/avatarCartoon';
 import { Button } from '../ui/Button';
 import { useToast } from '../ui/Toast';
 import { ModalSheet } from './ModalSheet';
@@ -33,23 +35,46 @@ import {
 type IoniconName = React.ComponentProps<typeof Ionicons>['name'];
 
 // Curated, kid-friendly icon options. `null` = initials; AVATAR_FACE = the
-// Chorely smiley; anything else is an Ionicon name.
+// Tydified smiley; anything else is an Ionicon name.
 const ICON_OPTIONS: readonly (string | null)[] = [
   null,
   AVATAR_FACE,
   'happy',
   'star',
+  'trophy',
+  'medal',
   'paw',
   'football',
   'basketball',
+  'bicycle',
   'game-controller',
   'rocket',
+  'airplane',
+  'boat',
+  'car-sport',
   'heart',
   'planet',
+  'sunny',
+  'moon',
+  'cloud',
   'ice-cream',
+  'pizza',
   'musical-notes',
+  'brush',
+  'book',
   'flower',
+  'leaf',
+  'fish',
+  'crown',
+  'rainbow',
+  'dinosaur',
+  'unicorn',
 ];
+
+// Preview pop spring — a quick settle, not a wobble. Tuned once here so the
+// selection feedback feels consistent for both color and icon taps.
+const POP_FROM = 0.85;
+const PICKER_GRADIENT_INDEXES = [0, 1, 2, 3, 4, 5] as const;
 
 export type ProfileEditTarget =
   | { kind: 'parent' }
@@ -78,6 +103,19 @@ export function ProfileEditModal({
   const [icon, setIcon] = useState<string | null>(null);
   const [tierOverride, setTierOverride] = useState<AgeTier | null>(null);
   const [saving, setSaving] = useState(false);
+
+  // Preview pop: every color/icon selection snaps the preview to POP_FROM and
+  // springs it back — instant, physical feedback that the tap "took".
+  const previewScale = useRef(new Animated.Value(1)).current;
+  useEffect(() => {
+    previewScale.setValue(POP_FROM);
+    Animated.spring(previewScale, {
+      toValue: 1,
+      friction: 5,
+      tension: 180,
+      useNativeDriver: true,
+    }).start();
+  }, [gradient, icon, previewScale]);
 
   const name =
     target?.kind === 'child'
@@ -148,34 +186,50 @@ export function ProfileEditModal({
       }
     >
       <View style={styles.previewWrap}>
-        <Avatar name={name} gradientIndex={gradient} icon={icon} size="xl" />
+        <Animated.View style={{ transform: [{ scale: previewScale }] }}>
+          <Avatar
+            name={name}
+            gradientIndex={gradient}
+            icon={icon}
+            size="xl"
+            animated
+          />
+        </Animated.View>
       </View>
 
       <View>
         <Text style={styles.label}>Color</Text>
         <View style={styles.swatchRow}>
-          {AVATAR_GRADIENTS.map((g, i) => {
-            const selected = gradient === i;
+          {PICKER_GRADIENT_INDEXES.map((gradientIndex, i) => {
+            const selected = gradient === gradientIndex;
+            const g = AVATAR_GRADIENTS[gradientIndex];
             return (
-              <Pressable
-                key={i}
-                onPress={() => setGradient(i)}
-                accessibilityRole="button"
-                accessibilityLabel={`Color ${i + 1}`}
-                accessibilityState={{ selected }}
-                style={[styles.swatch, selected && styles.swatchSelected]}
+              <Reanimated.View
+                key={gradientIndex}
+                entering={FadeInDown.duration(220).delay(Math.min(i, 8) * 30)}
               >
-                <LinearGradient
-                  colors={g}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={styles.swatchFill}
+                <Pressable
+                  onPress={() => {
+                    hapticLight();
+                    setGradient(gradientIndex);
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Color ${i + 1}`}
+                  accessibilityState={{ selected }}
+                  style={[styles.swatch, selected && styles.swatchSelected]}
                 >
-                  {selected ? (
-                    <Ionicons name="checkmark" size={16} color={C.textWhite} />
-                  ) : null}
-                </LinearGradient>
-              </Pressable>
+                  <LinearGradient
+                    colors={g}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.swatchFill}
+                  >
+                    {selected ? (
+                      <Ionicons name="checkmark" size={16} color={C.textWhite} />
+                    ) : null}
+                  </LinearGradient>
+                </Pressable>
+              </Reanimated.View>
             );
           })}
         </View>
@@ -187,28 +241,48 @@ export function ProfileEditModal({
           {ICON_OPTIONS.map((opt, i) => {
             const selected = icon === opt || (opt === null && icon == null);
             return (
-              <Pressable
+              <Reanimated.View
                 key={`${opt ?? 'initials'}-${i}`}
-                onPress={() => setIcon(opt)}
-                accessibilityRole="button"
-                accessibilityLabel={opt ?? 'Initials'}
-                accessibilityState={{ selected }}
-                style={[styles.iconChip, selected && styles.iconChipSelected]}
+                entering={FadeInDown.duration(220).delay(Math.min(i, 8) * 30)}
               >
-                {opt === null ? (
-                  <Text style={styles.iconInitials} maxFontSizeMultiplier={1.2}>
-                    Aa
-                  </Text>
-                ) : opt === AVATAR_FACE ? (
-                  <ChorelyIcon size={26} />
-                ) : (
-                  <Ionicons
-                    name={opt as IoniconName}
-                    size={20}
-                    color={selected ? C.pink : C.textMid}
-                  />
-                )}
-              </Pressable>
+                <Pressable
+                  onPress={() => {
+                    hapticLight();
+                    setIcon(opt);
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={opt ?? 'Initials'}
+                  accessibilityState={{ selected }}
+                  style={[styles.iconChip, selected && styles.iconChipSelected]}
+                >
+                  {opt === null ? (
+                    <Text style={styles.iconInitials} maxFontSizeMultiplier={1.2}>
+                      Aa
+                    </Text>
+                  ) : opt === AVATAR_FACE ? (
+                    <TydifiedIcon
+                      size={26}
+                      ringColors={
+                        AVATAR_GRADIENTS[
+                          Math.abs(gradient) % AVATAR_GRADIENTS.length
+                        ]
+                      }
+                    />
+                  ) : AVATAR_CARTOON[opt] !== undefined ? (
+                    <Image
+                      source={AVATAR_CARTOON[opt]}
+                      style={styles.iconSticker}
+                      resizeMode="contain"
+                    />
+                  ) : (
+                    <Ionicons
+                      name={opt as IoniconName}
+                      size={20}
+                      color={selected ? C.pink : C.textMid}
+                    />
+                  )}
+                </Pressable>
+              </Reanimated.View>
             );
           })}
         </View>
@@ -312,6 +386,7 @@ const makeStyles = (C: Palette) =>
     },
     swatchRow: {
       flexDirection: 'row',
+      flexWrap: 'wrap', // 11 swatches — must wrap on phone widths
       gap: spacing.s12,
     },
     swatch: {
@@ -335,6 +410,10 @@ const makeStyles = (C: Palette) =>
       flexDirection: 'row',
       flexWrap: 'wrap',
       gap: spacing.s8,
+    },
+    iconSticker: {
+      width: 26,
+      height: 26,
     },
     iconChip: {
       width: 46,

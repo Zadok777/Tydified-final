@@ -20,7 +20,7 @@ export const makeStyles = (C: Palette) =>
       flexDirection: 'row',
       alignItems: 'flex-start',
       paddingTop: spacing.s8,
-      marginBottom: spacing.s16,
+      marginBottom: spacing.s20,
     },
     headerText: {
       flex: 1,
@@ -37,7 +37,7 @@ export const makeStyles = (C: Palette) =>
       color: C.textDark,
     },
     greetingName: {
-      color: C.pink,
+      color: C.pinkText,
     },
     subGreeting: {
       ...typography.caption,
@@ -50,8 +50,8 @@ export const makeStyles = (C: Palette) =>
       gap: spacing.s8,
     },
     bell: {
-      width: 40,
-      height: 40,
+      width: 44,
+      height: 44,
       borderRadius: radii.rFull,
       backgroundColor: C.glass,
       borderWidth: 1,
@@ -72,7 +72,7 @@ export const makeStyles = (C: Palette) =>
     },
     // Hero
     heroCard: {
-      marginBottom: spacing.s8,
+      marginBottom: spacing.s12,
     },
     heroTop: {
       flexDirection: 'row',
@@ -112,7 +112,7 @@ export const makeStyles = (C: Palette) =>
     sectionTitle: {
       ...typography.title,
       color: C.textDark,
-      marginTop: spacing.s24,
+      marginTop: spacing.s32,
       marginBottom: spacing.s12,
     },
     // Snapshot
@@ -122,13 +122,14 @@ export const makeStyles = (C: Palette) =>
     },
     snapTile: {
       flex: 1,
-      borderRadius: radii.r16,
+      borderRadius: radii.r18,
       paddingVertical: spacing.s16,
       paddingHorizontal: spacing.s12,
       alignItems: 'flex-start',
       backgroundColor: C.glass,
       borderWidth: 1,
       borderColor: C.border,
+      minHeight: 94,
     },
     snapValue: {
       ...typography.heroNum,
@@ -155,7 +156,8 @@ export const makeStyles = (C: Palette) =>
       borderRadius: radii.r18,
       borderWidth: 1,
       borderColor: C.border,
-      padding: spacing.s12,
+      padding: spacing.s16,
+      minHeight: 74,
     },
     actionIcon: {
       width: 40,
@@ -188,7 +190,7 @@ export const makeStyles = (C: Palette) =>
     },
     kidCard: {
       backgroundColor: C.glass,
-      borderRadius: radii.r18,
+      borderRadius: radii.r20,
       borderWidth: 1,
       borderColor: C.border,
       padding: spacing.s16,
@@ -223,6 +225,12 @@ export const makeStyles = (C: Palette) =>
     },
     kidPoints: {
       alignItems: 'flex-end',
+      backgroundColor: C.orangeAlpha10,
+      borderRadius: radii.r16,
+      paddingHorizontal: spacing.s12,
+      paddingVertical: spacing.s8,
+      borderWidth: 1,
+      borderColor: C.orangeAlpha15,
     },
     kidPointsValue: {
       ...typography.title,
@@ -236,19 +244,24 @@ export const makeStyles = (C: Palette) =>
       letterSpacing: 0.6,
     },
     barTrack: {
-      height: 8,
+      height: 12,
       borderRadius: radii.rFull,
       backgroundColor: C.mutedAlpha20,
       overflow: 'hidden',
+      borderWidth: 1,
+      borderColor: C.border,
     },
     barFill: {
-      height: 8,
+      height: 12,
       borderRadius: radii.rFull,
+    },
+    barFillGradient: {
+      flex: 1,
     },
     // Goals
     goalCard: {
       backgroundColor: C.glass,
-      borderRadius: radii.r18,
+      borderRadius: radii.r20,
       borderWidth: 1,
       borderColor: C.border,
       padding: spacing.s16,

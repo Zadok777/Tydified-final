@@ -1,5 +1,5 @@
 // Small date helpers so screens never import a date library for the few labels
-// Chorely needs. All inputs are ISO-ish strings from Supabase (date or
+// Tydified needs. All inputs are ISO-ish strings from Supabase (date or
 // timestamptz); all outputs are display strings.
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -51,4 +51,26 @@ export function formatRelativeTime(iso: string | null | undefined): string {
     month: 'short',
     day: 'numeric',
   });
+}
+
+// US-format date entry (MM-DD-YYYY or MM/DD/YYYY) -> ISO YYYY-MM-DD for the
+// DB, or null when the input isn't a real calendar date. Forms validate and
+// convert through this so the stored value stays ISO.
+const US_DATE_PATTERN = /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/;
+
+export function usDateToIso(value: string): string | null {
+  const m = US_DATE_PATTERN.exec(value.trim());
+  if (m === null) return null;
+  const month = Number(m[1]);
+  const day = Number(m[2]);
+  const year = Number(m[3]);
+  const parsed = new Date(year, month - 1, day);
+  const real =
+    parsed.getFullYear() === year &&
+    parsed.getMonth() === month - 1 &&
+    parsed.getDate() === day;
+  if (!real) return null;
+  const mm = String(month).padStart(2, '0');
+  const dd = String(day).padStart(2, '0');
+  return `${year}-${mm}-${dd}`;
 }

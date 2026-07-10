@@ -10,9 +10,9 @@ import Svg, {
   Stop,
 } from 'react-native-svg';
 
-import { C } from '../../theme/tokens';
+import { useTheme } from '../../theme';
 
-interface ChorelyIconProps {
+interface TydifiedIconProps {
   // Side length in px. Component is rendered into a square box.
   size?: number;
   // Override the inner face fill — defaults to white. Set to C.bg if you
@@ -20,6 +20,10 @@ interface ChorelyIconProps {
   faceFill?: string;
   // Override the dark feature color (eyes + smile).
   featureColor?: string;
+  // Border-ring gradient pair. Defaults to the brand primary pair; pass an
+  // AVATAR_GRADIENTS entry to render the face in that lockup hue family
+  // (blue, pink, purple, gold, green, orange).
+  ringColors?: readonly [string, string];
   // When true, the smiley winks (right eye) every few seconds and the icon
   // bobs gently. Use on welcome screens and hero brand moments. Default off so
   // smaller chrome uses (header avatars, list rows) stay still and cheap.
@@ -41,17 +45,22 @@ const BLINK_INTERVAL_MS = 3500;
 const BOB_RANGE = 2.5;
 const BOB_DURATION_MS = 2000;
 
-export function ChorelyIcon({
+export function TydifiedIcon({
   size = 64,
-  faceFill = C.textWhite,
-  featureColor = C.textDark,
+  faceFill,
+  featureColor,
+  ringColors,
   animated = false,
   style,
-}: ChorelyIconProps) {
+}: TydifiedIconProps) {
+  const { C } = useTheme();
+  const resolvedFaceFill = faceFill ?? C.textWhite;
+  const resolvedFeatureColor = featureColor ?? C.textDark;
   // Only the right eye animates → a wink (not a both-eye blink). The left eye
   // stays open at OPEN_RY.
   const [rightRy, setRightRy] = useState(OPEN_RY);
   const bobY = useRef(new Animated.Value(0)).current;
+  const ringId = `tydifiedBorder-${(ringColors ?? ['brand']).join('').replace(/#/g, '')}`;
 
   // Wink loop. We drive ry through React state rather than a Reanimated
   // worklet because animating SVG props via reanimated has rough edges on
@@ -112,9 +121,12 @@ export function ChorelyIcon({
     >
       <Svg width={size} height={size} viewBox="0 0 100 100">
         <Defs>
-          <LinearGradient id="chorelyBorder" x1="0" y1="0" x2="1" y2="1">
-            <Stop offset="0" stopColor={C.pink} />
-            <Stop offset="1" stopColor={C.orange} />
+          {/* ID is derived from the ring pair — SVG ids are not reliably
+              scoped per <Svg>, and two faces with different rings on one
+              screen (e.g. the avatar picker) must not share a gradient. */}
+          <LinearGradient id={ringId} x1="0" y1="0" x2="1" y2="1">
+            <Stop offset="0" stopColor={ringColors?.[0] ?? C.pink} />
+            <Stop offset="1" stopColor={ringColors?.[1] ?? C.orange} />
           </LinearGradient>
         </Defs>
         <Rect
@@ -124,15 +136,15 @@ export function ChorelyIcon({
           height={92}
           rx={22}
           ry={22}
-          fill={faceFill}
-          stroke="url(#chorelyBorder)"
+          fill={resolvedFaceFill}
+          stroke={`url(#${ringId})`}
           strokeWidth={6}
         />
-        <Ellipse cx={36} cy={42} rx={5} ry={OPEN_RY} fill={featureColor} />
-        <Ellipse cx={64} cy={42} rx={5} ry={rightRy} fill={featureColor} />
+        <Ellipse cx={36} cy={42} rx={5} ry={OPEN_RY} fill={resolvedFeatureColor} />
+        <Ellipse cx={64} cy={42} rx={5} ry={rightRy} fill={resolvedFeatureColor} />
         <Path
           d="M30 62 Q50 82 70 62"
-          stroke={featureColor}
+          stroke={resolvedFeatureColor}
           strokeWidth={5}
           strokeLinecap="round"
           fill="none"

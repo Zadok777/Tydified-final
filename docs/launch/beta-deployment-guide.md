@@ -1,11 +1,11 @@
-# Chorely — Beta Deployment Guide (TestFlight + Google Play Testing)
+# Tydified — Beta Deployment Guide (TestFlight + Google Play Testing)
 
-Written for a non-developer. Read top to bottom. You do **not** need a Mac or Xcode — Chorely is an **Expo** app, so we build in the cloud with a tool called **EAS** (Expo Application Services). Think of EAS as a robot that takes your code and produces the installable app files for Apple and Google.
+Written for a non-developer. Read top to bottom. You do **not** need a Mac or Xcode — Tydified is an **Expo** app, so we build in the cloud with a tool called **EAS** (Expo Application Services). Think of EAS as a robot that takes your code and produces the installable app files for Apple and Google.
 
 **Your app's identity (already set):**
-- App name: **Chorely**
-- iOS Bundle ID: `com.zad0k777.chorely`
-- Android package: `com.zad0k777.chorely`
+- App name: **Tydified**
+- iOS Bundle ID: `com.zad0k777.tydified`
+- Android package: `com.zad0k777.tydified`
 - Expo owner/account: `zad0k777`
 - Version: `1.0.0`
 
@@ -25,7 +25,7 @@ Based on a real review of your current code.
 | Navigation | ✅ PASS | Tabs + screens work. |
 | Database Connections | ✅ PASS | Supabase connected; row-level security on. (Re-enable email confirmation; optionally move to a dedicated production project.) |
 | Push Notifications | ⬜ N/A | Not built (planned for v1.1). Fine for beta — just declare "no notifications." |
-| Subscription Features | ⚠️ TESTING NEEDED | RevenueCat is wired and the custom Chorely Plus paywall exists. Real App Store / Play products still need to be created and tested in a real build. |
+| Subscription Features | ⚠️ TESTING NEEDED | RevenueCat is wired and the custom Tydified Plus paywall exists. Real App Store / Play products still need to be created and tested in a real build. |
 | Premium Features (limits) | ✅ CODED | Free-tier gates are implemented: 1 child and 4 active chores per child unless the `Chorely Pro` entitlement is active. Verify manually in QA. |
 | Offline Functionality | ⚠️ LIMITED | App needs internet (it's normal for this kind of app). It remembers your login offline but needs a connection to load data. Acceptable for beta. |
 | Error Handling | ✅ PASS (basic) | Friendly error messages appear; no crash-reporting tool yet (optional: add Sentry later to see crashes testers hit). |
@@ -75,17 +75,17 @@ You'll use `eas build` and `eas submit` in the phases below.
 1. Go to https://appstoreconnect.apple.com → **My Apps** → **+** → **New App**.
 2. Fill in:
    - Platform: **iOS**
-   - Name: **Chorely** (must be unique across the App Store — if taken, try "Chorely: Chores & Rewards")
+   - Name: **Tydified** (must be unique across the App Store — if taken, try "Tydified: Chores & Rewards")
    - Primary language: **English (U.S.)**
-   - Bundle ID: choose **com.zad0k777.chorely** (see 2.3 if it's not listed)
-   - SKU: any text, e.g. `chorely-001`
+   - Bundle ID: choose **com.zad0k777.tydified** (see 2.3 if it's not listed)
+   - SKU: any text, e.g. `tydified-001`
    - User Access: Full Access
 3. Click **Create**.
 
 ### 2.3 Create the Bundle Identifier (if not already there)
 1. https://developer.apple.com/account → **Certificates, IDs & Profiles** → **Identifiers** → **+**
 2. Select **App IDs** → **App** → Continue.
-3. Description: `Chorely`. Bundle ID: **Explicit** → `com.zad0k777.chorely`.
+3. Description: `Tydified`. Bundle ID: **Explicit** → `com.zad0k777.tydified`.
 4. Capabilities: leave defaults (you don't need special ones for v1.0). Register.
 
 ### 2.4 Certificates & Signing — **let EAS do it**
@@ -121,7 +121,7 @@ npx eas submit --platform ios --profile production --latest
 4. The **first** external build needs a quick **Beta App Review** (usually < 24h). Later builds are faster.
 
 ### 2.9 Public TestFlight Link
-- In the External group, toggle **Public Link** → copy the URL → share it. Anyone with the link + the free **TestFlight** app can install Chorely.
+- In the External group, toggle **Public Link** → copy the URL → share it. Anyone with the link + the free **TestFlight** app can install Tydified.
 
 ### 2.10 Common rejection reasons (and fixes)
 | Reason | Fix |
@@ -146,7 +146,7 @@ npx eas submit --platform ios --profile production --latest
 
 ### 3.2 Create the App Listing
 1. Play Console → **Create app**.
-2. Enter: App name **Chorely**, default language **English (US)**, app type **App**, **Free**.
+2. Enter: App name **Tydified**, default language **English (US)**, app type **App**, **Free**.
 3. Accept declarations → **Create app**.
 
 ### 3.3 Build the Android File (AAB) with EAS

@@ -75,7 +75,9 @@ export type RootStackParamList = {
   Rewards: undefined;
   // Help center — pushed from the More tab.
   Help: undefined;
-  // Chorely Plus paywall — pushed from More or when a free-tier limit is hit.
+  // "How Tydified works" illustrated guide — pushed from the More tab.
+  HowTo: undefined;
+  // Tydified Plus paywall — pushed from More or when a free-tier limit is hit.
   Paywall: { reason?: PaywallReason } | undefined;
 };
 

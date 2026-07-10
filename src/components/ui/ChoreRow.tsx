@@ -2,7 +2,9 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Reanimated from 'react-native-reanimated';
 
+import { usePressBounce } from '../../hooks/usePressBounce';
 import {
   radii,
   shadows,
@@ -80,30 +82,40 @@ export function ChoreRow({
   onPress,
   style,
 }: ChoreRowProps) {
-  const { C, mode } = useTheme();
+  const { C } = useTheme();
   const styles = useThemedStyles(makeStyles);
+  const { onPressIn, onPressOut, bounceStyle } = usePressBounce();
   const visual = statusVisuals[status];
   const interactive = onPress !== undefined;
+  const rowTone = tintForStatus(C, status);
 
   return (
-    <Pressable
+    <AnimatedPressable
       onPress={onPress}
+      onPressIn={interactive ? onPressIn : undefined}
+      onPressOut={interactive ? onPressOut : undefined}
       disabled={!interactive}
       accessibilityRole={interactive ? 'button' : undefined}
       accessibilityLabel={`${title}, ${visual.label}, ${pointValue} points`}
-      style={({ pressed }) => [
+      style={[
         styles.row,
         shadows.sm,
-        pressed && interactive && styles.pressed,
+        {
+          backgroundColor: rowTone.background,
+          borderColor: rowTone.border,
+        },
         style,
+        bounceStyle,
       ]}
     >
       {assigneeName !== undefined ? (
-        <Avatar
-          name={assigneeName}
-          gradientIndex={assigneeGradientIndex}
-          size="md"
-        />
+        <View style={styles.leadingCircle}>
+          <Avatar
+            name={assigneeName}
+            gradientIndex={assigneeGradientIndex}
+            size="md"
+          />
+        </View>
       ) : (
         <View style={styles.iconBubble}>
           <Ionicons
@@ -140,6 +152,13 @@ export function ChoreRow({
       </View>
 
       <View style={styles.trailing}>
+        <View style={styles.checkCircle}>
+          <Ionicons
+            name={visual.iconName}
+            size={22}
+            color={badgeIconColorFor(C, visual.tone)}
+          />
+        </View>
         <PointsBadge points={pointValue} size="sm" />
         <Badge
           label={visual.label}
@@ -149,30 +168,44 @@ export function ChoreRow({
             <Ionicons
               name={visual.iconName}
               size={11}
-              color={badgeIconColorFor(C, mode, visual.tone)}
+              color={badgeIconColorFor(C, visual.tone)}
             />
           }
           style={styles.statusBadge}
         />
       </View>
-    </Pressable>
+    </AnimatedPressable>
   );
 }
 
-function badgeIconColorFor(
+const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
+
+function tintForStatus(
   C: Palette,
-  mode: 'light' | 'dark',
-  tone: StatusVisual['tone']
-): string {
+  status: ChoreStatus
+): { background: string; border: string } {
+  switch (status) {
+    case 'assigned':
+      return { background: C.pinkAlpha10, border: C.borderPink };
+    case 'submitted':
+      return { background: C.orangeAlpha10, border: C.orangeAlpha15 };
+    case 'approved':
+      return { background: C.greenAlpha15, border: C.greenAlpha20 };
+    case 'rejected':
+      return { background: C.redAlpha15, border: C.border };
+  }
+}
+
+function badgeIconColorFor(C: Palette, tone: StatusVisual['tone']): string {
   switch (tone) {
     case 'neutral':
       return C.textDark;
     case 'orange':
-      return mode === 'dark' ? C.orange : '#C36321';
+      return '#C36321';
     case 'green':
-      return C.green;
+      return C.greenText;
     case 'danger':
-      return mode === 'dark' ? '#FF7A7A' : '#B91C1C';
+      return '#B91C1C';
   }
 }
 
@@ -181,11 +214,10 @@ const makeStyles = (C: Palette) =>
     row: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: C.glass,
       borderRadius: radii.r18,
       borderWidth: 1,
-      borderColor: C.border,
       padding: spacing.s12,
+      minHeight: 76,
     },
     pressed: {
       transform: [{ scale: 0.98 }],
@@ -195,9 +227,21 @@ const makeStyles = (C: Palette) =>
       width: 48,
       height: 48,
       borderRadius: radii.rFull,
-      backgroundColor: C.pinkAlpha10,
+      backgroundColor: C.glass,
       alignItems: 'center',
       justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: C.border,
+    },
+    leadingCircle: {
+      width: 52,
+      height: 52,
+      borderRadius: radii.rFull,
+      backgroundColor: C.glass,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: C.border,
     },
     body: {
       flex: 1,
@@ -228,6 +272,16 @@ const makeStyles = (C: Palette) =>
     trailing: {
       alignItems: 'flex-end',
       gap: spacing.s4,
+    },
+    checkCircle: {
+      width: 44,
+      height: 44,
+      borderRadius: radii.rFull,
+      backgroundColor: C.glass,
+      borderWidth: 1,
+      borderColor: C.border,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     statusBadge: {
       marginTop: 2,

@@ -32,7 +32,7 @@ let gradientCounter = 0;
 export function ProgressRing({
   value,
   size = 96,
-  strokeWidth = 8,
+  strokeWidth = 10,
   color,
   trackColor,
   centerLabel,
@@ -50,7 +50,7 @@ export function ProgressRing({
   // collide on `<defs>` lookup.
   const gradientId = React.useMemo(() => {
     gradientCounter += 1;
-    return `chorelyRing${gradientCounter}`;
+    return `tydifiedRing${gradientCounter}`;
   }, []);
 
   const stroke = ringColor === 'gradient' ? `url(#${gradientId})` : ringColor;

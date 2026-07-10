@@ -1,4 +1,4 @@
-# CLAUDE.md — Chorely
+# CLAUDE.md — Tydified
 
 This file is read by Claude Code at the start of every session. It is the single source of truth for project rules, schema, and code standards. **Design tokens and screen specs live in `DESIGN.md`, not here.** On project rules, this file wins. On visual decisions, DESIGN.md wins.
 
@@ -17,14 +17,20 @@ During every session:
 
 - Mark tasks complete in TASKS.md as soon as they are finished.
 - Add newly discovered tasks to TASKS.md immediately when they surface.
+- **Record everything new, the same session it is added.** Any new asset, doc,
+  checklist, account, service, env var, build step, or decision must land in the
+  file this protocol already reads (this file, DESIGN.md, PLANNING.md, TASKS.md)
+  or in a doc linked from one of them — otherwise the next session cannot see it.
+  Active cross-session checklists get a ⭐ banner at the top of TASKS.md
+  (current example: docs/launch/PLUS_PAYWALL_SETUP.md).
 - Commit working code at the end of every feature or phase. Never leave the project in a broken state between sessions.
 - Ask before making changes that affect the database schema, navigation structure, or authentication logic.
 
 ---
 
-## 1. What Chorely Is
+## 1. What Tydified Is
 
-Chorely is a family chore and reward management mobile app. Parents create a family, add children, assign chores, approve completions, and define rewards. Children earn points for completing assigned chores, then redeem those points for parent-defined rewards.
+Tydified is a family chore and reward management mobile app. Parents create a family, add children, assign chores, approve completions, and define rewards. Children earn points for completing assigned chores, then redeem those points for parent-defined rewards.
 
 The app targets three age brackets with distinct visual experiences:
 
@@ -72,16 +78,16 @@ REVENUECAT_ANDROID_API_KEY=
 
 ## 4. Project Directory Structure
 
-On-disk folder is `/Users/santiagos4god/Desktop/Chorely 2/` (note the space; package name in `package.json` stays `chorely`).
+On-disk folder is `/Users/santiagos4god/Projects/Tydified/` (space-free path — renamed 2026-07-09 from `Chorely 2`; the space in the old name broke iOS builds). `~/Desktop/Tydified` is a symlink to it. Keep the real folder OUT of Desktop/Documents: they are iCloud-synced and iCloud materialization made Metro/tsc/git unusably slow.
 
 ```
-Chorely 2/
+Tydified/
 ├── src/
 │   ├── screens/
 │   │   ├── auth/                # WelcomeScreen, LoginScreen, SignUpScreen, OnboardingWizard
 │   │   └── parent/              # ParentDashboard, ChoresScreen, RewardsScreen, FamilyScreen, SettingsScreen, PaywallScreen
 │   ├── components/
-│   │   ├── brand/               # ChorelyLogo, ChorelyIcon
+│   │   ├── brand/               # TydifiedLogo, TydifiedIcon
 │   │   ├── ui/                  # GlassCard, Button, Input, Badge, Avatar, ProgressBar, ProgressRing, PointsBadge, ChoreRow, RewardCard, EmptyState, SkeletonLoader, Toast
 │   │   ├── layout/              # ScreenContainer, Header, TabBar
 │   │   └── modals/              # CreateChoreModal, CreateRewardModal, AddChildModal, ChoreApprovalModal, RedeemRewardModal, CelebrationOverlay
@@ -103,7 +109,7 @@ Chorely 2/
 │   │   └── app.types.ts         # App-specific interfaces + typed NavigationParams
 │   ├── utils/                   # getAgeBracket, formatPoints, dateHelpers, haptics
 │   └── hooks/                   # useDebounce, useColorScheme, custom hooks
-├── assets/                      # App icons, splash, brand images (chorely-logo.png)
+├── assets/                      # App icons, splash, brand images (tydified-logo.png)
 ├── supabase/
 │   └── migrations/              # SQL migration files (mirror of remote — read-only reference)
 ├── App.tsx
@@ -124,7 +130,7 @@ Chorely 2/
 
 ## 5. Database Schema
 
-These are the tables in the Supabase backend (migrations 001–017). Do not create new tables without updating this file. The frontend must align with this schema exactly. (Migrations 011–013 are security/perf hardening — function security, anon RPC revokes, RLS perf + FK indexes — and add no new tables. Migration 015 adds nullable `avatar_gradient integer` + `avatar_icon text` to profiles and children for customizable avatars — `avatar_gradient` indexes `AVATAR_GRADIENTS`, `avatar_icon` is an Ionicon name or `'face'` for the Chorely smiley. Migration 016 adds `children.age_tier_override`. Migration 017 is security hardening — revokes `authenticated` UPDATE on `children.points`/`streak_days`/identity columns so points change only via RPCs, and makes `generate_invite_code` crypto-secure; adds no new tables. See docs/STAGE1_BETA_READINESS_LOG.md.)
+These are the tables in the Supabase backend (migrations 001–017). Do not create new tables without updating this file. The frontend must align with this schema exactly. (Migrations 011–013 are security/perf hardening — function security, anon RPC revokes, RLS perf + FK indexes — and add no new tables. Migration 015 adds nullable `avatar_gradient integer` + `avatar_icon text` to profiles and children for customizable avatars — `avatar_gradient` indexes `AVATAR_GRADIENTS`, `avatar_icon` is an Ionicon name or `'face'` for the Tydified smiley. Migration 016 adds `children.age_tier_override`. Migration 017 is security hardening — revokes `authenticated` UPDATE on `children.points`/`streak_days`/identity columns so points change only via RPCs, and makes `generate_invite_code` crypto-secure; adds no new tables. See docs/STAGE1_BETA_READINESS_LOG.md.)
 
 ### profiles (001)
 ```sql
@@ -295,18 +301,20 @@ Per-child savings goals. `kind='reward'` saves toward a specific reward (target 
 
 The visual system — colors, gradients, shadows, radii, spacing, typography, age-bracket overrides, component rules, anti-patterns, and screen specifications — lives in **`DESIGN.md`**. Read it at session start. CLAUDE.md never duplicates design tokens.
 
+Full brand kit (logo files, palette, voice, usage rules): **docs/brand/BRAND_KIT.md** — read it before any store listing, marketing, or new visual asset work. Logo exports live in `assets/brand/`.
+
 Branding summary (context only — not load-bearing):
 
-- Design system name: **Lumina Bloom**
-- Palette: pink `#FF4D8D` / orange `#FF8C42` / green `#00A92A` / lavender bg `#F3F0FF`
+- Brand name: **Tydified** (2026-07 rebrand from Chorely). Tagline: "Do chores. Earn points. Unlock rewards. Level up!"
+- Palette (exact logo-lockup samples): Tydi blue `#14B0FE` primary / trophy amber `#FEAA01` / tagline green `#60DB01` / brand navy `#00001B`, with fied pink `#FC5499` + purple `#B353FC` as reserve celebration hues
 - Fonts: Nunito (headlines), DM Sans (body)
-- Aesthetic: light-mode glassmorphism, intentional and brand-defining (see DESIGN.md §10 on anti-pattern distinction)
+- Aesthetic: solid surfaces + hairline borders on a warm near-white canvas (see DESIGN.md §12)
 
 ---
 
 ## 7. Authentication Model
 
-Chorely uses a parent-only auth model. Children are data records, not authenticated users.
+Tydified uses a parent-only auth model. Children are data records, not authenticated users.
 
 ### Parent Auth
 Parents authenticate using Supabase email/password auth (`supabase.auth.signInWithPassword`). On first login they complete onboarding (via `complete_onboarding` RPC) which creates the family, first child, and user settings in one transaction. Parents hold an `auth.users` record and a corresponding `profiles` record. They can also join an existing family via invite code (`join_family_by_code` RPC).
@@ -386,7 +394,7 @@ If a user or prompt asks you to build any of these before v1.0 is submitted, dec
 - iOS API key and Android API key are separate environment variables.
 - The paywall screen must be tested on a real device. Simulator IAP does not work reliably.
 - Free tier limits: 1 child, 4 active chores per child.
-- **Tier model (decided 2026-06-01): ONE paid tier, "Chorely Plus."** Same features on monthly ($4.99) and yearly ($29.99) — yearly is just cheaper (no feature differences by billing period; this is the store-standard model and avoids reviewer/user confusion). Plus unlocks unlimited children + chores + premium features. The RevenueCat entitlement identifier is `Chorely Pro` (note the space — the exact string the app checks via `customerInfo.entitlements.active['Chorely Pro']`).
+- **Tier model (decided 2026-06-01): ONE paid tier, "Tydified Plus."** Same features on monthly ($4.99) and yearly ($29.99) — yearly is just cheaper (no feature differences by billing period; this is the store-standard model and avoids reviewer/user confusion). Plus unlocks unlimited children + chores + premium features. The RevenueCat entitlement identifier is `Chorely Pro` (note the space — the exact string the app checks via `customerInfo.entitlements.active['Chorely Pro']`).
 - **Trial strategy (decided 2026-06-23):** no app-side trial logic. If we offer a trial, configure it as a store/RevenueCat introductory offer, preferably **7 days on yearly** to drive annual conversion. Monthly can stay paid immediately during the first launch tests.
 - Never hard-gate features on subscription status alone. Always check both subscription status AND the feature flag, so limits can be adjusted without an app update.
 
@@ -398,18 +406,20 @@ Record all architectural decisions here. Format: date and one-sentence reason.
 
 | Date | Decision | Reason |
 |---|---|---|
+| 2026-07-10 | Teen self-serve accounts (13+ on own phones, invite-code link to existing child record) promoted to headline v1.1 feature, ahead of PIN profiles — spec in PLANNING.md §"v1.1 Spec — Teen Self-Serve Accounts" | Teens won't use a shared-device PIN flow; COPPA permits 13+ accounts; reuses planned child screens. Nothing built before v1.0 submission. |
+| 2026-07-07 | Rebranded Chorely → **Tydified** (name, tagline, exact logo-lockup palette, trophy app icon); RevenueCat entitlement identifier stays `Chorely Pro` and the Supabase project display name stays "Chorely App" until renamed in their dashboards | Original name/concept believed copied; features unchanged — branch `rebrand/tydified` |
 | 2026-05-27 | Fresh build in `~/Desktop/Chorely 2/` | Previous `~/Desktop/Chorely-new` and other artifacts archived; this is a clean start matching the Lumina Bloom prototype |
-| 2026-06-23 | Migrated backend to new Supabase project `zinbukzmkorkawbgckkh` ("Chorely App") on the personal account + moving to a new GitHub repo; retired the previous project and repo | Consolidating Chorely under the personal account. All 16 migrations re-applied to the new project; `.env.local` and types updated. |
-| 2026-06-23 | Custom Chorely Plus paywall over RevenueCat's prebuilt dashboard paywall | Keeps Lumina Bloom styling, store disclosure, Restore Purchases, and free-tier gate behavior in code while RevenueCat supplies offerings, purchases, restores, and entitlement state. |
+| 2026-06-23 | Migrated backend to new Supabase project `zinbukzmkorkawbgckkh` ("Chorely App") on the personal account + moving to a new GitHub repo; retired the previous project and repo | Consolidating Tydified under the personal account. All 16 migrations re-applied to the new project; `.env.local` and types updated. |
+| 2026-06-23 | Custom Tydified Plus paywall over RevenueCat's prebuilt dashboard paywall | Keeps Lumina Bloom styling, store disclosure, Restore Purchases, and free-tier gate behavior in code while RevenueCat supplies offerings, purchases, restores, and entitlement state. |
 | 2026-06-23 | Tighten free tier to 1 child / 4 active chores per child; if using a free trial, prefer 7 days on yearly only | Gives parents enough to understand the app while pushing normal multi-child families toward Plus; yearly-only trial improves annual conversion without making the monthly plan feel free by default. |
 | 2026-05-27 | Visual system split into DESIGN.md | Reduces CLAUDE.md session-load footprint; matches the "design.md" pattern from `ai-design-prompt-template.md` |
 | 2026-05-27 | Fonts: Nunito + DM Sans (not Plus Jakarta + Manrope) | Already loaded in App.tsx; neither is in banned-fonts list; Nunito's rounded forms match elementary bracket |
 | 2026-05-28 | Upgraded to Expo SDK 54 (RN 0.81 / React 19 / Reanimated 4) | Workspace got the bump from `npx expo install --fix` and runs cleanly in Expo Go; reverting would risk breaking the working dev loop. Future SDK changes should go through `npx expo install --fix` together, not piecemeal. |
-| 2026-05-28 | ChorelyIcon supports an `animated` prop (blink + bob) | Brand wanted the smiley to feel alive on Welcome / Onboarding hero moments; the prop defaults off so small chrome uses stay still and cheap |
+| 2026-05-28 | TydifiedIcon supports an `animated` prop (blink + bob) | Brand wanted the smiley to feel alive on Welcome / Onboarding hero moments; the prop defaults off so small chrome uses stay still and cheap |
 | 2026-05-28 | Full dark mode added (themed palette) — supersedes light-only | User requested a working dark mode option. Added `darkC` palette + `useThemedStyles`/`useTheme().C` so the whole app recolors via the Settings toggle. Light stays the default. See DESIGN.md §Dark Mode. |
 | 2026-05-29 | Parent nav restructured to Home / Review / Chores / Family / More (Rewards pushed from More) + full prototype visual alignment | User supplied the Lumina Bloom prototype screenshots as the original intent and asked to match them. Adopted the prototype's parent navigation + gradient/tinted-tile visual language. Kid screens stay v1.1. See DESIGN.md §11. |
 | 2026-05-29 | Added `goals` table (migration 014) — per-child reward-savings + custom-point goals with one-time "reached" celebration | Replaced the dashboard "Set Goal → coming-soon" stub with a functional feature; goals are read/written under the family-member RLS policy, no new RPC needed (no point mutations). |
-| 2026-05-29 | Customizable avatars (migration 015) — `avatar_gradient` + `avatar_icon` on profiles & children | Tap any avatar (parent or kid) -> `ProfileEditModal` to pick a gradient color + icon (incl. the Chorely face). Stored on the row under existing RLS; `Avatar` renders the chosen gradient/icon, falling back to name-hash gradient + initial. No photo upload (deferred). |
+| 2026-05-29 | Customizable avatars (migration 015) — `avatar_gradient` + `avatar_icon` on profiles & children | Tap any avatar (parent or kid) -> `ProfileEditModal` to pick a gradient color + icon (incl. the Tydified face). Stored on the row under existing RLS; `Avatar` renders the chosen gradient/icon, falling back to name-hash gradient + initial. No photo upload (deferred). |
 | 2026-05-29 | Sound effects via `expo-audio` (~1.1.1); `soundEnabled` is local-only (not in `user_settings`); `expo-audio` config plugin removed from `app.json` | Adds celebration/approval SFX through `utils/sounds.ts` (mirrors `haptics.ts`). Kept the pref local to avoid a schema migration (so it does not sync across devices yet). Removed the config plugin because it injects an iOS microphone permission we don't need for playback — unwanted for a COPPA-sensitive kids' app. SFX respect the silent switch. Audio files are an optional drop-in (`assets/sounds/`), so the bundle builds without them. |
 | — | Expo Managed over React Native CLI | Faster builds, no native module conflicts for v1 scope |
 | — | RevenueCat over Stripe for IAP | Apple and Google require native IAP; Stripe is not permitted |

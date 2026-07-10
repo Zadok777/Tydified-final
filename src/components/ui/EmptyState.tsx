@@ -12,12 +12,15 @@ import {
   type Palette,
 } from '../../theme';
 import { Button } from './Button';
+import { CartoonIcon, type CartoonIconName } from './CartoonIcon';
 
 type IoniconName = React.ComponentProps<typeof Ionicons>['name'];
 
 interface EmptyStateProps {
   // Ionicons name. Defaults to a friendly sparkles icon.
   icon?: IoniconName;
+  // Glossy sticker icon; wins over `icon` when provided.
+  cartoon?: CartoonIconName;
   title: string;
   description?: string;
   actionLabel?: string;
@@ -27,6 +30,7 @@ interface EmptyStateProps {
 
 export function EmptyState({
   icon = 'sparkles-outline',
+  cartoon,
   title,
   description,
   actionLabel,
@@ -39,8 +43,16 @@ export function EmptyState({
 
   return (
     <View style={[styles.wrapper, style]}>
+      <View style={styles.scene} pointerEvents="none">
+        <View style={styles.sceneCardOne} />
+        <View style={styles.sceneCardTwo} />
+      </View>
       <View style={styles.iconBubble}>
-        <Ionicons name={icon} size={32} color={C.pink} />
+        {cartoon !== undefined ? (
+          <CartoonIcon name={cartoon} size={38} />
+        ) : (
+          <Ionicons name={icon} size={32} color={C.pink} />
+        )}
       </View>
       <Text style={styles.title} maxFontSizeMultiplier={1.5}>
         {title}
@@ -66,6 +78,41 @@ const makeStyles = (C: Palette) =>
       justifyContent: 'center',
       paddingHorizontal: spacing.s24,
       paddingVertical: spacing.s32,
+      backgroundColor: C.glass,
+      borderRadius: radii.r20,
+      borderWidth: 1,
+      borderColor: C.border,
+      overflow: 'hidden',
+    },
+    scene: {
+      position: 'absolute',
+      top: spacing.s16,
+      left: spacing.s24,
+      right: spacing.s24,
+      height: 72,
+      opacity: 0.45,
+    },
+    sceneCardOne: {
+      position: 'absolute',
+      left: 8,
+      top: 22,
+      width: 72,
+      height: 22,
+      borderRadius: radii.r12,
+      backgroundColor: C.glass,
+      borderWidth: 1,
+      borderColor: C.border,
+    },
+    sceneCardTwo: {
+      position: 'absolute',
+      right: 0,
+      top: 8,
+      width: 82,
+      height: 24,
+      borderRadius: radii.r12,
+      backgroundColor: C.glass,
+      borderWidth: 1,
+      borderColor: C.border,
     },
     iconBubble: {
       width: 64,
@@ -75,6 +122,8 @@ const makeStyles = (C: Palette) =>
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: spacing.s16,
+      borderWidth: 1,
+      borderColor: C.border,
     },
     title: {
       ...typography.title,
@@ -90,5 +139,6 @@ const makeStyles = (C: Palette) =>
     },
     action: {
       marginTop: spacing.s20,
+      alignSelf: 'stretch',
     },
   });

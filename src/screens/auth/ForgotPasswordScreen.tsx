@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Header } from '../../components/layout/Header';
-import { ScreenContainer } from '../../components/layout/ScreenContainer';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toast';
 import { requestPasswordReset } from '../../services/auth';
 import {
   spacing,
-  typography,
   useThemedStyles,
   type Palette,
 } from '../../theme';
 import type { RootStackParamList } from '../../types/app.types';
+import { AuthScaffold } from './AuthScaffold';
 
 type Nav = StackNavigationProp<RootStackParamList, 'ForgotPassword'>;
 
@@ -63,63 +61,45 @@ export function ForgotPasswordScreen() {
   };
 
   return (
-    <ScreenContainer keyboardAvoiding scroll>
-      <Header title="Reset password" onBack={() => nav.goBack()} />
-
-      <View style={styles.intro}>
-        <Text style={styles.helper} maxFontSizeMultiplier={1.5}>
-          Enter your email and we&apos;ll send you a code to reset your
-          password.
-        </Text>
-      </View>
-
-      <View style={styles.form}>
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <Input
-              label="Email"
-              placeholder="you@example.com"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoComplete="email"
-              textContentType="emailAddress"
-              error={errors.email?.message}
-            />
-          )}
-        />
-
-        <View style={styles.submit}>
-          <Button
-            label="Send code"
-            onPress={handleSubmit(onSubmit)}
-            loading={submitting}
-            fullWidth
+    <AuthScaffold
+      title="Reset password"
+      subtitle="Enter your email and we'll send you a code to reset your password."
+      onBack={() => nav.goBack()}
+    >
+      <Controller
+        name="email"
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="Email"
+            placeholder="you@example.com"
+            value={field.value}
+            onChangeText={field.onChange}
+            onBlur={field.onBlur}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="email"
+            textContentType="emailAddress"
+            error={errors.email?.message}
           />
-        </View>
+        )}
+      />
+
+      <View style={styles.submit}>
+        <Button
+          label="Send code"
+          onPress={handleSubmit(onSubmit)}
+          loading={submitting}
+          fullWidth
+        />
       </View>
-    </ScreenContainer>
+    </AuthScaffold>
   );
 }
 
-const makeStyles = (C: Palette) =>
+const makeStyles = (_C: Palette) =>
   StyleSheet.create({
-    intro: {
-      marginTop: spacing.s8,
-      marginBottom: spacing.s16,
-    },
-    helper: {
-      ...typography.body,
-      color: C.textMid,
-    },
-    form: {
-      gap: spacing.s16,
-    },
     submit: {
       marginTop: spacing.s8,
     },

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
 
+import { AVATAR_CARTOON } from '../ui/avatarCartoon';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { useToast } from '../ui/Toast';
@@ -61,14 +62,14 @@ const ICONS: readonly IoniconName[] = [
 ];
 
 // Fixed accent choices stored on the reward row — mode-independent literals.
-// Refreshed for the teal brand: dropped the off-palette purple/cyan, kept
-// enough variety for users to tell rewards apart.
+// The five Tydified logo hues, sampled from the lockup, so every reward chip
+// reads as the brand while staying distinguishable.
 const COLORS: readonly string[] = [
-  '#0EA5A4', // teal (brand)
-  '#FF8C42', // orange
-  '#00A92A', // green
-  '#FF5C8A', // rose
-  '#F4B400', // gold
+  '#14B0FE', // Tydi blue (brand)
+  '#FEAA01', // trophy amber
+  '#60DB01', // tagline green
+  '#FC5499', // fied pink
+  '#B353FC', // fied purple
 ];
 
 const schema = yup.object({
@@ -292,11 +293,19 @@ export function CreateRewardModal({
                 accessibilityState={{ selected }}
                 style={[styles.iconChip, selected && styles.iconChipActive]}
               >
-                <Ionicons
-                  name={name}
-                  size={20}
-                  color={selected ? C.textWhite : C.textMid}
-                />
+                {AVATAR_CARTOON[name] !== undefined ? (
+                  <Image
+                    source={AVATAR_CARTOON[name]}
+                    style={styles.iconSticker}
+                    resizeMode="contain"
+                  />
+                ) : (
+                  <Ionicons
+                    name={name}
+                    size={20}
+                    color={selected ? C.textWhite : C.textMid}
+                  />
+                )}
               </Pressable>
             );
           })}
@@ -372,7 +381,7 @@ const makeStyles = (C: Palette) =>
   tierChip: {
     paddingHorizontal: spacing.s12,
     paddingVertical: spacing.s8,
-    borderRadius: radii.r12,
+    borderRadius: radii.rFull,
     borderWidth: 1,
     borderColor: C.border,
     backgroundColor: C.glassLight,
@@ -396,7 +405,7 @@ const makeStyles = (C: Palette) =>
     backgroundColor: C.pinkAlpha10,
     borderWidth: 1,
     borderColor: C.borderPink,
-    borderRadius: radii.r12,
+    borderRadius: radii.r16,
     paddingHorizontal: spacing.s12,
     paddingVertical: spacing.s8,
     alignItems: 'flex-start',
@@ -409,8 +418,12 @@ const makeStyles = (C: Palette) =>
   },
   suggestChipPts: {
     ...typography.caption,
-    color: C.pink,
+    color: C.pinkText,
     marginTop: 2,
+  },
+  iconSticker: {
+    width: 26,
+    height: 26,
   },
   iconChip: {
     width: 44,

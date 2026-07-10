@@ -1,4 +1,4 @@
-# Chorely — Tester Management Templates (Phase 4)
+# Tydified — Tester Management Templates (Phase 4)
 
 Copy/paste these. Replace anything in [brackets]. For the forms, the easiest free tool is **Google Forms** (forms.google.com) — create a form, paste these questions, and share the link with testers.
 
@@ -6,11 +6,11 @@ Copy/paste these. Replace anything in [brackets]. For the forms, the easiest fre
 
 ## 1. Tester Invitation Email
 
-**Subject:** You're invited to test Chorely 🎉
+**Subject:** You're invited to test Tydified 🎉
 
 Hi [First name],
 
-Thanks for helping me test **Chorely** — a simple app that turns kids' chores into points and rewards, fully managed by parents.
+Thanks for helping me test **Tydified** — a simple app that turns kids' chores into points and rewards, fully managed by parents.
 
 **How to join (5 minutes):**
 
@@ -21,7 +21,7 @@ Thanks for helping me test **Chorely** — a simple app that turns kids' chores 
 
 *Android:*
 1. Tap this link on your device: **[Google Play opt-in link]**
-2. Tap "Become a tester," then install Chorely from the Play Store.
+2. Tap "Become a tester," then install Tydified from the Play Store.
 
 **What I'd love you to try:**
 - Create your family and add a child
@@ -44,7 +44,7 @@ doulosnexus@gmail.com
 
 ## 2. Tester Feedback Form (general)
 
-**Title:** Chorely Beta — Feedback
+**Title:** Tydified Beta — Feedback
 
 1. Your name (optional): [short answer]
 2. Device & OS: [short answer] (e.g., "iPhone 14, iOS 18" or "Pixel 7, Android 15")
@@ -52,14 +52,14 @@ doulosnexus@gmail.com
 4. What did you like most? [paragraph]
 5. What was confusing or frustrating? [paragraph]
 6. Did anything not work? [paragraph]
-7. How likely are you to recommend Chorely? [0–10]
+7. How likely are you to recommend Tydified? [0–10]
 8. Anything else? [paragraph]
 
 ---
 
 ## 3. Bug Report Form
 
-**Title:** Chorely Beta — Report a Bug
+**Title:** Tydified Beta — Report a Bug
 
 1. Your name (optional): [short answer]
 2. Device & OS: [short answer]
@@ -75,7 +75,7 @@ doulosnexus@gmail.com
 
 ## 4. Feature Request Form
 
-**Title:** Chorely Beta — Feature Idea
+**Title:** Tydified Beta — Feature Idea
 
 1. Your name (optional): [short answer]
 2. What's the idea? [paragraph]
@@ -87,15 +87,15 @@ doulosnexus@gmail.com
 
 ## 5. User Experience Survey (send after ~1 week of use)
 
-**Title:** Chorely Beta — 1-Week Check-in
+**Title:** Tydified Beta — 1-Week Check-in
 
-1. How many days did you use Chorely this week? [0 / 1–2 / 3–4 / 5–7]
+1. How many days did you use Tydified this week? [0 / 1–2 / 3–4 / 5–7]
 2. Was it easy to set up your family and first chore? [1–5]
 3. Did your kids stay motivated by points/rewards? [1–5 / N/A]
 4. How clear was the design and navigation? [1–5]
 5. Did the app feel fast and reliable? [1–5]
 6. What would make you keep using it after launch? [paragraph]
-7. Would you pay for Chorely Plus (unlimited kids/chores)? [Yes / Maybe / No]
+7. Would you pay for Tydified Plus (unlimited kids/chores)? [Yes / Maybe / No]
 8. If yes/maybe, what feels like a fair price per month? [short answer]
 9. Any final thoughts? [paragraph]
 

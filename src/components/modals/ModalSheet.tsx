@@ -119,15 +119,15 @@ const makeStyles = (C: Palette) =>
   },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(45, 45, 58, 0.35)',
+    backgroundColor: 'rgba(0, 0, 27, 0.46)',
   },
   sheetWrap: {
     width: '100%',
   },
   sheet: {
     backgroundColor: C.glass,
-    borderTopLeftRadius: radii.r24,
-    borderTopRightRadius: radii.r24,
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
     borderWidth: 1,
     borderColor: C.border,
     overflow: 'hidden',
@@ -146,7 +146,7 @@ const makeStyles = (C: Palette) =>
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: spacing.s20,
+    paddingHorizontal: spacing.s24,
     paddingBottom: spacing.s12,
   },
   title: {
@@ -171,14 +171,14 @@ const makeStyles = (C: Palette) =>
     opacity: 0.85,
   },
   scroll: {
-    paddingHorizontal: spacing.s20,
+    paddingHorizontal: spacing.s24,
   },
   scrollContent: {
     paddingBottom: spacing.s16,
     gap: spacing.s16,
   },
   footer: {
-    paddingHorizontal: spacing.s20,
+    paddingHorizontal: spacing.s24,
     paddingTop: spacing.s12,
     borderTopWidth: 1,
     borderTopColor: C.border,

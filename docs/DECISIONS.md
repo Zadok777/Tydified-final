@@ -7,10 +7,11 @@
 
 | Date | Decision | Why |
 |---|---|---|
+| 2026-07-07 | Rebranded Chorely → **Tydified**: name, tagline, exact logo-lockup palette, trophy app icon, bundle id `com.zad0k777.tydified`; RevenueCat entitlement id stays `Chorely Pro` and Supabase project display name stays "Chorely App" until renamed in dashboards | Original name/concept believed copied; features unchanged (branch `rebrand/tydified`) |
 | 2026-06-23 | Tighten free tier to 1 child / 4 active chores per child; if using a trial, prefer 7 days on yearly only | Lets a parent test the app while pushing normal multi-child families toward Plus and favoring annual conversion |
-| 2026-06-23 | Use a custom in-app Chorely Plus paywall instead of RevenueCat's prebuilt dashboard paywall | Keeps Lumina Bloom styling, store disclosure, Restore Purchases, and free-tier gate behavior in code |
+| 2026-06-23 | Use a custom in-app Tydified Plus paywall instead of RevenueCat's prebuilt dashboard paywall | Keeps Lumina Bloom styling, store disclosure, Restore Purchases, and free-tier gate behavior in code |
 | 2026-06-23 | Migrated backend to new Supabase project `zinbukzmkorkawbgckkh` ("Chorely App", personal account) + new repo `Chorely-final`; retired the previous project/repo | Lost access to the old project; consolidating under the personal account |
-| 2026-06-01 | One paid tier "Chorely Plus" (monthly $4.99 / yearly $29.99, same features); entitlement id `Chorely Pro` | Store-standard model; avoids reviewer/user confusion |
+| 2026-06-01 | One paid tier "Tydified Plus" (monthly $4.99 / yearly $29.99, same features); entitlement id `Chorely Pro` | Store-standard model; avoids reviewer/user confusion |
 | 2026-06-01 | Age/grade tiers **suggest, never restrict**; derived from DOB with optional per-child override | Keeps parent freedom while tailoring suggestions |
 | 2026-05-29 | Parent nav = Home / Review / Chores / Family / More (rewards pushed from More) | Match the Lumina Bloom prototype |
 | 2026-05-29 | `goals` table for per-child savings goals (no new RPC; family-member RLS) | Functional replacement for the "coming soon" stub |

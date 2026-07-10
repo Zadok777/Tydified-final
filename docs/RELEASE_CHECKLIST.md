@@ -1,6 +1,6 @@
 # Release Checklist
 
-Steps to ship Chorely to the App Store and Google Play. Cross-reference:
+Steps to ship Tydified to the App Store and Google Play. Cross-reference:
 TASKS.md (Phase 10), [docs/store/](./store/), [docs/launch/](./launch/),
 [docs/legal/](./legal/), and [SECURITY.md](./SECURITY.md).
 
