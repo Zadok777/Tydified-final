@@ -18,10 +18,10 @@ Product IDs (use these exact strings everywhere):
 
 ## Leg 1 — Apple (Santiago, browser)
 
-- [ ] 1.1 Sign **Paid Applications agreement**: App Store Connect → Business →
+- [x] 1.1 (2026-07-10) Sign **Paid Applications agreement**: App Store Connect → Business →
       Paid Apps → accept + enter DS Santiago LLC bank account + tax forms.
       (Apple approval can take 1–2 days — start early.)
-- [ ] 1.2 Wait for agreement status **Active**.
+- [x] 1.2 (2026-07-10) Agreement status **Active** immediately (bank + W-9 also Active).
 - [ ] 1.3 Create subscription group `Tydified Plus`: Tydified app page →
       Monetization → Subscriptions → Create.
 - [ ] 1.4 Create `tydified_plus_monthly` in the group — duration 1 month,
