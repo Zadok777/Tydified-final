@@ -191,3 +191,46 @@ src/components/          ← NEW (rebuilt)
 | No Expo Router | Stay with React Navigation 6 (already in dependencies) |
 | Modals over new screens | Create/edit flows use modals to reduce navigation complexity |
 | Dark mode toggle in Settings | Added by request. Theme state persists through `settingsStore`; v1.0 keeps the light visual system as the default. |
+
+## v1.1 Spec — Teen Self-Serve Accounts (decided 2026-07-10)
+
+**Headline v1.1 feature** (promoted above PIN profile switching, which can ship
+after). Teens (15–18, optionally 13–14) with their own phones get a real,
+kid-scoped login linked to their existing `children` record. Under-13s are
+unchanged: records only, parent's device, COPPA rules intact — COPPA does not
+restrict 13+, so teen accounts may use email/password auth.
+
+### Flow
+
+1. Parent taps **Invite to phone** on a kid (Manage Kids / Family screen) →
+   app shows a short-lived kid invite code (crypto-secure, like family codes).
+2. Teen installs Tydified on their own device, signs up with email + password
+   (normal Supabase auth), and enters the code.
+3. `join_as_child_by_code(p_code)` RPC links `auth.uid()` to that child row →
+   same points, chores, streak, goals. One auth user per child row, and a
+   linked teen account cannot also be a parent in the same family.
+
+### Teen-scoped app
+
+Teens see: My Chores (submit with a tap → parent's Review), Rewards (request
+redemption — parent still confirms), own progress/streak/goals, own avatar.
+Teens cannot: create/approve chores, manage kids, see siblings' detail, touch
+settings/subscription. Reuses the v1.1 child-facing screens already planned;
+age-tier theming already exists via `getAgeBracket`.
+
+### Schema + security sketch
+
+- `children.child_user_id uuid NULL REFERENCES auth.users(id)` + unique index.
+- `child_invite_codes` table (or column on children) with expiry.
+- New RPCs: `create_child_invite(p_child_id)` (parent-only),
+  `join_as_child_by_code(p_code)`, `submit_chore` opened to the linked child
+  (`child_user_id = auth.uid()`) for own assignments only.
+- **Bulk of the work is RLS:** every policy today assumes the authed user is a
+  parent (`is_family_member()`). Add a `is_child_self()` path granting
+  read-own-row / submit-own-assignment / read-family-rewards, and nothing else.
+  Point mutations stay RPC-only (migration 017 hardening already enforces this).
+
+### Out of scope for this feature
+
+Photo verification, push notifications, PIN profiles (separate v1.1 items).
+Nothing here ships before the v1.0 App Store submission (CLAUDE.md §9).

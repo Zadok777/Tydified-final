@@ -406,6 +406,7 @@ Record all architectural decisions here. Format: date and one-sentence reason.
 
 | Date | Decision | Reason |
 |---|---|---|
+| 2026-07-10 | Teen self-serve accounts (13+ on own phones, invite-code link to existing child record) promoted to headline v1.1 feature, ahead of PIN profiles — spec in PLANNING.md §"v1.1 Spec — Teen Self-Serve Accounts" | Teens won't use a shared-device PIN flow; COPPA permits 13+ accounts; reuses planned child screens. Nothing built before v1.0 submission. |
 | 2026-07-07 | Rebranded Chorely → **Tydified** (name, tagline, exact logo-lockup palette, trophy app icon); RevenueCat entitlement identifier stays `Chorely Pro` and the Supabase project display name stays "Chorely App" until renamed in their dashboards | Original name/concept believed copied; features unchanged — branch `rebrand/tydified` |
 | 2026-05-27 | Fresh build in `~/Desktop/Chorely 2/` | Previous `~/Desktop/Chorely-new` and other artifacts archived; this is a clean start matching the Lumina Bloom prototype |
 | 2026-06-23 | Migrated backend to new Supabase project `zinbukzmkorkawbgckkh` ("Chorely App") on the personal account + moving to a new GitHub repo; retired the previous project and repo | Consolidating Tydified under the personal account. All 16 migrations re-applied to the new project; `.env.local` and types updated. |
