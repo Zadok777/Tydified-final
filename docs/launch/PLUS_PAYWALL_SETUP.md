@@ -51,10 +51,10 @@ Product IDs (use these exact strings everywhere):
 - [ ] 3.2 Santiago: Google Cloud service account JSON with Play access →
       upload in RevenueCat → Tydified Android app settings.
       (RC dashboard → app → Service account credentials shows the wizard.)
-- [ ] 3.3 Claude: create products `tydified_plus_monthly` / `tydified_plus_yearly`
+- [x] 3.3 (2026-07-10) Claude: create products `tydified_plus_monthly` / `tydified_plus_yearly`
       on both RC apps (API v2).
-- [ ] 3.4 Claude: attach both products to entitlement `Chorely Pro`.
-- [ ] 3.5 Claude: ensure offering `default` has `$rc_monthly` / `$rc_annual`
+- [x] 3.4 (2026-07-10) Claude: attach both products to entitlement `Chorely Pro`.
+- [x] 3.5 (2026-07-10) Claude: ensure offering `default` has `$rc_monthly` / `$rc_annual`
       packages pointing at the store products.
 - [ ] 3.6 Rebuild + TestFlight/Play — paywall should now show live plans with
       the 7-day trial badge on yearly.
