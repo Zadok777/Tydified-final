@@ -52,7 +52,7 @@ Product IDs (use these exact strings everywhere):
 
 ## Leg 3 — RevenueCat (Claude via API, except the two uploads)
 
-- [ ] 3.1 Santiago: ASC → Users and Access → Integrations → In-App Purchase →
+- [x] 3.1 (2026-07-10) Santiago: ASC → Users and Access → Integrations → In-App Purchase →
       generate an **In-App Purchase key** (.p8) → upload it in RevenueCat →
       Tydified iOS app settings (needed for RC to validate receipts).
 - [ ] 3.2 Santiago: Google Cloud service account JSON with Play access →
