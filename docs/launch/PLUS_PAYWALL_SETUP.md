@@ -41,7 +41,7 @@ Product IDs (use these exact strings everywhere):
 > (e.g. "Tydified Plus Monthly" / "Unlimited kids and chores") — Play won't
 > save a subscription without them.
 
-- [ ] 2.0 PREREQ: first `.aab` uploaded to Play Console internal testing
+- [x] 2.0 (2026-07-10) PREREQ: first `.aab` uploaded — Play app created under Doulos Nexus ORG account (no 12-tester/14-day rule for org accounts); internal track Active, tester list "Tydified testers" to Play Console internal testing
       (see RELEASE_CHECKLIST.md §6 — also starts the 12-tester/14-day clock).
 - [ ] 2.1 Play Console → set up **payments profile** for DS Santiago LLC.
 - [ ] 2.2 Monetize → Subscriptions → create `tydified_plus_monthly`
