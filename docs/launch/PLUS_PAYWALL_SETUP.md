@@ -18,23 +18,30 @@ Product IDs (use these exact strings everywhere):
 
 ## Leg 1 — Apple (Santiago, browser)
 
-- [ ] 1.1 Sign **Paid Applications agreement**: App Store Connect → Business →
+- [x] 1.1 (2026-07-10) Sign **Paid Applications agreement**: App Store Connect → Business →
       Paid Apps → accept + enter DS Santiago LLC bank account + tax forms.
       (Apple approval can take 1–2 days — start early.)
-- [ ] 1.2 Wait for agreement status **Active**.
-- [ ] 1.3 Create subscription group `Tydified Plus`: Tydified app page →
+- [x] 1.2 (2026-07-10) Agreement status **Active** immediately (bank + W-9 also Active).
+- [x] 1.3 (2026-07-10) Create subscription group `Tydified Plus`: Tydified app page →
       Monetization → Subscriptions → Create.
-- [ ] 1.4 Create `tydified_plus_monthly` in the group — duration 1 month,
+- [x] 1.4 (2026-07-10) Create `tydified_plus_monthly` in the group — duration 1 month,
       price $4.99, localization name "Tydified Plus Monthly".
-- [ ] 1.5 Create `tydified_plus_yearly` — duration 1 year, price $29.99,
+- [x] 1.5 (2026-07-10) Create `tydified_plus_yearly` — duration 1 year, price $29.99,
       localization name "Tydified Plus Yearly".
-- [ ] 1.6 On the yearly: add **Introductory Offer** → Free trial → 7 days.
+- [x] 1.6 (2026-07-10) On the yearly: add **Introductory Offer** → Free trial → 7 days.
 - [ ] 1.7 Both products: add review screenshot + notes later (needed only for
       App Store review, not sandbox testing).
 
 ## Leg 2 — Google (Santiago, browser; needs first Play upload done)
 
-- [ ] 2.0 PREREQ: first `.aab` uploaded to Play Console internal testing
+> **⚠️ REMINDER (2026-07-10): base plan IDs are LOCKED.** RevenueCat products
+> were already created expecting exactly `monthly-autorenew` and
+> `yearly-autorenew`. When creating the Play subscriptions (2.2/2.3), use those
+> exact base plan IDs and paste the localized listing name/description for each
+> (e.g. "Tydified Plus Monthly" / "Unlimited kids and chores") — Play won't
+> save a subscription without them.
+
+- [x] 2.0 (2026-07-10) PREREQ: first `.aab` uploaded — Play app created under Doulos Nexus ORG account (no 12-tester/14-day rule for org accounts); internal track Active, tester list "Tydified testers" to Play Console internal testing
       (see RELEASE_CHECKLIST.md §6 — also starts the 12-tester/14-day clock).
 - [ ] 2.1 Play Console → set up **payments profile** for DS Santiago LLC.
 - [ ] 2.2 Monetize → Subscriptions → create `tydified_plus_monthly`
@@ -45,16 +52,16 @@ Product IDs (use these exact strings everywhere):
 
 ## Leg 3 — RevenueCat (Claude via API, except the two uploads)
 
-- [ ] 3.1 Santiago: ASC → Users and Access → Integrations → In-App Purchase →
+- [x] 3.1 (2026-07-10) Santiago: ASC → Users and Access → Integrations → In-App Purchase →
       generate an **In-App Purchase key** (.p8) → upload it in RevenueCat →
       Tydified iOS app settings (needed for RC to validate receipts).
 - [ ] 3.2 Santiago: Google Cloud service account JSON with Play access →
       upload in RevenueCat → Tydified Android app settings.
       (RC dashboard → app → Service account credentials shows the wizard.)
-- [ ] 3.3 Claude: create products `tydified_plus_monthly` / `tydified_plus_yearly`
+- [x] 3.3 (2026-07-10) Claude: create products `tydified_plus_monthly` / `tydified_plus_yearly`
       on both RC apps (API v2).
-- [ ] 3.4 Claude: attach both products to entitlement `Chorely Pro`.
-- [ ] 3.5 Claude: ensure offering `default` has `$rc_monthly` / `$rc_annual`
+- [x] 3.4 (2026-07-10) Claude: attach both products to entitlement `Chorely Pro`.
+- [x] 3.5 (2026-07-10) Claude: ensure offering `default` has `$rc_monthly` / `$rc_annual`
       packages pointing at the store products.
 - [ ] 3.6 Rebuild + TestFlight/Play — paywall should now show live plans with
       the 7-day trial badge on yearly.
