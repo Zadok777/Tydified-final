@@ -34,6 +34,13 @@ Product IDs (use these exact strings everywhere):
 
 ## Leg 2 — Google (Santiago, browser; needs first Play upload done)
 
+> **⚠️ REMINDER (2026-07-10): base plan IDs are LOCKED.** RevenueCat products
+> were already created expecting exactly `monthly-autorenew` and
+> `yearly-autorenew`. When creating the Play subscriptions (2.2/2.3), use those
+> exact base plan IDs and paste the localized listing name/description for each
+> (e.g. "Tydified Plus Monthly" / "Unlimited kids and chores") — Play won't
+> save a subscription without them.
+
 - [ ] 2.0 PREREQ: first `.aab` uploaded to Play Console internal testing
       (see RELEASE_CHECKLIST.md §6 — also starts the 12-tester/14-day clock).
 - [ ] 2.1 Play Console → set up **payments profile** for DS Santiago LLC.
