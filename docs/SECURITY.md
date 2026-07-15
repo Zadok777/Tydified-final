@@ -96,6 +96,31 @@ no surprises:
 Re-run after any DDL change and before TestFlight (Advisors tab or the Supabase
 MCP `get_advisors`).
 
+## Live re-audit (2026-07-15)
+
+Full backend re-audit against the live project (`zinbukzmkorkawbgckkh`) during
+paywall testing week. All checks verified against production, not just the
+migration files:
+
+- **RLS enabled on all 12 tables** (incl. `goals`) — confirmed via `pg_class`.
+- **All 23 policies read and verified**: family data gated on
+  `is_family_member()`, personal data on `(select auth.uid())`;
+  `reward_redemptions` / `point_transactions` have **no INSERT policy** (RPC-only
+  writes); `families` rename/delete restricted to creator.
+- **anon EXECUTE = false on all 12 functions** (incl. `redeem_reward`,
+  `approve_chore`); internal helpers (`generate_invite_code`, `handle_new_user`,
+  `set_child_under_13`) not executable by `authenticated` either.
+- **Key-leak scan of working tree + full git history**: no JWTs
+  (`eyJhbGciOi…`), no `appl_`/`goog_` keys, no `service_role` references outside
+  docs. `.env.local` gitignored; tracked `.env.example` is all blanks;
+  `src/lib/supabase.ts` reads only the anon key from env.
+- **Security advisors: 10 warnings, all previously known** (9 by-design
+  SECURITY DEFINER RPCs + leaked-password protection, tracked below). No new
+  findings.
+- Optional post-launch hardening noted: revoke default `anon` table-level
+  grants (currently harmless — RLS blocks everything — but revoking makes RLS
+  the second line of defense instead of the only one).
+
 ## Known advisor notes (by design)
 
 Supabase flags `authenticated`-executable `SECURITY DEFINER` functions. These are

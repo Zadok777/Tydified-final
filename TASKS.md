@@ -262,6 +262,23 @@ Ran a full security / dead-code / correctness audit. Findings + actions:
 - Removed the dev **ComponentShowcase** screen + its nav route/links (was shipping in the bundle).
 - Security verdict: no critical vulns. No hardcoded secrets, no `console.log`, RLS verified. Remaining: enable leaked-password protection (Pro plan — see above); the "authenticated can call SECURITY DEFINER" advisor warnings are by-design (our RPC API, auth-checked internally).
 
+## Audit log (2026-07-15)
+
+Live backend security re-audit (see [docs/SECURITY.md](docs/SECURITY.md)
+§"Live re-audit (2026-07-15)" for full detail). Verdict: **no critical
+findings, no leaked secrets.**
+
+- [x] RLS confirmed enabled on all 12 live tables; all 23 policies read and
+      verified (family data → `is_family_member()`, personal data →
+      `auth.uid()`, redemptions/transactions RPC-only)
+- [x] anon role: EXECUTE = false on all 12 DB functions
+- [x] Key-leak scan of working tree + full git history: clean (no JWTs, no
+      service key, no RevenueCat secrets ever committed)
+- [ ] Enable leaked-password protection (still open — needs Supabase Pro; see
+      Phase 10)
+- [ ] Post-launch (optional): revoke default `anon` table-level grants
+      (defense-in-depth; RLS already blocks)
+
 ## Phase 11: Age/Grade-Tier Chores & Rewards (v1.0 — decided 2026-06-01)
 
 Tailor chore & reward SUGGESTIONS (and default point values) to a child's age/grade tier. **Suggestions only — never restrict** what a parent can assign. Tier auto-derived from `date_of_birth`, with an optional per-child override.
